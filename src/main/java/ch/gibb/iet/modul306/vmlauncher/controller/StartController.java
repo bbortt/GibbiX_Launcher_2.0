@@ -11,7 +11,7 @@ import ch.gibb.iet.modul306.vmlauncher.model.LauncherModel;
 import ch.gibb.iet.modul306.vmlauncher.model.SessionModel;
 
 public class StartController extends AbstractController {
-	private static final Logger logger = LogManager.getLogger(Application.class);
+	private static final Logger LOGGER = LogManager.getLogger(Application.class);
 
 	@Value("${application.modules.backup}")
 	private boolean enableBackupModel;
@@ -29,35 +29,38 @@ public class StartController extends AbstractController {
 	private boolean enableSessionModel;
 	private static SessionModel sessionModel;
 
+	public StartController() {
+		super();
+	}
+
 	public void startApplication(String[] args) {
 		printVersionInfo();
 		loadModules();
 	}
 
 	private void printVersionInfo() {
-		logger.debug("Build name: " + this.getClass().getPackage().getImplementationTitle());
-		logger.debug("Build number: " + this.getClass().getPackage().getImplementationVersion());
+		// Some build information
 	}
 
 	private void loadModules() {
 		if (enableBackupModel) {
 			backupModel = new BackupModel();
-			logger.info("Enabled modul " + backupModel.getClass().getSimpleName());
+			LOGGER.info("Enabled modul " + backupModel.getClass().getSimpleName());
 		}
 
 		if (enableDesignModel) {
 			designModel = new DesignModel();
-			logger.info("Enabled modul " + designModel.getClass().getSimpleName());
+			LOGGER.info("Enabled modul " + designModel.getClass().getSimpleName());
 		}
 
 		if (enableLauncherModel) {
 			launcherModel = new LauncherModel();
-			logger.info("Enabled modul " + launcherModel.getClass().getSimpleName());
+			LOGGER.info("Enabled modul " + launcherModel.getClass().getSimpleName());
 		}
 
 		if (enableSessionModel) {
 			sessionModel = new SessionModel();
-			logger.info("Enabled modul " + sessionModel.getClass().getSimpleName());
+			LOGGER.info("Enabled modul " + sessionModel.getClass().getSimpleName());
 		}
 	}
 }

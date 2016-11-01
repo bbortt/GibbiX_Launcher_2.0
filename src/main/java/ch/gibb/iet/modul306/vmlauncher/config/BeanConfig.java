@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 import ch.gibb.iet.modul306.vmlauncher.controller.StartController;
+import ch.gibb.iet.modul306.vmlauncher.controller.VersionController;
 
 /**
  * Spring configuration. Provides beans.
@@ -18,7 +19,12 @@ import ch.gibb.iet.modul306.vmlauncher.controller.StartController;
 @PropertySource("classpath:application.properties")
 public class BeanConfig {
 	@Bean
-	public StartController StartController() {
+	public StartController startController() {
 		return new StartController();
+	}
+
+	@Bean
+	public VersionController versionController() {
+		return new VersionController();
 	}
 }

@@ -9,17 +9,17 @@ import ch.gibb.iet.modul306.vmlauncher.config.BeanConfig;
 import ch.gibb.iet.modul306.vmlauncher.controller.StartController;
 
 public class Application {
-	private static final Logger logger = LogManager.getLogger(Application.class);
+	private static final Logger LOGGER = LogManager.getLogger(Application.class);
 
 	private static ApplicationContext context;
 
 	public static void main(String[] args) {
-		logger.info("Starting application..");
+		LOGGER.info("Starting application..");
 
 		context = new AnnotationConfigApplicationContext(BeanConfig.class);
 		StartController main = context.getBean(StartController.class);
 		main.startApplication(args);
 
-		logger.info("Application started successfully..");
+		LOGGER.info("Application started successfully..");
 	}
 }
