@@ -2,16 +2,16 @@ package ch.gibb.iet.modul306.vmlauncher.controller;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import ch.gibb.iet.modul306.vmlauncher.app.Application;
 import ch.gibb.iet.modul306.vmlauncher.model.BackupModel;
 import ch.gibb.iet.modul306.vmlauncher.model.DesignModel;
 import ch.gibb.iet.modul306.vmlauncher.model.LauncherModel;
 import ch.gibb.iet.modul306.vmlauncher.model.SessionModel;
 
 public class StartController extends AbstractController {
-	private static final Logger LOGGER = LogManager.getLogger(Application.class);
+	private static final Logger LOGGER = LogManager.getLogger(StartController.class);
 
 	@Value("${application.modules.backup}")
 	private boolean enableBackupModel;
@@ -29,6 +29,9 @@ public class StartController extends AbstractController {
 	private boolean enableSessionModel;
 	private static SessionModel sessionModel;
 
+	@Autowired
+	private ConfigurationController bootConfiguration;
+
 	public StartController() {
 		super();
 	}
@@ -39,7 +42,10 @@ public class StartController extends AbstractController {
 	}
 
 	private void printVersionInfo() {
-		// Some build information
+		LOGGER.info("Group Id: " + bootConfiguration.getGroupId());
+		LOGGER.info("Artifact Id: " + bootConfiguration.getArtifactId());
+		LOGGER.info("Build name: " + bootConfiguration.getBuildName());
+		LOGGER.info("Build version: " + bootConfiguration.getBuildVersion());
 	}
 
 	private void loadModules() {

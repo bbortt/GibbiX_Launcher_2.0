@@ -1,15 +1,10 @@
 package ch.gibb.iet.modul306.vmlauncher.controller;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-public class VersionController extends AbstractController {
-	public VersionController() {
-		super();
-	}
-
-	@Value("${info.project.model.version}")
-	private String modelVersion;
-
+@Component
+public class ConfigurationController extends AbstractController {
 	@Value("${info.project.group.id}")
 	private String groupId;
 
@@ -17,28 +12,36 @@ public class VersionController extends AbstractController {
 	private String artifactId;
 
 	@Value("${info.build.name}")
+
 	private String buildName;
-
 	@Value("${info.build.version}")
-	private String buildVersion;
 
-	public String getModelVersion() {
-		return modelVersion;
+	private String buildVersion;
+	@Value("${info.build.description}")
+
+	private String buildDescription;
+
+	public ConfigurationController() {
+		super();
 	}
 
 	public String getGroupId() {
-		return groupId;
+		return this.groupId;
 	}
 
 	public String getArtifactId() {
-		return artifactId;
+		return this.artifactId;
 	}
 
 	public String getBuildName() {
-		return buildName;
+		return this.buildName;
 	}
 
 	public String getBuildVersion() {
-		return buildVersion;
+		return this.buildVersion;
+	}
+
+	public String getBuildDescription() {
+		return this.buildDescription;
 	}
 }
