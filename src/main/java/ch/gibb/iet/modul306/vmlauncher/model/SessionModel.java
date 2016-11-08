@@ -10,13 +10,12 @@ import javax.xml.bind.JAXBException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import ch.gibb.iet.modul306.vmlauncher.controller.BootController;
 import ch.gibb.iet.modul306.vmlauncher.controller.SessionController;
 import ch.gibb.iet.modul306.vmlauncher.model.objects.XMLSessions;
 import ch.gibb.iet.modul306.vmlauncher.model.objects.XMLSessions.Session;
 
 public class SessionModel extends XMLModel<SessionController> {
-	private static final Logger LOGGER = LogManager.getLogger(BootController.class);
+	private static final Logger LOGGER = LogManager.getLogger(SessionModel.class);
 
 	private File localFile;
 	private List<Session> sessions;
@@ -41,8 +40,8 @@ public class SessionModel extends XMLModel<SessionController> {
 		return sessions.toArray(new Session[sessions.size()]);
 	}
 
-	public SessionModel(SessionController controller, Object object) throws JAXBException, FileNotFoundException {
-		super(controller, object);
+	public SessionModel(SessionController controller, Class<?> clazz) throws JAXBException, FileNotFoundException {
+		super(controller, clazz);
 		readAllSessions();
 	}
 
@@ -52,10 +51,11 @@ public class SessionModel extends XMLModel<SessionController> {
 		}
 
 		if (localFile.exists()) {
-			LOGGER.info("Loading local session configuratin.");
+			LOGGER.debug("Loading local session configuration..");
 			sessions = ((XMLSessions) xmlReader.unmarshal(localFile)).sessions;
 		} else {
-			throw new FileNotFoundException("Could not find any session config at " + localFile.getAbsolutePath());
+			throw new FileNotFoundException(
+					"Could not find any session config at " + localFile.getAbsolutePath() + ".");
 		}
 	}
 

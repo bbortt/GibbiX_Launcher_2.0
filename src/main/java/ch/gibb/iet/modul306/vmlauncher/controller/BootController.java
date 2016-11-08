@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+@SuppressWarnings("unused")
 public class BootController extends AbstractController {
 	private static final Logger LOGGER = LogManager.getLogger(BootController.class);
 
@@ -43,7 +44,7 @@ public class BootController extends AbstractController {
 		LOGGER.info("--------------------------------------------");
 		LOGGER.info("Application starting at "
 				+ new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date(System.currentTimeMillis())));
-		
+
 		LOGGER.info("Group Id: " + bootConfiguration.getGroupId());
 		LOGGER.info("Artifact Id: " + bootConfiguration.getArtifactId());
 		LOGGER.info("Build name: " + bootConfiguration.getBuildName());
@@ -55,23 +56,23 @@ public class BootController extends AbstractController {
 		LOGGER.info("Loading modules..");
 
 		if (enableBackupModel) {
+			LOGGER.debug("Enable Backup modul..");
 			backupModul = new BackupController();
-			LOGGER.info("Enabled modul " + backupModul.getClass().getSimpleName());
 		}
 
 		if (enableDesignModel) {
+			LOGGER.debug("Enable Design modul..");
 			designModul = new DesignController();
-			LOGGER.info("Enabled modul " + designModul.getClass().getSimpleName());
 		}
 
 		if (enableLauncherModel) {
+			LOGGER.debug("Enable Machine Configuration modul..");
 			launcherModul = new LauncherController();
-			LOGGER.info("Enabled modul " + launcherModul.getClass().getSimpleName());
 		}
 
 		if (enableSessionModel) {
+			LOGGER.debug("Enable Session Administration modul..");
 			sessionModul = new SessionController();
-			LOGGER.info("Enabled modul " + sessionModul.getClass().getSimpleName());
 		}
 	}
 }

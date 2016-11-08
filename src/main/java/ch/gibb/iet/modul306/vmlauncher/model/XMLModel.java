@@ -12,10 +12,10 @@ public class XMLModel<C extends AbstractController> extends AbstractModel<C> {
 	protected Marshaller xmlWriter;
 	protected Unmarshaller xmlReader;
 
-	public XMLModel(C controller, Object object) throws JAXBException {
+	public XMLModel(C controller, Class<?> clazz) throws JAXBException {
 		super(controller);
 
-		context = JAXBContext.newInstance(object.getClass());
+		context = JAXBContext.newInstance(clazz);
 		xmlWriter = context.createMarshaller();
 		xmlReader = context.createUnmarshaller();
 	}
