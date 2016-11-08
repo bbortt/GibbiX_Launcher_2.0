@@ -1,5 +1,8 @@
 package ch.gibb.iet.modul306.vmlauncher.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +35,15 @@ public class StartController extends AbstractController {
 	}
 
 	public void startApplication(String[] args) {
-		printVersionInfo();
+		printStartUpInfo();
 		loadModules();
 	}
 
-	private void printVersionInfo() {
+	private void printStartUpInfo() {
+		LOGGER.info("--------------------------------------------");
+		LOGGER.info("Application starting at "
+				+ new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date(System.currentTimeMillis())));
+		
 		LOGGER.info("Group Id: " + bootConfiguration.getGroupId());
 		LOGGER.info("Artifact Id: " + bootConfiguration.getArtifactId());
 		LOGGER.info("Build name: " + bootConfiguration.getBuildName());
@@ -44,6 +51,9 @@ public class StartController extends AbstractController {
 	}
 
 	private void loadModules() {
+		LOGGER.info("--------------------------------------------");
+		LOGGER.info("Loading modules..");
+
 		if (enableBackupModel) {
 			backupModul = new BackupController();
 			LOGGER.info("Enabled modul " + backupModul.getClass().getSimpleName());

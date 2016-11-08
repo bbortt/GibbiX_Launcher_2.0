@@ -20,6 +20,8 @@ public class Application {
 		StartController main = context.getBean(StartController.class);
 		main.startApplication(args);
 
+		LOGGER.info("--------------------------------------------");
 		LOGGER.info("Application started successfully..");
+		LOGGER.info("--------------------------------------------");
 	}
 }
