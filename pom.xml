@@ -25,6 +25,7 @@
 				<exclusion>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-starter-logging</artifactId>
+					<!-- <version>1.4.1.RELEASE</version> -->
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -40,6 +41,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
+			<!-- <version>4.3.3.RELEASE</version> -->
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
@@ -102,7 +104,6 @@
 							</arguments>
 						</configuration>
 					</plugin>
-
 				</plugins>
 			</build>
 
