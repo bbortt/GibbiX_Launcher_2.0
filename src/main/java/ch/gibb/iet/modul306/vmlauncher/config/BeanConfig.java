@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import ch.gibb.iet.modul306.vmlauncher.controller.StartController;
+import ch.gibb.iet.modul306.vmlauncher.controller.BootController;
 import ch.gibb.iet.modul306.vmlauncher.controller.ConfigurationController;
 
 /**
@@ -19,8 +19,8 @@ import ch.gibb.iet.modul306.vmlauncher.controller.ConfigurationController;
 @PropertySource("classpath:application.properties")
 public class BeanConfig {
 	@Bean
-	public StartController startController() {
-		return new StartController();
+	public BootController bootController() {
+		return new BootController();
 	}
 
 	@Bean

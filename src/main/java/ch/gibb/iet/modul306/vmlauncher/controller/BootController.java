@@ -8,8 +8,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-public class StartController extends AbstractController {
-	private static final Logger LOGGER = LogManager.getLogger(StartController.class);
+public class BootController extends AbstractController {
+	private static final Logger LOGGER = LogManager.getLogger(BootController.class);
 
 	@Value("${application.modules.backup}")
 	private boolean enableBackupModel;
@@ -30,7 +30,7 @@ public class StartController extends AbstractController {
 	@Autowired
 	private ConfigurationController bootConfiguration;
 
-	public StartController() {
+	public BootController() {
 		super();
 	}
 
