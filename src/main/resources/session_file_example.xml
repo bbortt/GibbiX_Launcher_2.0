@@ -2,18 +2,21 @@
 	<Session Id="1">
 		<Name>Test Session</Name>
 		<Machine Name="bmWP1">
-			<Installation_path>D:\\\\1_work\\bmWP1\\bmWP1.vmx</Installation_path>
+			<Installation_path>D:\\\\1_work\\bmWP1</Installation_path>
+			<Config_file>bmWP1.vmx</Config_file>
 			<Is_default>true</Is_default>
 		</Machine>
 	</Session>
 	<Session Id="2">
 		<Name>Multiple Machines Test</Name>
 		<Machine Name="bmWP2">
-			<Installation_path>D:\\\\1_work\\bmWP1\\bmWP2.vmx</Installation_path>
+			<Installation_path>D:\\\\1_work\\bmWP1</Installation_path>
+			<Config_file>bmWP2.vmx</Config_file>
 			<Is_default>true</Is_default>
 		</Machine>
 		<Machine Name="bmLP1">
-			<Installation_path>D:\\\\1_work\\bmWP1\\bmLP1.vmx</Installation_path>
+			<Installation_path>D:\\\\1_work\\bmWP1</Installation_path>
+			<Config_file>bmLP1.vmx</Config_file>
 			<Is_default>true</Is_default>
 		</Machine>
 	</Session>
