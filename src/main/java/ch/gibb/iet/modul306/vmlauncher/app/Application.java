@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import ch.gibb.iet.modul306.vmlauncher.config.BeanConfig;
-import ch.gibb.iet.modul306.vmlauncher.controller.StartController;
+import ch.gibb.iet.modul306.vmlauncher.controller.BootController;
 
 public class Application {
 	private static final Logger LOGGER = LogManager.getLogger(Application.class);
@@ -14,12 +14,16 @@ public class Application {
 	private static ApplicationContext context;
 
 	public static void main(String[] args) {
+		LOGGER.info("--------------------------------------------");
 		LOGGER.info("Starting application..");
+		LOGGER.info("--------------------------------------------");
 
 		context = new AnnotationConfigApplicationContext(BeanConfig.class);
-		StartController main = context.getBean(StartController.class);
+		BootController main = context.getBean(BootController.class);
 		main.startApplication(args);
 
+		LOGGER.info("--------------------------------------------");
 		LOGGER.info("Application started successfully..");
+		LOGGER.info("--------------------------------------------");
 	}
 }

@@ -1,18 +1,15 @@
 package ch.gibb.iet.modul306.vmlauncher.controller;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-public class StartController extends AbstractController {
-	private static final Logger LOGGER = LogManager.getLogger(StartController.class);
+public class BootController extends AbstractController {
+	private static final Logger LOGGER = LogManager.getLogger(BootController.class);
 
 	@Value("${application.modules.backup}")
 	private boolean enableBackupModel;
@@ -24,7 +21,7 @@ public class StartController extends AbstractController {
 
 	@Value("${application.modules.launcher}")
 	private boolean enableLauncherModel;
-	public static LauncherController launcherModul;
+	private static LauncherController launcherModul;
 
 	@Value("${application.modules.session}")
 	private boolean enableSessionModel;
@@ -33,16 +30,20 @@ public class StartController extends AbstractController {
 	@Autowired
 	private ConfigurationController bootConfiguration;
 
-	public StartController() {
+	public BootController() {
 		super();
 	}
 
 	public void startApplication(String[] args) {
-		printVersionInfo();
+		printStartUpInfo();
 		loadModules();
 	}
 
-	private void printVersionInfo() {
+	private void printStartUpInfo() {
+		LOGGER.info("--------------------------------------------");
+		LOGGER.info("Application starting at "
+				+ new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date(System.currentTimeMillis())));
+		
 		LOGGER.info("Group Id: " + bootConfiguration.getGroupId());
 		LOGGER.info("Artifact Id: " + bootConfiguration.getArtifactId());
 		LOGGER.info("Build name: " + bootConfiguration.getBuildName());
@@ -50,6 +51,9 @@ public class StartController extends AbstractController {
 	}
 
 	private void loadModules() {
+		LOGGER.info("--------------------------------------------");
+		LOGGER.info("Loading modules..");
+
 		if (enableBackupModel) {
 			backupModul = new BackupController();
 			LOGGER.info("Enabled modul " + backupModul.getClass().getSimpleName());
