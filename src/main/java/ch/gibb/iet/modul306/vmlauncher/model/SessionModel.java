@@ -42,30 +42,36 @@ public class SessionModel extends XMLModel<SessionController> {
 
 	public SessionModel(SessionController controller, Class<?> clazz) throws JAXBException, FileNotFoundException {
 		super(controller, clazz);
-		readAllSessions();
+		readAllLocalSessions(new File("session_config.xml"));
 	}
 
-	private void readAllSessions() throws JAXBException, FileNotFoundException {
+	public SessionModel(SessionController controller, Class<?> clazz, File sessionFile)
+			throws FileNotFoundException, JAXBException {
+		super(controller, clazz);
+		readAllLocalSessions(sessionFile);
+	}
+
+	private void readAllLocalSessions(File sessionFile) throws JAXBException, FileNotFoundException {
 		if (localFile == null) {
-			localFile = new File("session_config.xml");
+			localFile = sessionFile;
 		}
 
 		if (localFile.exists()) {
-			LOGGER.debug("Loading local session configuration..");
+			LOGGER.debug("Loading local session configuration from " + sessionFile.getAbsolutePath());
 			sessions = ((XMLSessions) xmlReader.unmarshal(localFile)).sessions;
 		} else {
 			throw new FileNotFoundException(
-					"Could not find any session config at " + localFile.getAbsolutePath() + ".");
+					"Could not find any session config at " + sessionFile.getAbsolutePath() + ".");
 		}
 	}
 
-	public void writeAllSessions() throws JAXBException, IOException {
+	public void saveSessionChanges() throws JAXBException, IOException {
 		if (localFile == null) {
 			localFile = new File("session_config.xml");
 		}
 
 		if (!localFile.exists()) {
-			LOGGER.debug("Local file does not yet exist. Creating..");
+			LOGGER.debug("Local file does not exist yet. Creating..");
 			localFile.createNewFile();
 		}
 

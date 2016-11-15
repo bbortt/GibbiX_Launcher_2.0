@@ -22,7 +22,6 @@ public class SessionController extends AbstractController {
 		try {
 			sessionModul = new SessionModel(this, XMLSessions.class);
 		} catch (FileNotFoundException | JAXBException e) {
-			e.printStackTrace();
 			LOGGER.error(e.getLocalizedMessage());
 		}
 	}

@@ -21,9 +21,13 @@ public class XMLSessions {
 	}
 
 	public static class Session {
-		@XmlAttribute(name = "id", required = true)
+		@XmlAttribute(name = "Id", required = true)
 		public int id;
 
+		@XmlElement(name = "Name", required = true)
+		public String name;
+
+		@XmlElement(name = "Machine", required = true)
 		private List<VirtualMachine> virtualMachines;
 
 		public VirtualMachine getVirtualMachine(int index) {
@@ -47,7 +51,14 @@ public class XMLSessions {
 		}
 
 		public static class VirtualMachine {
+			@XmlAttribute(name = "Name", required = true)
+			public String name;
 
+			@XmlElement(name = "Installation_path", required = true)
+			public String path;
+
+			@XmlElement(name = "Is_default", required = true)
+			public boolean isDefault;
 		}
 	}
 }
