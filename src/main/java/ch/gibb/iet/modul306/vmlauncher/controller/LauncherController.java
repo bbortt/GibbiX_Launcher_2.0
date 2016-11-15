@@ -31,6 +31,7 @@ public class LauncherController extends AbstractController {
 		if (!(f.exists() && f.isDirectory())) {
 		   path = "C:/Users/vmadmin/workspace/1_work";
 		}
+		
 		this.VM_PATH = path;
 		this.virtualMachines = getData();
 	}
@@ -38,9 +39,9 @@ public class LauncherController extends AbstractController {
 	private Map<String, Map<String,String>> getData(){
 		try {
 			Map<String, Map<String,String>> vmMap = new HashMap<String, Map<String,String>>();
-			File[] maschines = getVirtualMaschineDirectories();
+			File[] machines = getVirtualMachineDirectories();
 			
-			for(File a : maschines){
+			for(File a : machines){
 				if(a.isDirectory()){
 					vmMap.put(a.getName(), getVirtualMachine(a));
 				}
@@ -72,10 +73,37 @@ public class LauncherController extends AbstractController {
     			}
     		}
 		}
+    	map.put("VM_PATH", VM_PATH+"/"+direcory.getName()+"/"+direcory.getName()+".vmx");
 		return map;	
 	}
 	
-	public File[] getVirtualMaschineDirectories(){
+	private File[] getVirtualMachineDirectories(){
 	    return new File(VM_PATH).listFiles();
+	}
+	
+	public void startVirtualMachine(Map<String, String> map){
+		if(!map.isEmpty()){
+			String pathToVMPlayer = "C:/Program Files (x86)/VMware/VMware Player/vmplayer.exe";
+			File f1 = new File(pathToVMPlayer);
+			if(!(f1.exists() && f1.canExecute())){
+				File[] files = new File("/vmplayer.exe").listFiles();
+				if(files != null && files.length > 0){
+					pathToVMPlayer = files[0].getPath();
+				} else {
+					pathToVMPlayer ="";
+				}
+			}
+			if(new File(pathToVMPlayer).canExecute()){
+				File f2 = new File(map.get("VM_PATH"));
+				if (f2.exists() && f2.canExecute()) {
+					try {
+			            new ProcessBuilder().command(pathToVMPlayer,map.get("VM_PATH")).start();
+			        } catch (IOException e) {
+			            // TODO Auto-generated catch block
+			            e.printStackTrace();
+			        }
+				}
+			}
+		}
 	}
 }
