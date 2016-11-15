@@ -1,5 +1,11 @@
 package ch.gibb.iet.modul306.vmlauncher.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +24,7 @@ public class StartController extends AbstractController {
 
 	@Value("${application.modules.launcher}")
 	private boolean enableLauncherModel;
-	private static LauncherController launcherModul;
+	public static LauncherController launcherModul;
 
 	@Value("${application.modules.session}")
 	private boolean enableSessionModel;

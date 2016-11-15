@@ -20,31 +20,41 @@ public class LauncherController extends AbstractController {
 	
 	private static final Logger LOGGER = LogManager.getLogger(Application.class);
 	
-	public static final String VM_PATH = "C:/Users/vmadmin/workspace/1_work";
+	private String VM_PATH = "D:/1_work";
 	
-	public List<vmModel> vmModels;
+	public Map<String, Map<String, String>> virtualMachines;
 	
 	public LauncherController() {
+		//TODO: Eingabe eines Paths, falls Default Pfad nicht vorhanden!
+		String path="D:/1_work";
+		File f = new File(path);
+		if (!(f.exists() && f.isDirectory())) {
+		   path = "C:/Users/vmadmin/workspace/1_work";
+		}
+		this.VM_PATH = path;
+		this.virtualMachines = getData();
+	}
+	
+	private Map<String, Map<String,String>> getData(){
 		try {
-			List<vmModel> models = new ArrayList<vmModel>();
+			Map<String, Map<String,String>> vmMap = new HashMap<String, Map<String,String>>();
 			File[] maschines = getVirtualMaschineDirectories();
 			
 			for(File a : maschines){
 				if(a.isDirectory()){
-					vmModel vmModel = getVirtualMachine(a);
-					models.add(vmModel);
+					vmMap.put(a.getName(), getVirtualMachine(a));
 				}
 			}
 			
-			this.vmModels = models;
-			
+			return vmMap;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	private vmModel getVirtualMachine(File direcory) throws IOException {
+	private Map<String, String> getVirtualMachine(File direcory) throws IOException {
 		
 		
 		String lineInfo;
@@ -55,14 +65,14 @@ public class LauncherController extends AbstractController {
     	while ((lineInfo = br.readLine()) != null) {
     		
     		if(!(lineInfo.contains("#")) && !(lineInfo.isEmpty())){
-    			String[] val = lineInfo.split("=");
-    			map.put(val[0], val[1]);
+    			String[] val = lineInfo.split(" = ");
+    			String[] val2 = val[1].split("\"");
+    			if(val2.length == 2){
+    				map.put(val[0], val2[1]);
+    			}
     		}
 		}
-    	
-    	LOGGER.info("IN: "+ map.size());
-		
-		return null;	
+		return map;	
 	}
 	
 	public File[] getVirtualMaschineDirectories(){
