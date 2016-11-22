@@ -1,15 +1,17 @@
 package ch.gibb.iet.modul306.vmlauncher.app;
 
-import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import ch.gibb.iet.modul306.vmlauncher.config.BeanConfig;
 import ch.gibb.iet.modul306.vmlauncher.controller.BootController;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
-public class Application {
-	private static final Logger LOGGER = LogManager.getLogger(Application.class);
+@SuppressWarnings({ "restriction" })
+public class app extends Application {
+	private static final Logger LOGGER = Logger.getLogger(app.class);
 
 	private static ApplicationContext context;
 
@@ -19,11 +21,16 @@ public class Application {
 		LOGGER.info("--------------------------------------------");
 
 		context = new AnnotationConfigApplicationContext(BeanConfig.class);
-		BootController main = context.getBean(BootController.class);
-		main.startApplication(args);
+
+		launch(args);
 
 		LOGGER.info("--------------------------------------------");
-		LOGGER.info("Application started successfully..");
+		LOGGER.info("Application exited.");
 		LOGGER.info("--------------------------------------------");
+	}
+
+	@Override
+	public void start(Stage mainStage) {
+		context.getBean(BootController.class).startApplication(mainStage);
 	}
 }

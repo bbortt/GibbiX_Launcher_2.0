@@ -3,14 +3,16 @@ package ch.gibb.iet.modul306.vmlauncher.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-@SuppressWarnings("unused")
+import ch.gibb.iet.modul306.vmlauncher.view.ApplicationView;
+import javafx.stage.Stage;
+
+@SuppressWarnings({ "restriction", "unused" })
 public class BootController extends AbstractController {
-	private static final Logger LOGGER = LogManager.getLogger(BootController.class);
+	private static final Logger LOGGER = Logger.getLogger(BootController.class);
 
 	@Value("${application.modules.backup}")
 	private boolean enableBackupModel;
@@ -31,13 +33,18 @@ public class BootController extends AbstractController {
 	@Autowired
 	private ConfigurationController bootConfiguration;
 
-	public BootController() {
-		super();
-	}
+	private ApplicationView view;
 
-	public void startApplication(String[] args) {
+	public void startApplication(Stage mainStage) {
 		printStartUpInfo();
 		loadModules();
+		loadView(mainStage);
+
+		LOGGER.info("--------------------------------------------");
+		LOGGER.info("Done. Application ready to use.");
+		LOGGER.info("Good luck @ GIBB :)");
+		LOGGER.info("(c) 2016 by Team VMLauncher 2.0");
+		LOGGER.info("--------------------------------------------");
 	}
 
 	private void printStartUpInfo() {
@@ -74,5 +81,12 @@ public class BootController extends AbstractController {
 			LOGGER.debug("Enable Session Administration modul..");
 			sessionModul = new SessionController();
 		}
+	}
+
+	protected void loadView(Stage mainStage) {
+		LOGGER.info("--------------------------------------------");
+		LOGGER.info("Loading view..");
+
+		view = new ApplicationView(mainStage, this);
 	}
 }
