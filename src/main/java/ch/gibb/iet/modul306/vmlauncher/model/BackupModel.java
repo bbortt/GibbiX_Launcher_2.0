@@ -1,19 +1,14 @@
 package ch.gibb.iet.modul306.vmlauncher.model;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
-import org.apache.commons.compress.utils.IOUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import ch.gibb.iet.modul306.vmlauncher.controller.BackupController;
 import ch.gibb.iet.modul306.vmlauncher.model.objects.XMLMachine;
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.model.ZipParameters;
+import net.lingala.zip4j.util.Zip4jConstants;
 
 public class BackupModel extends AbstractModel<BackupController> {
 	private static final Logger LOGGER = LogManager.getLogger(BackupModel.class);
@@ -23,34 +18,39 @@ public class BackupModel extends AbstractModel<BackupController> {
 		super(controller);
 	}
 
-	public void backupMachine(XMLMachine machine, File backupDestination) throws FileNotFoundException, IOException {
+	public void backupMachine(XMLMachine machine, String backupDestination, String password) throws ZipException {
 		LOGGER.info("Creating backup for " + machine.name);
 
-		compressFolder(machine.path, backupDestination.getAbsolutePath() + "\\" + machine.name + SUFFIX);
-	}
-
-	public void compressFolder(String sourceDir, String outputFile) throws IOException, FileNotFoundException {
-		ZipOutputStream zipFile = new ZipOutputStream(new FileOutputStream(outputFile));
-		compressFolderRecursive(sourceDir, sourceDir, zipFile);
-		zipFile.flush();
-		zipFile.close();
-	}
-
-	private void compressFolderRecursive(String rootDir, String sourceDir, ZipOutputStream out)
-			throws IOException, FileNotFoundException {
-		for (File file : new File(sourceDir).listFiles()) {
-			if (file.isDirectory()) {
-				compressFolderRecursive(rootDir, sourceDir + file.getName() + File.separator, out);
-			} else {
-				ZipEntry entry = new ZipEntry(sourceDir.replace(rootDir, "") + file.getName());
-				out.putNextEntry(entry);
-
-				// FileInputStream in = new FileInputStream(sourceDir +
-				// file.getName());
-				FileInputStream in = new FileInputStream(sourceDir + File.separator + file.getName());
-				IOUtils.copy(in, out);
-				in.close();
-			}
+		if (password == null) {
+			compressFolder(machine.path, backupDestination + "\\" + machine.name + SUFFIX, null);
+		} else {
+			compressFolder(machine.path, backupDestination + "\\" + machine.name + SUFFIX, null);
 		}
+	}
+
+	public void compressFolder(String sourceDir, String outputFile, String password) throws ZipException {
+		ZipFile newZip = new ZipFile(outputFile);
+
+		ZipParameters params = new ZipParameters();
+		params.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
+		params.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_FASTEST);
+
+		if (password != null) {
+			params.setPassword(password);
+		}
+
+		newZip.addFolder(sourceDir, params);
+	}
+
+	public void uncompressFile(String sourceFile, String outputDir, String password) throws ZipException {
+		ZipFile zip = new ZipFile(sourceFile);
+
+		if (zip.isEncrypted() && password == null) {
+			throw new IllegalArgumentException("Cannot open zip. Requires password!");
+		} else if (zip.isEncrypted() && password != null) {
+			zip.setPassword(password);
+		}
+
+		zip.extractAll(outputDir);
 	}
 }
