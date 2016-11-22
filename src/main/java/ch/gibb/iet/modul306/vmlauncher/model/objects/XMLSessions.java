@@ -28,17 +28,17 @@ public class XMLSessions {
 		public String name;
 
 		@XmlElement(name = "Machine", required = true)
-		private List<VirtualMachine> virtualMachines;
+		private List<XMLMachine> virtualMachines;
 
-		public VirtualMachine getVirtualMachine(int index) {
+		public XMLMachine getVirtualMachine(int index) {
 			return virtualMachines.get(index);
 		}
 
-		public void addVirtualMachine(VirtualMachine virtualMachine) {
+		public void addVirtualMachine(XMLMachine virtualMachine) {
 			virtualMachines.add(virtualMachine);
 		}
 
-		public void removeVirtualMachine(VirtualMachine virtualMachine) {
+		public void removeVirtualMachine(XMLMachine virtualMachine) {
 			virtualMachines.remove(virtualMachine);
 		}
 
@@ -46,19 +46,8 @@ public class XMLSessions {
 			virtualMachines.remove(index);
 		}
 
-		public VirtualMachine[] getAllMachines() {
-			return virtualMachines.toArray(new VirtualMachine[virtualMachines.size()]);
-		}
-
-		public static class VirtualMachine {
-			@XmlAttribute(name = "Name", required = true)
-			public String name;
-
-			@XmlElement(name = "Installation_path", required = true)
-			public String path;
-
-			@XmlElement(name = "Is_default", required = true)
-			public boolean isDefault;
+		public XMLMachine[] getAllMachines() {
+			return virtualMachines.toArray(new XMLMachine[virtualMachines.size()]);
 		}
 	}
 }
