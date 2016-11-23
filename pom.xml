@@ -76,7 +76,7 @@
 			<artifactId>javafx</artifactId>
 			<version>2.2.3</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/javafx-0.2.jar</systemPath>
+			<systemPath>${project.basedir}/lib/jfxrt.jar</systemPath>
 		</dependency>
 	</dependencies>
 

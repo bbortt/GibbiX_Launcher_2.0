@@ -1,5 +1,8 @@
 package ch.gibb.iet.modul306.vmlauncher.app;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -9,7 +12,6 @@ import ch.gibb.iet.modul306.vmlauncher.controller.BootController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-@SuppressWarnings({ "restriction" })
 public class app extends Application {
 	private static final Logger LOGGER = Logger.getLogger(app.class);
 
@@ -31,6 +33,10 @@ public class app extends Application {
 
 	@Override
 	public void start(Stage mainStage) {
-		context.getBean(BootController.class).startApplication(mainStage);
+		 context.getBean(BootController.class).startApplication(mainStage);
+	}
+
+	public static String getCurrentSystemTime() {
+		return new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date(System.currentTimeMillis()));
 	}
 }
