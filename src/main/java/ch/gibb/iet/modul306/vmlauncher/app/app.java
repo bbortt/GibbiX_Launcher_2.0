@@ -24,15 +24,30 @@ public class app extends Application {
 
 		context = new AnnotationConfigApplicationContext(BeanConfig.class);
 		launch(args);
-
-		LOGGER.info("--------------------------------------------");
-		LOGGER.info("Application exited.");
-		LOGGER.info("--------------------------------------------");
 	}
 
 	@Override
 	public void start(Stage mainStage) {
 		context.getBean(BootController.class).startApplication(mainStage);
+	}
+
+	@Override
+	public void stop() {
+		printGoodBye();
+
+		try {
+			super.stop();
+		} catch (Exception e) {
+			LOGGER.error(e.getLocalizedMessage());
+		}
+
+		System.exit(0);
+	}
+
+	private void printGoodBye() {
+		LOGGER.info("--------------------------------------------");
+		LOGGER.info("Application exited.");
+		LOGGER.info("--------------------------------------------");
 	}
 
 	public static String getCurrentSystemTime() {

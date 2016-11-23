@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 import ch.gibb.iet.modul306.vmlauncher.controller.BootController;
-import ch.gibb.iet.modul306.vmlauncher.controller.ConfigurationController;
 
 /**
  * Spring configuration. Provides beans.
@@ -24,7 +23,7 @@ public class BeanConfig {
 	}
 
 	@Bean
-	public ConfigurationController bootConfiguration() {
-		return new ConfigurationController();
+	public ApplicationData applicationData() {
+		return new ApplicationData();
 	}
 }

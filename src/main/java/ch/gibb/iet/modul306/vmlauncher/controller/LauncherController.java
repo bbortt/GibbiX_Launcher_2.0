@@ -11,6 +11,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import ch.gibb.iet.modul306.vmlauncher.app.app;
+import javafx.stage.Stage;
 
 @SuppressWarnings("unused")
 public class LauncherController extends AbstractController {
@@ -100,5 +101,11 @@ public class LauncherController extends AbstractController {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void loadView(Stage mainStage) {
+		// TODO Auto-generated method stub
+
 	}
 }

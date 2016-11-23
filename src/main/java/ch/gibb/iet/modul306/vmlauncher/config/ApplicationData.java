@@ -1,10 +1,10 @@
-package ch.gibb.iet.modul306.vmlauncher.controller;
+package ch.gibb.iet.modul306.vmlauncher.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ConfigurationController extends AbstractController {
+public class ApplicationData {
 	@Value("${info.project.group.id}")
 	private String groupId;
 
@@ -21,7 +21,7 @@ public class ConfigurationController extends AbstractController {
 
 	private String buildDescription;
 
-	public ConfigurationController() {
+	public ApplicationData() {
 		super();
 	}
 
