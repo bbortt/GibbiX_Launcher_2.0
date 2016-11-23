@@ -1,7 +1,5 @@
 package ch.gibb.iet.modul306.vmlauncher.view;
 
-import java.io.File;
-
 import org.apache.log4j.Logger;
 
 import ch.gibb.iet.modul306.vmlauncher.controller.AbstractController;
