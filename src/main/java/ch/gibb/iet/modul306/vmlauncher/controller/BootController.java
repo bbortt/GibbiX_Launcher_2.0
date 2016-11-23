@@ -1,16 +1,14 @@
 package ch.gibb.iet.modul306.vmlauncher.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import ch.gibb.iet.modul306.vmlauncher.app.app;
 import ch.gibb.iet.modul306.vmlauncher.view.ApplicationView;
 import javafx.stage.Stage;
 
-@SuppressWarnings({ "restriction", "unused" })
+@SuppressWarnings("unused")
 public class BootController extends AbstractController {
 	private static final Logger LOGGER = Logger.getLogger(BootController.class);
 
@@ -41,7 +39,7 @@ public class BootController extends AbstractController {
 		loadView(mainStage);
 
 		LOGGER.info("--------------------------------------------");
-		LOGGER.info("Done. Application ready to use.");
+		LOGGER.info("Startup finished at " + app.getCurrentSystemTime() + ". Application ready to use.");
 		LOGGER.info("Good luck @ GIBB :)");
 		LOGGER.info("(c) 2016 by Team VMLauncher 2.0");
 		LOGGER.info("--------------------------------------------");
@@ -49,8 +47,7 @@ public class BootController extends AbstractController {
 
 	private void printStartUpInfo() {
 		LOGGER.info("--------------------------------------------");
-		LOGGER.info("Application starting at "
-				+ new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date(System.currentTimeMillis())));
+		LOGGER.info("Application starting at " + app.getCurrentSystemTime());
 
 		LOGGER.info("Group Id: " + bootConfiguration.getGroupId());
 		LOGGER.info("Artifact Id: " + bootConfiguration.getArtifactId());

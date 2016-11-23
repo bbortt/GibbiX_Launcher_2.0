@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.gibb.iet.modul306</groupId>
 	<artifactId>vmlauncher</artifactId>
-	<version>0.0.1</version>
+	<version>0.2.0</version>
 
 	<name>VMLauncher</name>
 	<description>Project in Modul 306.</description>
@@ -76,7 +76,7 @@
 			<artifactId>javafx</artifactId>
 			<version>2.2.3</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/javafx-0.2.jar</systemPath>
+			<systemPath>${project.basedir}/lib/jfxrt.jar</systemPath>
 		</dependency>
 	</dependencies>
 
@@ -121,6 +121,7 @@
 						<version>1.5.0</version>
 						<configuration>
 							<mainClass>ch.gibb.iet.modul306.vmlauncher.app.app</mainClass>
+							<cleanupDaemonThreads>true</cleanupDaemonThreads>
 							<arguments></arguments>
 						</configuration>
 					</plugin>

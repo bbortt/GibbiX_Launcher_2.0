@@ -12,8 +12,8 @@ import org.apache.log4j.Logger;
 
 import ch.gibb.iet.modul306.vmlauncher.app.app;
 
+@SuppressWarnings("unused")
 public class LauncherController extends AbstractController {
-
 	private static final Logger LOGGER = LogManager.getLogger(app.class);
 
 	private String VM_PATH = "D:/1_work";
@@ -51,6 +51,7 @@ public class LauncherController extends AbstractController {
 		return null;
 	}
 
+	@SuppressWarnings("resource")
 	private Map<String, String> getVirtualMachine(File direcory) throws IOException {
 
 		String lineInfo;
