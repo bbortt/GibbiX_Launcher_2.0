@@ -3,6 +3,7 @@ package ch.gibb.iet.modul306.vmlauncher.view;
 import org.apache.log4j.Logger;
 
 import ch.gibb.iet.modul306.vmlauncher.controller.BootController;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 public class ApplicationView extends AbstractView<BootController> {
@@ -15,7 +16,7 @@ public class ApplicationView extends AbstractView<BootController> {
 	}
 
 	@Override
-	protected Browser loadMainPage() {
+	protected WebView loadMainPage() {
 		return loadPage("index.html");
 	}
 

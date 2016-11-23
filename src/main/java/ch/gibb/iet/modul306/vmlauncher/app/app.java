@@ -23,7 +23,6 @@ public class app extends Application {
 		LOGGER.info("--------------------------------------------");
 
 		context = new AnnotationConfigApplicationContext(BeanConfig.class);
-
 		launch(args);
 
 		LOGGER.info("--------------------------------------------");
@@ -33,7 +32,7 @@ public class app extends Application {
 
 	@Override
 	public void start(Stage mainStage) {
-		 context.getBean(BootController.class).startApplication(mainStage);
+		context.getBean(BootController.class).startApplication(mainStage);
 	}
 
 	public static String getCurrentSystemTime() {
