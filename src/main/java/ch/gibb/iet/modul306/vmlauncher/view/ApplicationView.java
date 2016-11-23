@@ -47,7 +47,7 @@ public class ApplicationView extends AbstractView<BootController> {
 				new EventListener() {
 					@Override
 					public void handleEvent(Event evt) {
-						if (!controller.isLauncherModulEnabled()) {
+						if (controller.getLauncherModul() == null) {
 							LOGGER.warn("Launcher-modul is currently not enabled!");
 
 							warnModulNotEnabled("Launcher-Modul");
@@ -63,7 +63,7 @@ public class ApplicationView extends AbstractView<BootController> {
 				new EventListener() {
 					@Override
 					public void handleEvent(Event evt) {
-						if (!controller.isBackupModulEnabled()) {
+						if (controller.getBackupModul() == null) {
 							LOGGER.warn("Backup-modul is currently not enabled!");
 
 							warnModulNotEnabled("Backup-modul");
@@ -79,7 +79,7 @@ public class ApplicationView extends AbstractView<BootController> {
 				new EventListener() {
 					@Override
 					public void handleEvent(Event evt) {
-						if (!controller.isSessionModulEnabled()) {
+						if (controller.getSessionModul() == null) {
 							LOGGER.warn("Session-modul is currently not enabled!");
 
 							warnModulNotEnabled("Session-modul");

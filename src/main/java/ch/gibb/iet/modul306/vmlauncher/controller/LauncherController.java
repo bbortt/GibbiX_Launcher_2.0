@@ -4,34 +4,89 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import ch.gibb.iet.modul306.vmlauncher.app.app;
+import ch.gibb.iet.modul306.vmlauncher.model.objects.XMLMachine;
 import javafx.stage.Stage;
 
-@SuppressWarnings("unused")
+@Component
 public class LauncherController extends AbstractController {
 	private static final Logger LOGGER = LogManager.getLogger(app.class);
 
-	private String VM_PATH = "D:/1_work";
+	@Value("${gibbix.path.default}")
+	private static final String GIBBIX_PATH = "";
+	@Value("${gibbix.machines.path.default}")
+	private static final String WORK_DIRECTORY = "";
+
+	public XMLMachine[] getMachines() {
+		File workDir = new File(GIBBIX_PATH + WORK_DIRECTORY);
+		if (!workDir.exists() || !workDir.isDirectory()) {
+			throw new IllegalArgumentException("Work directory at " + workDir + " does not exist!");
+		}
+
+		return searchMachinesRecursive(workDir);
+	}
+
+	private XMLMachine[] searchMachinesRecursive(File currentDir) {
+		if (!currentDir.exists() || !currentDir.isDirectory()) {
+			return null;
+		}
+
+		for (File subFile : currentDir.listFiles()) {
+			if (subFile.isFile() && subFile.getName().contains(".vmx")) {
+				LOGGER.debug("Got machine at " + subFile.getAbsolutePath()
+				);
+
+				XMLMachine newMachine = new XMLMachine();
+				newMachine.name = subFile.getName().substring(0, subFile.getName().lastIndexOf("."));
+				newMachine.path = subFile.getAbsolutePath().substring(0, subFile.getAbsolutePath().lastIndexOf("/"));
+				newMachine.file = subFile.getName();
+
+				return new XMLMachine[] { newMachine };
+			}
+		}
+
+		List<XMLMachine> collected = new ArrayList<>();
+		Arrays.asList(currentDir.listFiles()).stream().filter(subFile -> subFile.isDirectory())
+				.forEach(subDirectory -> {
+					XMLMachine[] fromSubs = searchMachinesRecursive(subDirectory);
+					if (fromSubs != null) {
+						Arrays.asList(fromSubs).forEach(machine -> {
+							collected.add(machine);
+						});
+					}
+				});
+
+		if (collected.size() == 0) {
+			return null;
+		}
+
+		return collected.toArray(new XMLMachine[collected.size()]);
+	}
 
 	public Map<String, Map<String, String>> virtualMachines;
 
-	public LauncherController() {
-		// TODO: Eingabe eines Paths, falls Default Pfad nicht vorhanden!
-		String path = "D:/1_work";
-		File f = new File(path);
-		if (!(f.exists() && f.isDirectory())) {
-			path = "C:/Users/vmadmin/workspace/1_work";
-		}
-
-		this.VM_PATH = path;
-		// this.virtualMachines = getData();
-	}
+	// public LauncherController() {
+	// // TODO: Eingabe eines Paths, falls Default Pfad nicht vorhanden!
+	// String path = "D:/1_work";
+	// File f = new File(path);
+	// if (!(f.exists() && f.isDirectory())) {
+	// path = "C:/Users/vmadmin/workspace/1_work";
+	// }
+	//
+	// this.VM_PATH = path;
+	// // this.virtualMachines = getData();
+	// }
 
 	private Map<String, Map<String, String>> getData() {
 		try {
@@ -58,8 +113,8 @@ public class LauncherController extends AbstractController {
 		String lineInfo;
 		Map<String, String> map = new HashMap<String, String>();
 
-		BufferedReader br = new BufferedReader(
-				new FileReader(VM_PATH + "/" + direcory.getName() + "/" + direcory.getName() + ".vmx"));
+		BufferedReader br = new BufferedReader(new FileReader(
+				GIBBIX_PATH + WORK_DIRECTORY + "/" + direcory.getName() + "/" + direcory.getName() + ".vmx"));
 
 		while ((lineInfo = br.readLine()) != null) {
 
@@ -71,12 +126,12 @@ public class LauncherController extends AbstractController {
 				}
 			}
 		}
-		map.put("VM_PATH", VM_PATH + "/" + direcory.getName() + "/" + direcory.getName() + ".vmx");
+		map.put("VM_PATH", GIBBIX_PATH + WORK_DIRECTORY + "/" + direcory.getName() + "/" + direcory.getName() + ".vmx");
 		return map;
 	}
 
 	private File[] getVirtualMachineDirectories() {
-		return new File(VM_PATH).listFiles();
+		return new File(GIBBIX_PATH + WORK_DIRECTORY).listFiles();
 	}
 
 	public void startVirtualMachine(Map<String, String> map) throws IOException {

@@ -3,68 +3,67 @@ package ch.gibb.iet.modul306.vmlauncher.controller;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import ch.gibb.iet.modul306.vmlauncher.app.app;
 import ch.gibb.iet.modul306.vmlauncher.config.ApplicationData;
 import ch.gibb.iet.modul306.vmlauncher.view.ApplicationView;
 import javafx.stage.Stage;
 
-@SuppressWarnings("unused")
+@Component
 public class BootController extends AbstractController {
 	private static final Logger LOGGER = Logger.getLogger(BootController.class);
 
 	@Value("${application.modules.launcher}")
-	private boolean enableLauncherModel;
+	private boolean isLauncherModulEnabled;
+	@Autowired
 	private static LauncherController launcherModul;
 
-	public boolean isLauncherModulEnabled() {
-		return enableLauncherModel;
-	}
-
 	public LauncherController getLauncherModul() {
-		return launcherModul;
+		if (isLauncherModulEnabled && launcherModul != null) {
+			return launcherModul;
+		}
+		return null;
 	}
 
 	@Value("${application.modules.backup}")
-	private boolean enableBackupModel;
+	private boolean isBackupModulEnabled;
+	@Autowired
 	private static BackupController backupModul;
 
-	public boolean isBackupModulEnabled() {
-		return enableBackupModel;
-	}
-
 	public BackupController getBackupModul() {
-		return backupModul;
+		if (isBackupModulEnabled && backupModul != null) {
+			return backupModul;
+		}
+		return null;
 	}
 
 	@Value("${application.modules.design}")
-	private boolean enableDesignModel;
+	private boolean isDesignModulEnabled;
+	@Autowired
 	private static DesignController designModul;
 
-	public boolean isDesignModulEnabled() {
-		return enableDesignModel;
-	}
-
-	public static DesignController getDesignModul() {
-		return designModul;
+	public DesignController getDesignModul() {
+		if (isDesignModulEnabled && designModul != null) {
+			return designModul;
+		}
+		return null;
 	}
 
 	@Value("${application.modules.session}")
-	private boolean enableSessionModel;
+	private boolean isSessionModulEnabled;
+	@Autowired
 	private static SessionController sessionModul;
 
-	public boolean isSessionModulEnabled() {
-		return enableSessionModel;
-	}
-
 	public SessionController getSessionModul() {
-		return sessionModul;
+		if (isSessionModulEnabled && sessionModul != null) {
+			return sessionModul;
+		}
+		return null;
 	}
 
 	@Autowired
 	private ApplicationData applicationData;
-
-	private ApplicationView view;
 
 	public void startApplication(Stage mainStage) {
 		printStartUpInfo();
@@ -90,26 +89,22 @@ public class BootController extends AbstractController {
 
 	private void loadModules() {
 		LOGGER.info("--------------------------------------------");
-		LOGGER.info("Loading modules");
+		LOGGER.info("Enabling modules");
 
-		if (enableLauncherModel) {
-			LOGGER.debug("Enable Machine Configuration modul..");
-			launcherModul = new LauncherController();
+		if (isLauncherModulEnabled) {
+			LOGGER.debug("Machine-modul is enabled");
 		}
 
-		if (enableBackupModel) {
-			LOGGER.debug("Enable Backup modul");
-			backupModul = new BackupController();
+		if (isBackupModulEnabled) {
+			LOGGER.debug("Backup-modul is enabled");
 		}
 
-		if (enableDesignModel) {
-			LOGGER.debug("Enable Design modul");
-			designModul = new DesignController();
+		if (isDesignModulEnabled) {
+			LOGGER.debug("Design-modul is enabled");
 		}
 
-		if (enableSessionModel) {
-			LOGGER.debug("Enable Session Administration modul");
-			sessionModul = new SessionController();
+		if (isSessionModulEnabled) {
+			LOGGER.debug("Session-modul is enabled");
 		}
 	}
 
@@ -118,6 +113,6 @@ public class BootController extends AbstractController {
 		LOGGER.info("--------------------------------------------");
 		LOGGER.info("Loading view..");
 
-		view = new ApplicationView(mainStage, this);
+		new ApplicationView(mainStage, this);
 	}
 }
