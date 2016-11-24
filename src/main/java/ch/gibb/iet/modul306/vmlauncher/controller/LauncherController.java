@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import ch.gibb.iet.modul306.vmlauncher.app.app;
 import ch.gibb.iet.modul306.vmlauncher.model.objects.XMLMachine;
+import ch.gibb.iet.modul306.vmlauncher.view.MachineView;
 import javafx.stage.Stage;
 
 @Component
@@ -28,7 +29,7 @@ public class LauncherController extends AbstractController {
 	@Value("${gibbix.machines.path.default}")
 	private static final String WORK_DIRECTORY = "";
 
-	public XMLMachine[] getMachines() {
+	public XMLMachine[] getAllMachinesInWorkDirectory() {
 		File workDir = new File(GIBBIX_PATH + WORK_DIRECTORY);
 		if (!workDir.exists() || !workDir.isDirectory()) {
 			throw new IllegalArgumentException("Work directory at " + workDir + " does not exist!");
@@ -44,8 +45,7 @@ public class LauncherController extends AbstractController {
 
 		for (File subFile : currentDir.listFiles()) {
 			if (subFile.isFile() && subFile.getName().contains(".vmx")) {
-				LOGGER.debug("Got machine at " + subFile.getAbsolutePath()
-				);
+				LOGGER.debug("Got machine at " + subFile.getAbsolutePath());
 
 				XMLMachine newMachine = new XMLMachine();
 				newMachine.name = subFile.getName().substring(0, subFile.getName().lastIndexOf("."));
@@ -160,7 +160,7 @@ public class LauncherController extends AbstractController {
 
 	@Override
 	public void loadView(Stage mainStage) {
-		// TODO Auto-generated method stub
-
+		MachineView view = new MachineView(mainStage, this);
+		view.addMachinesToView(getAllMachinesInWorkDirectory());
 	}
 }

@@ -17,7 +17,7 @@ public class BootController extends AbstractController {
 	@Value("${application.modules.launcher}")
 	private boolean isLauncherModulEnabled;
 	@Autowired
-	private static LauncherController launcherModul;
+	private LauncherController launcherModul;
 
 	public LauncherController getLauncherModul() {
 		if (isLauncherModulEnabled && launcherModul != null) {
@@ -29,7 +29,7 @@ public class BootController extends AbstractController {
 	@Value("${application.modules.backup}")
 	private boolean isBackupModulEnabled;
 	@Autowired
-	private static BackupController backupModul;
+	private BackupController backupModul;
 
 	public BackupController getBackupModul() {
 		if (isBackupModulEnabled && backupModul != null) {
@@ -41,7 +41,7 @@ public class BootController extends AbstractController {
 	@Value("${application.modules.design}")
 	private boolean isDesignModulEnabled;
 	@Autowired
-	private static DesignController designModul;
+	private DesignController designModul;
 
 	public DesignController getDesignModul() {
 		if (isDesignModulEnabled && designModul != null) {
@@ -53,7 +53,7 @@ public class BootController extends AbstractController {
 	@Value("${application.modules.session}")
 	private boolean isSessionModulEnabled;
 	@Autowired
-	private static SessionController sessionModul;
+	private SessionController sessionModul;
 
 	public SessionController getSessionModul() {
 		if (isSessionModulEnabled && sessionModul != null) {
