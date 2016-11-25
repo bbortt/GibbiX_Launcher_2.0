@@ -10,6 +10,8 @@ import ch.gibb.iet.modul306.vmlauncher.config.ApplicationData;
 import ch.gibb.iet.modul306.vmlauncher.view.ApplicationView;
 import javafx.stage.Stage;
 
+// Do not extend AbstractController.class
+// This would end in an endless loop of autowiring itself
 @Component
 public class BootController extends AbstractController {
 	private static final Logger LOGGER = Logger.getLogger(BootController.class);
@@ -18,6 +20,12 @@ public class BootController extends AbstractController {
 	private boolean isLauncherModulEnabled;
 	@Autowired
 	private LauncherController launcherModul;
+
+	protected BootController bootController;
+
+	public BootController getBootController() {
+		return this;
+	}
 
 	public LauncherController getLauncherModul() {
 		if (isLauncherModulEnabled && launcherModul != null) {
@@ -108,7 +116,7 @@ public class BootController extends AbstractController {
 		}
 	}
 
-	@Override
+	// @Override from AbstractController.class
 	public void loadView(Stage mainStage) {
 		LOGGER.info("--------------------------------------------");
 		LOGGER.info("Loading view..");

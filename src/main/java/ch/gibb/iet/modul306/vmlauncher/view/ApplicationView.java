@@ -22,13 +22,19 @@ public class ApplicationView extends AbstractView<BootController> {
 		this.webView = new WebView();
 
 		mainStage.setTitle(DISPLAY_NAME);
-		mainStage.setScene(new Scene(super.loadPage("index.html")));
 
+		if (mainStage.getScene() != null) {
+			mainStage.setScene(new Scene(super.loadPage("index.html"), mainStage.getScene().getWidth(),
+					mainStage.getScene().getHeight()));
+		} else {
+			mainStage.setScene(new Scene(super.loadPage("index.html")));
+		}
+		
 		mainStage.show();
 	}
 
 	@Override
-	protected void bindButtonListener() throws InterruptedException {
+	protected void viewLoadedCallback() throws InterruptedException {
 		bindClickEventToClass("hosts_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {

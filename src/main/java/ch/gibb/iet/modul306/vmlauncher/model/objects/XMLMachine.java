@@ -4,6 +4,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
 public class XMLMachine {
+	@XmlAttribute(name = "id", required = false)
+	public int id;
+
 	@XmlAttribute(name = "Name", required = true)
 	public String name;
 
@@ -13,6 +16,6 @@ public class XMLMachine {
 	@XmlElement(name = "Config_file", required = true)
 	public String file;
 
-	@XmlElement(name = "Is_default", required = true)
+	@XmlElement(name = "Is_default", required = false)
 	public boolean isDefault;
 }

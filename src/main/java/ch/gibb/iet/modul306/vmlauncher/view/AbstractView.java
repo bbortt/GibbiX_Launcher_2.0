@@ -38,6 +38,12 @@ public abstract class AbstractView<C extends AbstractController> {
 
 		loadScene();
 
+		waitForGUIAndBindButtons();
+
+		LOGGER.info(this.getClass().getSimpleName() + " loaded at " + app.getCurrentSystemTime());
+	}
+
+	private void waitForGUIAndBindButtons() {
 		// LoadWorker calls listener if page is fully loaded
 		// Bind buttons to fully loaded page --> NullPointerException otherwise
 		// Removes itself after one use
@@ -51,16 +57,14 @@ public abstract class AbstractView<C extends AbstractController> {
 				}
 
 				try {
-					bindButtonListener();
+					viewLoadedCallback();
 				} catch (Exception e) {
-					LOGGER.error(e.getLocalizedMessage());
+					waitForGUIAndBindButtons();
 				}
 
 				webView.getEngine().getLoadWorker().stateProperty().removeListener(this);
 			}
 		});
-
-		LOGGER.info(this.getClass().getSimpleName() + " loaded at " + app.getCurrentSystemTime());
 	}
 
 	protected abstract void loadScene();
@@ -74,7 +78,7 @@ public abstract class AbstractView<C extends AbstractController> {
 		return webView;
 	}
 
-	protected abstract void bindButtonListener() throws Exception;
+	protected abstract void viewLoadedCallback() throws Exception;
 
 	protected void warnModulNotEnabled(String modulName) {
 		Alert warning = new Alert(AlertType.WARNING);
@@ -91,7 +95,7 @@ public abstract class AbstractView<C extends AbstractController> {
 			NamedNodeMap attributesList = classElements.item(i).getAttributes();
 			for (int j = 0; j < attributesList.getLength(); j++) {
 				if (attributesList.item(j).getNodeName() != null && attributesList.item(j).getNodeName().equals("class")
-						&& attributesList.item(j).getNodeValue().equals(clazz)) {
+						&& attributesList.item(j).getNodeValue().contains(clazz)) {
 					((EventTarget) classElements.item(i)).addEventListener("click", listener, false);
 				}
 			}
@@ -99,6 +103,8 @@ public abstract class AbstractView<C extends AbstractController> {
 	}
 
 	protected void bindFooterLinks() {
+		LOGGER.debug("Binding footer links");
+
 		((EventTarget) webView.getEngine().getDocument().getElementById("project_github_link"))
 				.addEventListener("click", new EventListener() {
 					@Override
