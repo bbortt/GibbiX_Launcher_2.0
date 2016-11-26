@@ -152,4 +152,21 @@ public abstract class AbstractView<C extends AbstractController> {
 					}
 				}, false);
 	}
+
+	protected void addHTMLToElementWithId(String id, String html) {
+		StringBuilder scriptBuilder = new StringBuilder();
+
+		// JQery opening tag
+		scriptBuilder.append("$( \"#" + id + "\" ).append( \"");
+
+		// Content to append
+		scriptBuilder.append(html);
+
+		// JQuery closing tag
+		scriptBuilder.append("\" )");
+
+		LOGGER.debug("Appending content to element " + id + ": " + html);
+
+		webView.getEngine().executeScript(scriptBuilder.toString());
+	}
 }

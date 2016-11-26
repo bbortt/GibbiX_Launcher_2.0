@@ -1,5 +1,7 @@
 package ch.gibb.iet.modul306.vmlauncher.model;
 
+import java.io.File;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -18,13 +20,13 @@ public class BackupModel extends AbstractModel<BackupController> {
 		super(controller);
 	}
 
-	public void backupMachine(XMLMachine machine, String backupDestination, String password) throws ZipException {
+	public void backupMachine(XMLMachine machine, File backupDestination, String password) throws ZipException {
 		LOGGER.info("Creating backup for " + machine.name);
 
 		if (password == null) {
-			compressFolder(machine.path, backupDestination + "\\" + machine.name + SUFFIX, null);
+			compressFolder(machine.path, backupDestination.getAbsolutePath() + "\\" + machine.name + SUFFIX, null);
 		} else {
-			compressFolder(machine.path, backupDestination + "\\" + machine.name + SUFFIX, null);
+			compressFolder(machine.path, backupDestination.getAbsolutePath() + "\\" + machine.name + SUFFIX, password);
 		}
 	}
 

@@ -1,7 +1,5 @@
 package ch.gibb.iet.modul306.vmlauncher.view;
 
-import java.awt.Desktop;
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -14,14 +12,16 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.xml.sax.SAXException;
 
-import ch.gibb.iet.modul306.vmlauncher.controller.LauncherController;
+import ch.gibb.iet.modul306.vmlauncher.controller.BackupController;
+import ch.gibb.iet.modul306.vmlauncher.model.BackupModel;
 import ch.gibb.iet.modul306.vmlauncher.model.objects.XMLMachine;
 import javafx.scene.Scene;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import net.lingala.zip4j.exception.ZipException;
 
-public class MachineView extends AbstractView<LauncherController> {
-	private static final Logger LOGGER = LogManager.getLogger(MachineView.class);
+public class BackupView extends AbstractView<BackupController> {
+	private static final Logger LOGGER = LogManager.getLogger(BackupModel.class);
 
 	private XMLMachine[] givenMachines;
 
@@ -44,7 +44,7 @@ public class MachineView extends AbstractView<LauncherController> {
 		return "root_content_element";
 	}
 
-	public MachineView(Stage mainStage, LauncherController controller) {
+	public BackupView(Stage mainStage, BackupController controller) {
 		super(mainStage, controller);
 	}
 
@@ -55,17 +55,18 @@ public class MachineView extends AbstractView<LauncherController> {
 		mainStage.setTitle(DISPLAY_NAME);
 
 		if (mainStage.getScene() != null) {
-			mainStage.setScene(new Scene(super.loadPage("machine_view.html"), mainStage.getScene().getWidth(),
+			mainStage.setScene(new Scene(super.loadPage("backup_view.html"), mainStage.getScene().getWidth(),
 					mainStage.getScene().getHeight()));
 		} else {
-			mainStage.setScene(new Scene(super.loadPage("machine_view.html")));
+			mainStage.setScene(new Scene(super.loadPage("backup_view.html")));
 		}
 
 		mainStage.show();
 	}
 
 	@Override
-	protected void viewLoadedCallback() throws Exception {
+	protected void viewLoadedCallback()
+			throws InterruptedException, SAXException, IOException, ParserConfigurationException {
 		bindClickEventToClass("home_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
@@ -87,7 +88,7 @@ public class MachineView extends AbstractView<LauncherController> {
 			addMachinesToView(givenMachines);
 		}
 
-		super.bindFooterLinks();
+		bindFooterLinks();
 	}
 
 	private void addMachinesToView(XMLMachine[] machines)
@@ -103,19 +104,20 @@ public class MachineView extends AbstractView<LauncherController> {
 	private void addClickListener(XMLMachine machine) {
 		LOGGER.debug("Adding click listener to " + machine.name);
 
-		((EventTarget) webView.getEngine().getDocument().getElementById(machine.id + "_" + machine.name))
+		((EventTarget) webView.getEngine().getDocument().getElementById(machine.id + "_" + machine.name + "_export"))
 				.addEventListener("click", new EventListener() {
 					@Override
 					public void handleEvent(Event evt) {
-						String fullPath = machine.path + "\\" + machine.file;
-						LOGGER.info("Launching machine located at " + fullPath);
+						LOGGER.info("Starting backup for " + machine.name);
 						try {
-							Desktop.getDesktop().open(new File(fullPath));
-						} catch (IOException e) {
+							controller.backupMachine(machine, mainStage);
+						} catch (ZipException e) {
 							LOGGER.error(e.getLocalizedMessage());
 						}
 					}
 				}, false);
+
+		// TODO: Add import link
 	}
 
 	private String createMachineHTMLElement(XMLMachine machine) {
@@ -127,17 +129,20 @@ public class MachineView extends AbstractView<LauncherController> {
 		htmlBuilder.append("<div class='col s12 m4'>");
 		// <div class="icon-block">
 		htmlBuilder.append("<div class='icon-block'>");
-		// <a id="[ID]" href="[DETAIL_VIEW]" class="black-text">
-		htmlBuilder.append("<a id='" + machine.id + "_" + machine.name + "' href='" + machine.path + "\\" + machine.file
+		// <a id="[ID]" href="[PATH]" class="black-text">
+		htmlBuilder.append("<a id='" + machine.id + "_" + machine.name + "_export' href='" + machine.path
 				+ "' class='black-text'>");
 		// <h2 class="center light-blue-text">
 		htmlBuilder.append("<h2 class='center light-blue-text'>");
-		// <img alt="Launch machine" src="images/ic_launch_black_24dp_2x.png" />
-		htmlBuilder.append("<img alt='Launch machine' src='images/ic_launch_black_24dp_2x.png' />");
+		// <img alt="Launch machine" src="images/ic_backup_black_24dp_2x.png" />
+		htmlBuilder.append("<img alt='Backup machine' src='images/ic_backup_black_24dp_2x.png' />");
 		// </h2>
 		htmlBuilder.append("</h2>");
 		// </a>
 		htmlBuilder.append("</a>");
+
+		// TODO: Add import image and link
+
 		// <h5 class="center">[NAME]</h5>
 		htmlBuilder.append("<h5 class='center'>" + machine.name + "</h5>");
 
