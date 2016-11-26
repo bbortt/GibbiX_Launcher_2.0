@@ -104,6 +104,7 @@ public class BackupView extends AbstractView<BackupController> {
 	private void addClickListener(XMLMachine machine) {
 		LOGGER.debug("Adding click listener to " + machine.name);
 
+		// Export
 		((EventTarget) webView.getEngine().getDocument().getElementById(machine.id + "_" + machine.name + "_export"))
 				.addEventListener("click", new EventListener() {
 					@Override
@@ -117,7 +118,19 @@ public class BackupView extends AbstractView<BackupController> {
 					}
 				}, false);
 
-		// TODO: Add import link
+		// Import
+		((EventTarget) webView.getEngine().getDocument().getElementById(machine.id + "_" + machine.name + "_import"))
+				.addEventListener("click", new EventListener() {
+					@Override
+					public void handleEvent(Event evt) {
+						LOGGER.info("Restoring " + machine.name);
+						try {
+							controller.restoreMachine(machine, mainStage);
+						} catch (ZipException e) {
+							LOGGER.error(e.getLocalizedMessage());
+						}
+					}
+				}, false);
 	}
 
 	private String createMachineHTMLElement(XMLMachine machine) {
@@ -129,26 +142,32 @@ public class BackupView extends AbstractView<BackupController> {
 		htmlBuilder.append("<div class='col s12 m4'>");
 		// <div class="icon-block">
 		htmlBuilder.append("<div class='icon-block'>");
+
+		// Export
+		// <h2 class="center light-blue-text">
+		htmlBuilder.append("<h2 class='center light-blue-text'>");
 		// <a id="[ID]" href="[PATH]" class="black-text">
 		htmlBuilder.append("<a id='" + machine.id + "_" + machine.name + "_export' href='" + machine.path
 				+ "' class='black-text'>");
-		// <h2 class="center light-blue-text">
-		htmlBuilder.append("<h2 class='center light-blue-text'>");
-		// <img alt="Launch machine" src="images/ic_backup_black_24dp_2x.png" />
+		// <img alt="Backup machine" src="images/ic_backup_black_24dp_2x.png" />
 		htmlBuilder.append("<img alt='Backup machine' src='images/ic_backup_black_24dp_2x.png' />");
-		// </h2>
-		htmlBuilder.append("</h2>");
 		// </a>
 		htmlBuilder.append("</a>");
 
-		// TODO: Add import image and link
+		// Import
+		// <a id="[ID]" href="[PATH]" class="black-text">
+		htmlBuilder.append("<a id='" + machine.id + "_" + machine.name + "_import' href='" + machine.path
+				+ "' class='black-text'>");
+		// <img alt="Restore machine"
+		// src="images/ic_cloud_download_black_24dp_2x.png" />
+		htmlBuilder.append("<img alt='Restore machine' src='images/ic_cloud_download_black_24dp_2x.png' />");
+		// </a>
+		htmlBuilder.append("</a>");
+		// </h2>
+		htmlBuilder.append("</h2>");
 
 		// <h5 class="center">[NAME]</h5>
 		htmlBuilder.append("<h5 class='center'>" + machine.name + "</h5>");
-
-		// <p class="light">[SOME TEXT]</p>
-		// TODO: Might add the path or some information here!
-		// TODO: To get information refactor getData() from zimmermannj
 
 		// </div>
 		htmlBuilder.append("</div>");

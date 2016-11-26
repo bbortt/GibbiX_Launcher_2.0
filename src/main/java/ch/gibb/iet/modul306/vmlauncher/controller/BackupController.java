@@ -1,8 +1,10 @@
 package ch.gibb.iet.modul306.vmlauncher.controller;
 
-import java.awt.Window;
 import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -45,5 +47,27 @@ public class BackupController extends AbstractController {
 		File destination = directoryChooser.showDialog(mainStage);
 
 		new BackupModel(this).backupMachine(machine, destination, null);
+	}
+
+	public void restoreMachine(XMLMachine machine, Stage mainStage) throws ZipException {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setInitialDirectory(new File(getGibbiXRootPath()));
+		fileChooser.setTitle("Choose zip to restore");
+
+		File source = fileChooser.showOpenDialog(mainStage);
+
+		Arrays.asList(new File(machine.path).listFiles()).forEach(subFile -> {
+			if (subFile.isDirectory()) {
+				try {
+					FileUtils.deleteDirectory(subFile);
+				} catch (IOException e) {
+					LOGGER.fatal(e.getLocalizedMessage());
+				}
+			} else {
+				subFile.delete();
+			}
+		});
+
+		new BackupModel(this).uncompressFile(source.getAbsolutePath(), machine.path, null);
 	}
 }
