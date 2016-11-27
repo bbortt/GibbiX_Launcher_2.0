@@ -1,7 +1,5 @@
 package ch.gibb.iet.modul306.vmlauncher.view;
 
-import java.awt.Desktop;
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -66,6 +64,12 @@ public class MachineView extends AbstractView<LauncherController> {
 
 	@Override
 	protected void viewLoadedCallback() throws Exception {
+		if (machinesNotFound) {
+			showMachinesNotFount();
+		} else {
+			addMachinesToView();
+		}
+
 		bindClickEventToClass("home_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
@@ -81,39 +85,26 @@ public class MachineView extends AbstractView<LauncherController> {
 			}
 		});
 
-		if (machinesNotFound) {
-			showMachinesNotFount();
-		} else {
-			addMachinesToView(givenMachines);
-		}
-
 		super.bindFooterLinks();
 	}
 
-	private void addMachinesToView(XMLMachine[] machines)
-			throws SAXException, IOException, ParserConfigurationException {
-		LOGGER.info("Adding " + machines.length + " machines to view");
+	private void addMachinesToView() throws SAXException, IOException, ParserConfigurationException {
+		LOGGER.info("Adding " + givenMachines.length + " machines to view");
 
-		Arrays.asList(machines).forEach(machine -> {
+		Arrays.asList(givenMachines).forEach(machine -> {
 			addHTMLToElementWithId(getContentElementId(), createMachineHTMLElement(machine));
-			addClickListener(machine);
+			addMachineLaunchClickListener(machine);
 		});
 	}
 
-	private void addClickListener(XMLMachine machine) {
+	private void addMachineLaunchClickListener(XMLMachine machine) {
 		LOGGER.debug("Adding click listener to " + machine.name);
 
 		((EventTarget) webView.getEngine().getDocument().getElementById(machine.id + "_" + machine.name))
 				.addEventListener("click", new EventListener() {
 					@Override
 					public void handleEvent(Event evt) {
-						String fullPath = machine.path + "\\" + machine.file;
-						LOGGER.info("Launching machine located at " + fullPath);
-						try {
-							Desktop.getDesktop().open(new File(fullPath));
-						} catch (IOException e) {
-							LOGGER.error(e.getLocalizedMessage());
-						}
+						machine.launch();
 					}
 				}, false);
 	}

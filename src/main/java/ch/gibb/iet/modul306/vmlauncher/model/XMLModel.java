@@ -12,11 +12,21 @@ public class XMLModel<C extends AbstractController> extends AbstractModel<C> {
 	protected Marshaller xmlWriter;
 	protected Unmarshaller xmlReader;
 
-	public XMLModel(C controller, Class<?> clazz) throws JAXBException {
+	public XMLModel() {
+		super();
+	}
+
+	public XMLModel(C controller) {
 		super(controller);
+	}
+
+	public XMLModel<?> initalize(C controller, Class<?> clazz) throws JAXBException {
+		this.controller = controller;
 
 		context = JAXBContext.newInstance(clazz);
 		xmlWriter = context.createMarshaller();
 		xmlReader = context.createUnmarshaller();
+
+		return this;
 	}
 }

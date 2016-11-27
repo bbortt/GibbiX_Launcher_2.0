@@ -9,11 +9,13 @@ import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import ch.gibb.iet.modul306.vmlauncher.controller.SessionController;
 import ch.gibb.iet.modul306.vmlauncher.model.objects.XMLSessions;
 import ch.gibb.iet.modul306.vmlauncher.model.objects.XMLSessions.Session;
 
+@Component
 public class SessionModel extends XMLModel<SessionController> {
 	private static final Logger LOGGER = LogManager.getLogger(SessionModel.class);
 
@@ -40,15 +42,24 @@ public class SessionModel extends XMLModel<SessionController> {
 		return sessions.toArray(new Session[sessions.size()]);
 	}
 
-	public SessionModel(SessionController controller, Class<?> clazz) throws JAXBException, FileNotFoundException {
-		super(controller, clazz);
+	public SessionModel() {
+		super();
+	}
+
+	public SessionModel(SessionController controller) throws FileNotFoundException, JAXBException {
+		super(controller);
 		readAllLocalSessions(new File("session_config.xml"));
 	}
 
-	public SessionModel(SessionController controller, Class<?> clazz, File sessionFile)
-			throws FileNotFoundException, JAXBException {
-		super(controller, clazz);
+	public SessionModel initalize(SessionController controller) throws JAXBException, FileNotFoundException {
+		super.initalize(controller, XMLSessions.class);
+		readAllLocalSessions(new File("session_config.xml"));
+		return this;
+	}
+
+	public SessionModel readSessionsFromFile(File sessionFile) throws FileNotFoundException, JAXBException {
 		readAllLocalSessions(sessionFile);
+		return this;
 	}
 
 	private void readAllLocalSessions(File sessionFile) throws JAXBException, FileNotFoundException {

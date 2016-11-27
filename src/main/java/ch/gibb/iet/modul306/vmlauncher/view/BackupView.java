@@ -24,6 +24,7 @@ public class BackupView extends AbstractView<BackupController> {
 	private static final Logger LOGGER = LogManager.getLogger(BackupModel.class);
 
 	private XMLMachine[] givenMachines;
+	private boolean machinesNotFound = false;
 
 	public void setXMLMachines(XMLMachine[] machines) {
 		if (machines == null) {
@@ -33,8 +34,6 @@ public class BackupView extends AbstractView<BackupController> {
 
 		this.givenMachines = machines;
 	}
-
-	private boolean machinesNotFound = false;
 
 	public void setMachinesNotFound() {
 		machinesNotFound = true;
@@ -67,6 +66,12 @@ public class BackupView extends AbstractView<BackupController> {
 	@Override
 	protected void viewLoadedCallback()
 			throws InterruptedException, SAXException, IOException, ParserConfigurationException {
+		if (machinesNotFound) {
+			showMachinesNotFount();
+		} else {
+			addMachinesToView(givenMachines);
+		}
+
 		bindClickEventToClass("home_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
@@ -82,12 +87,6 @@ public class BackupView extends AbstractView<BackupController> {
 			}
 		});
 
-		if (machinesNotFound) {
-			showMachinesNotFount();
-		} else {
-			addMachinesToView(givenMachines);
-		}
-
 		bindFooterLinks();
 	}
 
@@ -97,11 +96,11 @@ public class BackupView extends AbstractView<BackupController> {
 
 		Arrays.asList(machines).forEach(machine -> {
 			addHTMLToElementWithId(getContentElementId(), createMachineHTMLElement(machine));
-			addClickListener(machine);
+			addMachineClickListener(machine);
 		});
 	}
 
-	private void addClickListener(XMLMachine machine) {
+	private void addMachineClickListener(XMLMachine machine) {
 		LOGGER.debug("Adding click listener to " + machine.name);
 
 		// Export
@@ -212,7 +211,7 @@ public class BackupView extends AbstractView<BackupController> {
 		htmlBuilder.append("</div>");
 		// </div>
 		htmlBuilder.append("</div>");
-
+		
 		addHTMLToElementWithId(getContentElementId(), htmlBuilder.toString());
 
 		// <div class="col s12 m4"><div class="icon-block"><!-- Right filler
