@@ -124,6 +124,11 @@ public abstract class AbstractView<C extends AbstractController> {
 								Desktop.getDesktop().browse(new URI("https://github.com/bbortt/GibbiX_Launcher_2.0"));
 							} catch (IOException | URISyntaxException e) {
 								LOGGER.error(e.getLocalizedMessage());
+
+								Alert error = new Alert(AlertType.ERROR);
+								error.setTitle(e.getClass().toString());
+								error.setContentText(e.getLocalizedMessage());
+								error.show();
 							}
 						}
 					}
@@ -147,6 +152,11 @@ public abstract class AbstractView<C extends AbstractController> {
 								Desktop.getDesktop().browse(new URI("http://materializecss.com"));
 							} catch (IOException | URISyntaxException e) {
 								LOGGER.error(e.getLocalizedMessage());
+
+								Alert error = new Alert(AlertType.ERROR);
+								error.setTitle(e.getClass().toString());
+								error.setContentText(e.getLocalizedMessage());
+								error.show();
 							}
 						}
 					}

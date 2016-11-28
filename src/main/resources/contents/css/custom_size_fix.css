@@ -1,9 +1,8 @@
 .section {
 	height: 38vh;
-	overflow-x: hidden;
-	overflow-y: scroll;
+	overflow: hidden;
 }
 
 .page-footer {
-	overflow: hidden,
+	overflow: hidden;
 }

@@ -101,14 +101,12 @@ public class SessionView extends AbstractView<SessionController> {
 			}
 		});
 
-		final SessionView superView = this;
 		((EventTarget) webView.getEngine().getDocument().getElementById("create_session_button"))
 				.addEventListener("click", new EventListener() {
 					@Override
 					public void handleEvent(Event evt) {
 						CreateSessionsView view = new CreateSessionsView(mainStage, controller);
 						view.setXMLMachines(givenMachines);
-						view.setSuper(superView);
 					}
 				}, false);
 
@@ -213,7 +211,7 @@ public class SessionView extends AbstractView<SessionController> {
 										.get().launch();
 							} catch (NoSuchElementException e) {
 								Alert error = new Alert(AlertType.ERROR);
-								error.setTitle("Machine not found.");
+								error.setTitle(e.getClass().toString());
 								error.setContentText("Machine " + machine.name + " not found. Skipping..");
 								error.show();
 							}

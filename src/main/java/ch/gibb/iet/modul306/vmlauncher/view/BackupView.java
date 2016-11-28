@@ -16,6 +16,8 @@ import ch.gibb.iet.modul306.vmlauncher.controller.BackupController;
 import ch.gibb.iet.modul306.vmlauncher.model.BackupModel;
 import ch.gibb.iet.modul306.vmlauncher.model.objects.XMLMachine;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import net.lingala.zip4j.exception.ZipException;
@@ -113,6 +115,11 @@ public class BackupView extends AbstractView<BackupController> {
 							controller.backupMachine(machine, mainStage);
 						} catch (ZipException e) {
 							LOGGER.error(e.getLocalizedMessage());
+
+							Alert error = new Alert(AlertType.ERROR);
+							error.setTitle(e.getClass().toString());
+							error.setContentText(e.getLocalizedMessage());
+							error.show();
 						}
 					}
 				}, false);
@@ -127,6 +134,11 @@ public class BackupView extends AbstractView<BackupController> {
 							controller.restoreMachine(machine, mainStage);
 						} catch (ZipException e) {
 							LOGGER.error(e.getLocalizedMessage());
+
+							Alert error = new Alert(AlertType.ERROR);
+							error.setTitle(e.getClass().toString());
+							error.setContentText(e.getLocalizedMessage());
+							error.show();
 						}
 					}
 				}, false);
@@ -211,7 +223,7 @@ public class BackupView extends AbstractView<BackupController> {
 		htmlBuilder.append("</div>");
 		// </div>
 		htmlBuilder.append("</div>");
-		
+
 		addHTMLToElementWithId(getContentElementId(), htmlBuilder.toString());
 
 		// <div class="col s12 m4"><div class="icon-block"><!-- Right filler

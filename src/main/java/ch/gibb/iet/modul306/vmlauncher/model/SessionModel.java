@@ -3,6 +3,7 @@ package ch.gibb.iet.modul306.vmlauncher.model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
@@ -27,15 +28,27 @@ public class SessionModel extends XMLModel<SessionController> {
 	}
 
 	public void addSession(Session session) {
+		if (sessions == null) {
+			sessions = new ArrayList<>();
+		}
+
 		sessions.add(session);
 	}
 
 	public void removeSession(Session session) {
 		sessions.remove(session);
+
+		if (sessions.size() == 0) {
+			sessions = null;
+		}
 	}
 
 	public void removeSessionByIndex(int index) {
 		sessions.remove(index);
+
+		if (sessions.size() == 0) {
+			sessions = null;
+		}
 	}
 
 	public Session[] getAllSessions() {
@@ -46,18 +59,22 @@ public class SessionModel extends XMLModel<SessionController> {
 		super();
 	}
 
-	public SessionModel(SessionController controller) throws FileNotFoundException, JAXBException {
-		super(controller);
-		readAllLocalSessions(new File("session_config.xml"));
-	}
+	// public SessionModel(SessionController controller) throws
+	// FileNotFoundException, JAXBException {
+	// super(controller);
+	// localFile=new File("session_config.xml");
+	// readAllLocalSessions(localFile);
+	// }
 
 	public SessionModel initalize(SessionController controller) throws JAXBException, FileNotFoundException {
 		super.initalize(controller, XMLSessions.class);
-		readAllLocalSessions(new File("session_config.xml"));
+		localFile = new File("session_config.xml");
+		readAllLocalSessions(localFile);
 		return this;
 	}
 
 	public SessionModel readSessionsFromFile(File sessionFile) throws FileNotFoundException, JAXBException {
+		this.localFile = sessionFile;
 		readAllLocalSessions(sessionFile);
 		return this;
 	}
@@ -77,6 +94,10 @@ public class SessionModel extends XMLModel<SessionController> {
 	}
 
 	public void saveSessionChanges() throws JAXBException, IOException {
+		if (sessions == null || sessions.size() == 0) {
+			throw new IllegalArgumentException("No sessions exist to save!");
+		}
+
 		if (localFile == null) {
 			localFile = new File("session_config.xml");
 		}
@@ -86,7 +107,7 @@ public class SessionModel extends XMLModel<SessionController> {
 			localFile.createNewFile();
 		}
 
-		LOGGER.info("Saving session configuration.");
+		LOGGER.info("Saving session configuration to " + localFile.getAbsolutePath());
 		xmlWriter.marshal(new XMLSessions(sessions), localFile);
 	}
 }

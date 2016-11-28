@@ -29,6 +29,10 @@ public class XMLMachine {
 	public boolean isDefault;
 
 	public void launch() {
+		// TODO: Search local path of VMLauncher
+		// Might not be default program
+		// Is this relevant?
+
 		String fullPath = path + "\\" + file;
 		LOGGER.info("Launching machine located at " + fullPath);
 		try {
