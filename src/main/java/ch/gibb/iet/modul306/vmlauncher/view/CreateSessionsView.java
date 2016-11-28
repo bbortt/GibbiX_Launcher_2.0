@@ -11,6 +11,8 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
+import org.w3c.dom.html.HTMLInputElement;
+import org.w3c.dom.html.HTMLSelectElement;
 
 import ch.gibb.iet.modul306.vmlauncher.controller.SessionController;
 import ch.gibb.iet.modul306.vmlauncher.model.objects.XMLMachine;
@@ -23,6 +25,8 @@ import javafx.stage.Stage;
 
 public class CreateSessionsView extends AbstractView<SessionController> {
 	private static final Logger LOGGER = LogManager.getLogger(CreateSessionsView.class);
+
+	private int selectIdCounter = 1;
 
 	private XMLMachine[] givenMachines;
 
@@ -52,7 +56,7 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 
 	@Override
 	protected void viewLoadedCallback() throws Exception {
-		addNewMachineSelect();
+		addFirstMachineSelect();
 
 		bindClickEventToClass("home_menu_link", new EventListener() {
 			@Override
@@ -110,22 +114,29 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 		super.bindFooterLinks();
 	}
 
+	private void addFirstMachineSelect() {
+		addNewMachineSelect(selectIdCounter);
+		addMachineSelectedListener();
+	}
+
 	// TODO: The select ist not displayd??
-	private void addNewMachineSelect() {
+	private void addNewMachineSelect(int id) {
 		StringBuilder builder = new StringBuilder();
 
 		// <div class="input-field col s12">
 		builder.append("<div class='input-field col s12'>");
 		// <select class="machine_select_element" id="session_machines_select">
-		builder.append("<select class='machine_select_element' id='session_machines_select'>");
+		builder.append("<select class='machine_select_element_" + id + "' id='session_machines_select'>");
 		// <option value="" disabled selected>Choose virtual machines</option>
-		builder.append("<option value='default' disabled selected>Choose virtual machines</option>");
+		builder.append("<option value='default' disabled selected>Add machine</option>");
 		// <option value="3">Option 3</option>
 		Arrays.asList(givenMachines).forEach(machine -> {
 			builder.append(createMachineOptionHTMLElement(machine));
 		});
 		// </select>
 		builder.append("</select>");
+		// <label>Materialize Select</label>
+		builder.append("<label>Add machine</label>");
 		// </div>
 		builder.append("</div>");
 
@@ -138,13 +149,56 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 		StringBuilder optionBuilder = new StringBuilder();
 
 		// <option value="3">Option 3</option>
-		optionBuilder.append("<option value='" + machine.id + "'>" + machine.name + "</option>");
+		optionBuilder.append(
+				"<option class='machine_option_element' value='" + machine.id + "'>" + machine.name + "</option>");
 
 		return optionBuilder.toString();
 	}
 
+	private void addMachineSelectedListener() {
+		bindClickEventToClass("machine_option_element", new EventListener() {
+			@Override
+			public void handleEvent(Event evt) {
+				// Might not further be usefull if input-cast success'
+				XMLMachine selectedMachine = Arrays.asList(givenMachines).stream()
+						.filter(machine -> evt.getTarget().toString().contains(String.valueOf(machine.id))).findFirst()
+						.get();
+
+				LOGGER.debug("Selected machine was " + selectedMachine.name);
+
+				webView.getEngine().getDocument().getElementById("machine_select_element_" + selectIdCounter)
+						.setAttribute("name", selectedMachine.name);
+
+				selectIdCounter++;
+				addNewMachineSelect(selectIdCounter);
+				addMachineSelectedListener();
+			}
+		});
+	}
+
 	private Session createNewSessionFromGUIInputs() {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO: Validate inputs!!
+
+		Session newSession = new Session();
+		newSession.id = controller.countExistingSessions() + 1;
+		newSession.name = ((HTMLInputElement) webView.getEngine().getDocument().getElementById("session_name_input"))
+				.getValue();
+
+		for (int i = 0; i < selectIdCounter; i++) {
+			final int finalI = i;
+			XMLMachine foundMachine = Arrays.asList(givenMachines).stream()
+					.filter(machine -> machine.name.equals(((HTMLSelectElement) webView.getEngine().getDocument()
+							.getElementById("machin_select_element_" + String.valueOf(finalI))).getSelectedIndex()))
+					.findFirst().get();
+
+			if (foundMachine != null) {
+				newSession.addVirtualMachine(foundMachine);
+			}
+		}
+
+		LOGGER.info("Creating new session " + newSession.name + " with " + newSession.getAllMachines().length
+				+ " machines");
+
+		return newSession;
 	}
 }

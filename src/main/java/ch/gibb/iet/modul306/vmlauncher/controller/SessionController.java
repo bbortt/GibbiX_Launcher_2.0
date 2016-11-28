@@ -42,6 +42,10 @@ public class SessionController extends AbstractController {
 		}
 	}
 
+	public int countExistingSessions() {
+		return sessionModel.getAllSessions().length;
+	}
+
 	public void createSession(Session session) throws JAXBException, IOException {
 		sessionModel.addSession(session);
 		sessionModel.saveSessionChanges();
