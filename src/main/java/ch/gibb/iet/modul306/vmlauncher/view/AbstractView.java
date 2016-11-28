@@ -52,7 +52,11 @@ public abstract class AbstractView<C extends AbstractController> {
 			public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue,
 					Worker.State newValue) {
 				if (newValue != Worker.State.SUCCEEDED) {
-					LOGGER.fatal("Could not load page to display. Exiting application!");
+					// LOGGER.warn("Could not load page to display. Retrying!");
+					// waitForGUIAndBindButtons();
+
+					// TODO: How to fix this??
+					LOGGER.fatal("Could not load page to display. Exiting..");
 					System.exit(1);
 				}
 
@@ -131,6 +135,8 @@ public abstract class AbstractView<C extends AbstractController> {
 								error.show();
 							}
 						}
+
+						evt.preventDefault();
 					}
 				}, false);
 
@@ -159,6 +165,8 @@ public abstract class AbstractView<C extends AbstractController> {
 								error.show();
 							}
 						}
+
+						evt.preventDefault();
 					}
 				}, false);
 	}

@@ -1,10 +1,10 @@
+
 package ch.gibb.iet.modul306.vmlauncher.view;
 
 import java.io.IOException;
 import java.util.Arrays;
 
 import javax.xml.bind.JAXBException;
-import javax.xml.ws.WebEndpoint;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -69,6 +69,18 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 			}
 		});
 
+		((EventTarget) webView.getEngine().getDocument().getElementById("cancel_session_button"))
+				.addEventListener("click", new EventListener() {
+					@Override
+					public void handleEvent(Event evt) {
+						LOGGER.info("Cancel creating new session, changing to default modul-view");
+
+						controller.loadView(mainStage);
+
+						evt.preventDefault();
+					}
+				}, false);
+
 		((EventTarget) webView.getEngine().getDocument().getElementById("create_session_button"))
 				.addEventListener("click", new EventListener() {
 					@Override
@@ -90,21 +102,24 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 							error.setContentText(e.getLocalizedMessage());
 							error.show();
 						}
+
+						evt.preventDefault();
 					}
 				}, false);
 
 		super.bindFooterLinks();
 	}
 
+	// TODO: The select ist not displayd??
 	private void addNewMachineSelect() {
 		StringBuilder builder = new StringBuilder();
 
-		// <div class="input-field col s12 row">
-		builder.append("<div class='input-field col s12 row'>");
+		// <div class="input-field col s12">
+		builder.append("<div class='input-field col s12'>");
 		// <select class="machine_select_element" id="session_machines_select">
 		builder.append("<select class='machine_select_element' id='session_machines_select'>");
 		// <option value="" disabled selected>Choose virtual machines</option>
-		builder.append("<option value='' disabled selected>Choose virtual machines</option>");
+		builder.append("<option value='default' disabled selected>Choose virtual machines</option>");
 		// <option value="3">Option 3</option>
 		Arrays.asList(givenMachines).forEach(machine -> {
 			builder.append(createMachineOptionHTMLElement(machine));

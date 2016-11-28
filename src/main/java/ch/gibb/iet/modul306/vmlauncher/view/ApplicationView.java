@@ -29,7 +29,7 @@ public class ApplicationView extends AbstractView<BootController> {
 		} else {
 			mainStage.setScene(new Scene(super.loadPage("index.html")));
 		}
-		
+
 		mainStage.show();
 	}
 
@@ -62,6 +62,8 @@ public class ApplicationView extends AbstractView<BootController> {
 
 						LOGGER.info("Changing to launcher-modul");
 						controller.getLauncherModul().loadView(mainStage);
+
+						evt.preventDefault();
 					}
 				}, false);
 
@@ -78,6 +80,8 @@ public class ApplicationView extends AbstractView<BootController> {
 
 						LOGGER.info("Changing to backup-modul");
 						controller.getBackupModul().loadView(mainStage);
+
+						evt.preventDefault();
 					}
 				}, false);
 
@@ -94,6 +98,8 @@ public class ApplicationView extends AbstractView<BootController> {
 
 						LOGGER.info("Changing to session-modul");
 						controller.getSessionModul().loadView(mainStage);
+
+						evt.preventDefault();
 					}
 				}, false);
 

@@ -107,6 +107,8 @@ public class SessionView extends AbstractView<SessionController> {
 					public void handleEvent(Event evt) {
 						CreateSessionsView view = new CreateSessionsView(mainStage, controller);
 						view.setXMLMachines(givenMachines);
+
+						evt.preventDefault();
 					}
 				}, false);
 
@@ -216,6 +218,8 @@ public class SessionView extends AbstractView<SessionController> {
 								error.show();
 							}
 						});
+
+						evt.preventDefault();
 					}
 				}, false);
 	}

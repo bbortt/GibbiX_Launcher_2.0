@@ -121,6 +121,8 @@ public class BackupView extends AbstractView<BackupController> {
 							error.setContentText(e.getLocalizedMessage());
 							error.show();
 						}
+
+						evt.preventDefault();
 					}
 				}, false);
 
@@ -140,6 +142,8 @@ public class BackupView extends AbstractView<BackupController> {
 							error.setContentText(e.getLocalizedMessage());
 							error.show();
 						}
+
+						evt.preventDefault();
 					}
 				}, false);
 	}

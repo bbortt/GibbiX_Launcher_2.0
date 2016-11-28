@@ -105,6 +105,8 @@ public class MachineView extends AbstractView<LauncherController> {
 					@Override
 					public void handleEvent(Event evt) {
 						machine.launch();
+
+						evt.preventDefault();
 					}
 				}, false);
 	}
