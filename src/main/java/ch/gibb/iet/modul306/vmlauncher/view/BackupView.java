@@ -166,7 +166,7 @@ public class BackupView extends AbstractView<BackupController> {
 		StringBuilder htmlBuilder = new StringBuilder();
 
 		// <div class="col s12 m4">
-		htmlBuilder.append("<div class='col s12 m4'>");
+		htmlBuilder.append("<div class='col s12 m3 l2'>");
 		// <div class="icon-block">
 		htmlBuilder.append("<div class='icon-block'>");
 

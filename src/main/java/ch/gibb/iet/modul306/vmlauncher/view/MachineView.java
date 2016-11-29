@@ -127,18 +127,18 @@ public class MachineView extends AbstractView<LauncherController> {
 		StringBuilder htmlBuilder = new StringBuilder();
 
 		// <div class="col s12 m4">
-		htmlBuilder.append("<div class='col s12 m4'>");
+		htmlBuilder.append("<div class='col s12 m3 l2 height-limit'>");
 		// <div class="icon-block">
 		htmlBuilder.append("<div class='icon-block'>");
 		// <a id="[ID]" href="[DETAIL_VIEW]" class="black-text">
 		htmlBuilder.append("<a id='" + machine.id + "_" + machine.name + "' href='" + machine.path + "\\" + machine.file
 				+ "' class='black-text'>");
 		// <h2 class="center light-blue-text">
-		htmlBuilder.append("<h2 class='center light-blue-text'>");
-		// <img alt="Launch machine" src="images/ic_launch_black_24dp_2x.png" />
-		htmlBuilder.append("<img alt='Launch machine' src='images/ic_launch_black_24dp_2x.png' />");
+		htmlBuilder.append("<div class='center vm-icon'>");
+		// <img alt="Launch machine" src="images/vm/[ICON]" />
+		htmlBuilder.append("<img alt='Launch machine' src='images/vm/"+machine.name+"-icon.png' class='vm-icon'/>");
 		// </h2>
-		htmlBuilder.append("</h2>");
+		htmlBuilder.append("</div>");
 		// </a>
 		htmlBuilder.append("</a>");
 		// <h5 class="center">[NAME]</h5>
