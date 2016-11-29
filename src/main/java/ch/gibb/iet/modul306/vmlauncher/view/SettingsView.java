@@ -221,7 +221,7 @@ public class SettingsView extends AbstractView<SettingsController> {
 			if (inputElement.getType().equals("checkbox")) {
 				LOGGER.debug("Handling checkbox element");
 
-				properties.put(entry.getKey(), Boolean.valueOf(inputElement.getValue()));
+				properties.put(entry.getKey(), inputElement.getChecked());
 			} else if (inputElement.getType().equals("text")) {
 				LOGGER.debug("Handling text element");
 

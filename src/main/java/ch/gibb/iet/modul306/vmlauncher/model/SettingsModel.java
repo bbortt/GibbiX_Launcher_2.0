@@ -46,14 +46,16 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 
 	@SuppressWarnings("resource")
 	public SettingsModel readRuntimeConfiguration() throws URISyntaxException, IOException {
-		properties = new HashMap<>();
-
 		localFile = new File(this.getClass().getClassLoader().getResource("application.properties").toURI());
 		BufferedReader reader = new BufferedReader(new FileReader(localFile));
 
 		String line;
 		while ((line = reader.readLine()) != null) {
 			if (line.contains("=") && !line.contains("#") && !line.equals("")) {
+				if (properties == null) {
+					properties = new HashMap<>();
+				}
+
 				LOGGER.debug(line);
 				String[] splittedValue = line.split("=");
 
