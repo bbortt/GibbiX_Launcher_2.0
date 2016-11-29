@@ -35,14 +35,14 @@ public class ApplicationView extends AbstractView<BootController> {
 
 	@Override
 	protected void viewLoadedCallback() throws InterruptedException {
-		bindClickEventToClass("hosts_menu_link", new EventListener() {
+		bindClickEventToLinkClass("hosts_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
 				LOGGER.warn("Hosts modul does not exist yet!");
 			}
 		});
 
-		bindClickEventToClass("settings_menu_link", new EventListener() {
+		bindClickEventToLinkClass("settings_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
 				if (controller.getSettingsModul() == null) {

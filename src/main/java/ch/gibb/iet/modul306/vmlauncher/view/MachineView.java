@@ -70,7 +70,7 @@ public class MachineView extends AbstractView<LauncherController> {
 			addMachinesToView();
 		}
 
-		bindClickEventToClass("home_menu_link", new EventListener() {
+		bindClickEventToLinkClass("home_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
 				LOGGER.info("Chaning to boot-modul");
@@ -78,7 +78,7 @@ public class MachineView extends AbstractView<LauncherController> {
 			}
 		});
 
-		bindClickEventToClass("settings_menu_link", new EventListener() {
+		bindClickEventToLinkClass("settings_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
 				if (controller.getBootController().getSettingsModul() == null) {
@@ -174,7 +174,6 @@ public class MachineView extends AbstractView<LauncherController> {
 		htmlBuilder.append("<a class='settings_menu_link black-text' href='settings_modul'>");
 		// <h2 class="center light-blue-text">
 		htmlBuilder.append("<h2 class='center light-blue-text'>");
-		// TODO: Download google-material "settings"-icon
 		// <img alt="Launch machine" src="images/ic_settings_black_24dp_2x.png"
 		// />
 		htmlBuilder.append("<img alt='Settings' src='images/ic_settings_black_24dp_2x.png' />");

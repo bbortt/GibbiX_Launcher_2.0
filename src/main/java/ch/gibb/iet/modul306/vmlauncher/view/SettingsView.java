@@ -84,7 +84,7 @@ public class SettingsView extends AbstractView<SettingsController> {
 					}
 				}, false);
 
-		bindClickEventToClass("home_menu_link", new EventListener() {
+		bindClickEventToLinkClass("home_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
 				LOGGER.info("Chaning to boot-modul");

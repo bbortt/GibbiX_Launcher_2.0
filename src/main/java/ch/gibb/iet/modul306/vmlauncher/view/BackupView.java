@@ -74,7 +74,7 @@ public class BackupView extends AbstractView<BackupController> {
 			addMachinesToView(givenMachines);
 		}
 
-		bindClickEventToClass("home_menu_link", new EventListener() {
+		bindClickEventToLinkClass("home_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
 				LOGGER.info("Chaning to boot-modul");
@@ -82,7 +82,7 @@ public class BackupView extends AbstractView<BackupController> {
 			}
 		});
 
-		bindClickEventToClass("settings_menu_link", new EventListener() {
+		bindClickEventToLinkClass("settings_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
 				if (controller.getBootController().getSettingsModul() == null) {

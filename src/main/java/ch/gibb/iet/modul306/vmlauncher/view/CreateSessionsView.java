@@ -1,10 +1,8 @@
 
 package ch.gibb.iet.modul306.vmlauncher.view;
 
-import java.io.IOException;
 import java.util.Arrays;
-
-import javax.xml.bind.JAXBException;
+import java.util.InputMismatchException;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -58,7 +56,7 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 	protected void viewLoadedCallback() throws Exception {
 		addFirstMachineSelect();
 
-		bindClickEventToClass("home_menu_link", new EventListener() {
+		bindClickEventToLinkClass("home_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
 				LOGGER.info("Chaning to boot-modul");
@@ -66,7 +64,7 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 			}
 		});
 
-		bindClickEventToClass("settings_menu_link", new EventListener() {
+		bindClickEventToLinkClass("settings_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
 				if (controller.getBootController().getSettingsModul() == null) {
@@ -82,6 +80,15 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 				evt.preventDefault();
 			}
 		});
+
+		((EventTarget) webView.getEngine().getDocument().getElementById("add_machine_button")).addEventListener("click",
+				new EventListener() {
+					@Override
+					public void handleEvent(Event evt) {
+						selectIdCounter++;
+						addNewMachineSelect();
+					}
+				}, false);
 
 		((EventTarget) webView.getEngine().getDocument().getElementById("cancel_session_button"))
 				.addEventListener("click", new EventListener() {
@@ -108,11 +115,12 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 							information.setTitle("Success");
 							information.setContentText("New session successfully created!");
 							information.show();
-						} catch (JAXBException | IOException e) {
+						} catch (Exception e) {
 							LOGGER.error(e.getLocalizedMessage());
 
 							Alert error = new Alert(AlertType.ERROR);
 							error.setTitle(e.getClass().toString());
+							error.setHeaderText("Failed to create new session.");
 							error.setContentText(e.getLocalizedMessage());
 							error.show();
 						}
@@ -125,23 +133,25 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 	}
 
 	private void addFirstMachineSelect() {
-		addNewMachineSelect(selectIdCounter);
-		addMachineSelectedListener();
+		addNewMachineSelect();
 	}
 
-	private void addNewMachineSelect(int id) {
+	private void addNewMachineSelect() {
 		StringBuilder builder = new StringBuilder();
 
 		// <div class="input-field col s12">
 		builder.append("<div class='input-field col s12'>");
 		// <select class="machine_select_element" id="session_machines_select">
-		builder.append("<select id='machine_select_element_" + id + "'>");
+		builder.append("<select id='machine_select_element_" + selectIdCounter + "'>");
 		// <option value="" disabled selected>Choose virtual machines</option>
 		builder.append("<option value='default' disabled selected>Add machine</option>");
+
+		// Virtual machines
 		// <option value="3">Option 3</option>
 		Arrays.asList(givenMachines).forEach(machine -> {
 			builder.append(createMachineOptionHTMLElement(machine));
 		});
+
 		// </select>
 		builder.append("</select>");
 		// <label>Materialize Select</label>
@@ -150,6 +160,8 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 		builder.append("</div>");
 
 		addHTMLToElementWithId("root_content_element", builder.toString());
+
+		initalizeMaterialSelect();
 	}
 
 	private String createMachineOptionHTMLElement(XMLMachine machine) {
@@ -157,39 +169,28 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 
 		StringBuilder optionBuilder = new StringBuilder();
 
-		// <option class="machine_option_element" value="3">Option 3</option>
-		optionBuilder.append(
-				"<option class='machine_option_element' value='" + machine.id + "'>" + machine.name + "</option>");
+		// <option value="3">Option 3</option>
+		optionBuilder.append("<option value='" + machine.id + "'>" + machine.name + "</option>");
 
 		return optionBuilder.toString();
 	}
 
-	private void addMachineSelectedListener() {
-		bindClickEventToClass("machine_option_element", new EventListener() {
-			@Override
-			public void handleEvent(Event evt) {
-				LOGGER.debug("Event catched.");
+	private void initalizeMaterialSelect() {
+		// <!-- Enable material select -->
+		// <script>
+		// $(document).ready(function() {
+		// setTimeout(function(){
+		// $('select').material_select();
+		// },50);
+		// });
+		// </script>
 
-				// Might not further be usefull if input-cast success'
-				XMLMachine selectedMachine = Arrays.asList(givenMachines).stream()
-						.filter(machine -> evt.getTarget().toString().contains(String.valueOf(machine.id))).findFirst()
-						.get();
-
-				LOGGER.debug("Selected machine was " + selectedMachine.name);
-
-				// webView.getEngine().getDocument().getElementById("machine_select_element_"
-				// + selectIdCounter)
-				// .setAttribute("name", selectedMachine.name);
-
-				selectIdCounter++;
-				addNewMachineSelect(selectIdCounter);
-				addMachineSelectedListener();
-			}
-		});
+		webView.getEngine().executeScript(
+				"$(document).ready( function() { setTimeout( function() { $('select').material_select(); }, 50); });");
 	}
 
-	private Session createNewSessionFromGUIInputs() {
-		// TODO: Validate inputs!!
+	private Session createNewSessionFromGUIInputs() throws InputMismatchException, IndexOutOfBoundsException {
+		validateInputs();
 
 		Session newSession = new Session();
 		newSession.id = controller.countExistingSessions() + 1;
@@ -204,7 +205,7 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 				LOGGER.debug("Adding machine " + givenMachines[selectedIndex - 1].name + " to the session");
 				newSession.addVirtualMachine(givenMachines[selectedIndex - 1]);
 			} else {
-				throw new IndexOutOfBoundsException("Index " + selectedIndex + " does not exist!");
+				throw new IndexOutOfBoundsException("Please select an existing machine!");
 			}
 		}
 
@@ -212,5 +213,14 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 				+ " machines");
 
 		return newSession;
+	}
+
+	private void validateInputs() throws InputMismatchException {
+		// Check session name
+		HTMLInputElement nameInputElement = (HTMLInputElement) webView.getEngine().getDocument()
+				.getElementById("session_name_input");
+		if (nameInputElement == null || nameInputElement.getValue() == null || nameInputElement.getValue() == "") {
+			throw new InputMismatchException("Session name is not set correctly!");
+		}
 	}
 }
