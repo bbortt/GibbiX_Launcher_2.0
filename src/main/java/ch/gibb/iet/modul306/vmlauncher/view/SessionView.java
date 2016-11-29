@@ -99,7 +99,17 @@ public class SessionView extends AbstractView<SessionController> {
 		bindClickEventToClass("settings_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
-				LOGGER.warn("Settings modul does not exist yet!");
+				if (controller.getBootController().getSettingsModul() == null) {
+					LOGGER.warn("Settings-modul ist currently not enabled!");
+
+					warnModulNotEnabled("Settings-modul");
+					return;
+				}
+
+				LOGGER.info("Changing to settings-modul");
+				controller.getBootController().getSettingsModul().loadView(mainStage);
+
+				evt.preventDefault();
 			}
 		});
 
@@ -139,9 +149,10 @@ public class SessionView extends AbstractView<SessionController> {
 		// <h2 class="center light-blue-text">
 		htmlBuilder.append("<h2 class='center light-blue-text'>");
 		// TODO: Download google-material "settings"-icon
-		// <img alt="Launch machine" src="images/ic_settings_black_24dp_2x.png"
+		// <img alt="Launch machine"
+		// src="images/ic_delete_forever_black_24dp_2x.png"
 		// />
-		htmlBuilder.append("<img alt='Settings' src='images/ic_settings_black_24dp_2x.png' />");
+		htmlBuilder.append("<img alt='Settings' src='images/ic_delete_forever_black_24dp_2x.png' />");
 		// </h2>
 		htmlBuilder.append("</h2>");
 		// <h5 class="center">Settings</h5>

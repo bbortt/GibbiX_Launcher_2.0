@@ -71,6 +71,13 @@ public class BootController extends AbstractController {
 	}
 
 	@Autowired
+	private SettingsController settingsController;
+
+	public SettingsController getSettingsModul() {
+		return settingsController;
+	}
+
+	@Autowired
 	private ApplicationData applicationData;
 
 	public void startApplication(Stage mainStage) {

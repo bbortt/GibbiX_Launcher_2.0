@@ -81,7 +81,17 @@ public class MachineView extends AbstractView<LauncherController> {
 		bindClickEventToClass("settings_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
-				LOGGER.warn("Settings modul does not exist yet!");
+				if (controller.getBootController().getSettingsModul() == null) {
+					LOGGER.warn("Settings-modul ist currently not enabled!");
+
+					warnModulNotEnabled("Settings-modul");
+					return;
+				}
+
+				LOGGER.info("Changing to settings-modul");
+				controller.getBootController().getSettingsModul().loadView(mainStage);
+
+				evt.preventDefault();
 			}
 		});
 

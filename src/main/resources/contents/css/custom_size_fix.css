@@ -6,3 +6,7 @@
 .page-footer {
 	overflow: hidden;
 }
+
+.scrollable {
+	overflow-y: scroll;
+}
