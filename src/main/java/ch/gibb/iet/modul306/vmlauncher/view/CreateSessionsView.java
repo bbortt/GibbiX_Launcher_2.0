@@ -126,7 +126,7 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 		// <div class="input-field col s12">
 		builder.append("<div class='input-field col s12'>");
 		// <select class="machine_select_element" id="session_machines_select">
-		builder.append("<select class='machine_select_element_" + id + "' id='session_machines_select'>");
+		builder.append("<select id='machine_select_element_" + id + "'>");
 		// <option value="" disabled selected>Choose virtual machines</option>
 		builder.append("<option value='default' disabled selected>Add machine</option>");
 		// <option value="3">Option 3</option>
@@ -148,7 +148,7 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 
 		StringBuilder optionBuilder = new StringBuilder();
 
-		// <option value="3">Option 3</option>
+		// <option class="machine_option_element" value="3">Option 3</option>
 		optionBuilder.append(
 				"<option class='machine_option_element' value='" + machine.id + "'>" + machine.name + "</option>");
 
@@ -159,6 +159,8 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 		bindClickEventToClass("machine_option_element", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
+				LOGGER.debug("Event catched.");
+				
 				// Might not further be usefull if input-cast success'
 				XMLMachine selectedMachine = Arrays.asList(givenMachines).stream()
 						.filter(machine -> evt.getTarget().toString().contains(String.valueOf(machine.id))).findFirst()
@@ -166,8 +168,9 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 
 				LOGGER.debug("Selected machine was " + selectedMachine.name);
 
-				webView.getEngine().getDocument().getElementById("machine_select_element_" + selectIdCounter)
-						.setAttribute("name", selectedMachine.name);
+				// webView.getEngine().getDocument().getElementById("machine_select_element_"
+				// + selectIdCounter)
+				// .setAttribute("name", selectedMachine.name);
 
 				selectIdCounter++;
 				addNewMachineSelect(selectIdCounter);
@@ -185,14 +188,14 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 				.getValue();
 
 		for (int i = 0; i < selectIdCounter; i++) {
-			final int finalI = i;
-			XMLMachine foundMachine = Arrays.asList(givenMachines).stream()
-					.filter(machine -> machine.name.equals(((HTMLSelectElement) webView.getEngine().getDocument()
-							.getElementById("machin_select_element_" + String.valueOf(finalI))).getSelectedIndex()))
-					.findFirst().get();
+			int selectedIndex = ((HTMLSelectElement) webView.getEngine().getDocument()
+					.getElementById("machine_select_element_" + String.valueOf(selectIdCounter))).getSelectedIndex();
 
-			if (foundMachine != null) {
-				newSession.addVirtualMachine(foundMachine);
+			if (selectedIndex != 0 && selectedIndex - 1 <= givenMachines.length) {
+				LOGGER.debug("Adding machine " + givenMachines[selectedIndex - 1].name + " to the session");
+				newSession.addVirtualMachine(givenMachines[selectedIndex - 1]);
+			} else {
+				throw new IndexOutOfBoundsException("Index " + selectedIndex + " does not exist!");
 			}
 		}
 

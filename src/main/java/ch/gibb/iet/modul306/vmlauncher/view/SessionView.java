@@ -2,6 +2,7 @@ package ch.gibb.iet.modul306.vmlauncher.view;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -15,6 +16,7 @@ import ch.gibb.iet.modul306.vmlauncher.model.objects.XMLSessions.Session;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
@@ -193,14 +195,14 @@ public class SessionView extends AbstractView<SessionController> {
 
 		Arrays.asList(givenSessions).forEach(session -> {
 			addHTMLToElementWithId(getContentElementId(), createSessionHTMLElement(session));
-			addSessionLaunchClickListener(session);
+			addSessionManageClickListener(session);
 		});
 	}
 
-	private void addSessionLaunchClickListener(Session session) {
+	private void addSessionManageClickListener(Session session) {
 		LOGGER.debug("Adding click listener to " + session.name);
 
-		((EventTarget) webView.getEngine().getDocument().getElementById(String.valueOf(session.id)))
+		((EventTarget) webView.getEngine().getDocument().getElementById(String.valueOf("launch_" + session.id)))
 				.addEventListener("click", new EventListener() {
 					@Override
 					public void handleEvent(Event evt) {
@@ -222,6 +224,35 @@ public class SessionView extends AbstractView<SessionController> {
 						evt.preventDefault();
 					}
 				}, false);
+
+		((EventTarget) webView.getEngine().getDocument().getElementById(String.valueOf("delete_" + session.id)))
+				.addEventListener("click", new EventListener() {
+					@Override
+					public void handleEvent(Event evt) {
+						Alert confirm = new Alert(AlertType.CONFIRMATION);
+						confirm.setTitle("Please confirm");
+						confirm.setContentText("Are you sure you want to delete " + session.name + "?");
+						Optional<ButtonType> result = confirm.showAndWait();
+
+						if (result.get() == ButtonType.OK) {
+							LOGGER.info("Deleting session " + session.name);
+
+							try {
+								controller.deleteSession(session, mainStage);
+							} catch (Exception e) {
+								Alert error = new Alert(AlertType.ERROR);
+								error.setTitle(e.getClass().toString());
+								error.setHeaderText("Session " + session.name + " could not be saved!");
+								error.setContentText(e.getLocalizedMessage());
+								error.show();
+							}
+						} else {
+							LOGGER.debug("Deleting session " + session.name + " abort");
+						}
+
+						evt.preventDefault();
+					}
+				}, false);
 	}
 
 	private String createSessionHTMLElement(Session session) {
@@ -233,16 +264,23 @@ public class SessionView extends AbstractView<SessionController> {
 		htmlBuilder.append("<div class='col s12 m4'>");
 		// <div class="icon-block">
 		htmlBuilder.append("<div class='icon-block'>");
-		// <a id="[ID]" href="[DETAIL_VIEW]" class="black-text">
-		htmlBuilder.append("<a id='" + session.id + "' href='" + session.name + "' class='black-text'>");
 		// <h2 class="center light-blue-text">
 		htmlBuilder.append("<h2 class='center light-blue-text'>");
-		// <img alt="Launch machine" src="images/ic_launch_black_24dp_2x.png" />
+		// <a id="[ID]" href="[LAUNCH_SESSION]" class="black-text">
+		htmlBuilder.append("<a id='launch_" + session.id + "' href='" + session.name + "' class='black-text'>");
+		// <img alt="Launch session" src="images/ic_launch_black_24dp_2x.png" />
 		htmlBuilder.append("<img alt='Launch session' src='images/ic_launch_black_24dp_2x.png' />");
-		// </h2>
-		htmlBuilder.append("</h2>");
 		// </a>
 		htmlBuilder.append("</a>");
+		// <a id="[ID]" href="[DELETE_SESSION]" class="black-text">
+		htmlBuilder.append("<a id='delete_" + session.id + "' href='" + session.name + "' class='black-text'>");
+		// TODO: Download delete-icon
+		// <img alt="Delete session" src="images/ic_launch_black_24dp_2x.png" />
+		htmlBuilder.append("<img alt='Delete session' src='images/ic_launch_black_24dp_2x.png' />");
+		// </a>
+		htmlBuilder.append("</a>");
+		// </h2>
+		htmlBuilder.append("</h2>");
 		// <h5 class="center">[NAME]</h5>
 		htmlBuilder.append("<h5 class='center'>" + session.name + "</h5>");
 
