@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import javax.xml.bind.JAXBException;
-import javax.xml.ws.WebEndpoint;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
