@@ -12,3 +12,16 @@
 .icon-block .material-icons {
 	font-size: inherit;
 }
+.height-limit{
+	height: 20vh;
+}
+.vm-icon{
+	padding-top:0;
+	padding-bottom:0;
+	margin-top:0;
+	margin-bottom: -5px;
+}
+
+body{
+	background-color: #FFF;
+}
