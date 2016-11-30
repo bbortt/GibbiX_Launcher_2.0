@@ -19,7 +19,7 @@ import ch.gibb.iet.modul306.vmlauncher.controller.SessionController;
  */
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan(basePackages = "ch.gibb.iet.modul306.vmlauncher.*")
+@ComponentScan(basePackages = "ch.gibb.iet.modul306.vmlauncher")
 @PropertySource("classpath:application.properties")
 public class BeanConfig {
 	@Bean

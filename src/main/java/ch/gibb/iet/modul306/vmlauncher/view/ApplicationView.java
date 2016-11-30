@@ -4,6 +4,7 @@ import java.awt.Desktop;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
@@ -15,18 +16,20 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+@Component
 public class ApplicationView extends AbstractView<BootController> {
 	private static final Logger LOGGER = Logger.getLogger(ApplicationView.class);
 
-	public ApplicationView(Stage mainStage, BootController controller) {
-		super(mainStage, controller);
+	@Override
+	public void display(Stage mainStage, BootController controller) {
+		super.display(mainStage, controller);
 	}
 
 	@Override
 	protected void loadScene() {
 		this.webView = new WebView();
 
-		mainStage.setTitle(DISPLAY_NAME);
+		mainStage.setTitle(displayName);
 
 		if (mainStage.getScene() != null) {
 			mainStage.setScene(new Scene(super.loadPage("index.html"), mainStage.getScene().getWidth(),

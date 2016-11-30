@@ -6,6 +6,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.events.Event;
@@ -23,18 +25,22 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+@Component
 public abstract class AbstractView<C extends AbstractController> {
 	private static final Logger LOGGER = Logger.getLogger(AbstractView.class);
-	protected static final String DISPLAY_NAME = "VMLauncher 2.0";
+
+	@Value("${info.application.display.name}")
+	protected String displayName;
+
+	@Value("${info.application.display.theme}")
+	private String themeName;
 
 	protected Stage mainStage;
 
 	protected WebView webView;
 	protected C controller;
 
-	private String themePath = "starter-theme/";
-
-	public AbstractView(Stage mainStage, C controller) {
+	public void display(Stage mainStage, C controller) {
 		this.mainStage = mainStage;
 		this.controller = controller;
 
@@ -77,7 +83,7 @@ public abstract class AbstractView<C extends AbstractController> {
 
 	protected WebView loadPage(String pageName) {
 		String notWorkingFile = "file:///"
-				+ getClass().getClassLoader().getResource("contents/" + themePath + pageName).getPath();
+				+ getClass().getClassLoader().getResource("contents/" + themeName + "/" + pageName).getPath();
 		LOGGER.debug("Using file at " + notWorkingFile);
 
 		webView.getEngine().load(notWorkingFile);

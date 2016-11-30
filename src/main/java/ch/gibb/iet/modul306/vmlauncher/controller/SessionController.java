@@ -22,22 +22,25 @@ public class SessionController extends AbstractController {
 	@Autowired
 	private SessionModel sessionModel;
 
+	@Autowired
+	private SessionView sessionView;
+
 	@Override
 	public void loadView(Stage mainStage) {
-		SessionView view = new SessionView(mainStage, this);
+		sessionView.display(mainStage, this);
 
 		try {
 			sessionModel.initalize(this);
-			view.setSessions(sessionModel.getAllSessions());
+			sessionView.setSessions(sessionModel.getAllSessions());
 		} catch (NullPointerException | FileNotFoundException | JAXBException e) {
-			view.setSessionsNotFound();
+			sessionView.setSessionsNotFound();
 			LOGGER.error(e.getLocalizedMessage());
 		}
 
 		try {
-			view.setXMLMachines(machineModel.getAllMachinesInWorkDirectory());
+			sessionView.setXMLMachines(machineModel.getAllMachinesInWorkDirectory());
 		} catch (IllegalArgumentException e) {
-			view.setMachinesNotFound();
+			sessionView.setMachinesNotFound();
 			LOGGER.error(e.getLocalizedMessage());
 		}
 	}

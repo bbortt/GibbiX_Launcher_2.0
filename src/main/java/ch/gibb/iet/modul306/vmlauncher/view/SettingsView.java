@@ -4,6 +4,7 @@ import java.util.TreeMap;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
@@ -16,6 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+@Component
 public class SettingsView extends AbstractView<SettingsController> {
 	private static final Logger LOGGER = LogManager.getLogger(SettingsView.class);
 
@@ -39,15 +41,16 @@ public class SettingsView extends AbstractView<SettingsController> {
 		return "root_content_element";
 	}
 
-	public SettingsView(Stage mainStage, SettingsController controller) {
-		super(mainStage, controller);
+	@Override
+	public void display(Stage mainStage, SettingsController controller) {
+		super.display(mainStage, controller);
 	}
 
 	@Override
 	protected void loadScene() {
 		this.webView = new WebView();
 
-		mainStage.setTitle(DISPLAY_NAME);
+		mainStage.setTitle(displayName);
 
 		if (mainStage.getScene() != null) {
 			mainStage.setScene(new Scene(super.loadPage("settings_view.html"), mainStage.getScene().getWidth(),

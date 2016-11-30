@@ -22,14 +22,17 @@ public class SettingsController extends AbstractController {
 	@Autowired
 	private SettingsModel settingsModul;
 
+	@Autowired
+	private SettingsView settingsView;
+
 	@Override
 	public void loadView(Stage mainStage) {
-		SettingsView view = new SettingsView(mainStage, this);
+		settingsView.display(mainStage, this);
 
 		try {
-			view.setProperties(settingsModul.readRuntimeConfiguration().getAllProperties());
+			settingsView.setProperties(settingsModul.readRuntimeConfiguration().getAllProperties());
 		} catch (URISyntaxException | IOException e) {
-			view.setPropertiesNotFound();
+			settingsView.setPropertiesNotFound();
 			LOGGER.error(e.getLocalizedMessage());
 		}
 	}

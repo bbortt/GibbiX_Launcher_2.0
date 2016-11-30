@@ -2,6 +2,7 @@ package ch.gibb.iet.modul306.vmlauncher.controller;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ch.gibb.iet.modul306.vmlauncher.view.MachineView;
@@ -10,6 +11,9 @@ import javafx.stage.Stage;
 @Component
 public class LauncherController extends AbstractController {
 	private static final Logger LOGGER = LogManager.getLogger(LauncherController.class);
+
+	@Autowired
+	private MachineView machineView;
 
 	/*
 	 * public Map<String, Map<String, String>> virtualMachines;
@@ -70,12 +74,12 @@ public class LauncherController extends AbstractController {
 
 	@Override
 	public void loadView(Stage mainStage) {
-		MachineView view = new MachineView(mainStage, this);
+		machineView.display(mainStage, this);
 
 		try {
-			view.setXMLMachines(machineModel.getAllMachinesInWorkDirectory());
+			machineView.setXMLMachines(machineModel.getAllMachinesInWorkDirectory());
 		} catch (IllegalArgumentException e) {
-			view.setMachinesNotFound();
+			machineView.setMachinesNotFound();
 			LOGGER.error(e.getLocalizedMessage());
 		}
 	}

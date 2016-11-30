@@ -27,14 +27,17 @@ public class BackupController extends AbstractController {
 
 	private BackupModel backupModel;
 
+	@Autowired
+	private BackupView backupView;
+
 	@Override
 	public void loadView(Stage mainStage) {
-		BackupView view = new BackupView(mainStage, this);
+		backupView.display(mainStage, this);
 
 		try {
-			view.setXMLMachines(machineModel.getAllMachinesInWorkDirectory());
+			backupView.setXMLMachines(machineModel.getAllMachinesInWorkDirectory());
 		} catch (IllegalArgumentException e) {
-			view.setMachinesNotFound();
+			backupView.setMachinesNotFound();
 			LOGGER.error(e.getLocalizedMessage());
 		}
 	}

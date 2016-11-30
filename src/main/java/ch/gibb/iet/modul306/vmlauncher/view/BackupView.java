@@ -7,6 +7,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
@@ -22,6 +23,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import net.lingala.zip4j.exception.ZipException;
 
+@Component
 public class BackupView extends AbstractView<BackupController> {
 	private static final Logger LOGGER = LogManager.getLogger(BackupModel.class);
 
@@ -45,15 +47,16 @@ public class BackupView extends AbstractView<BackupController> {
 		return "root_content_element";
 	}
 
-	public BackupView(Stage mainStage, BackupController controller) {
-		super(mainStage, controller);
+	@Override
+	public void display(Stage mainStage, BackupController controller) {
+		super.display(mainStage, controller);
 	}
 
 	@Override
 	protected void loadScene() {
 		this.webView = new WebView();
 
-		mainStage.setTitle(DISPLAY_NAME);
+		mainStage.setTitle(displayName);
 
 		if (mainStage.getScene() != null) {
 			mainStage.setScene(new Scene(super.loadPage("backup_view.html"), mainStage.getScene().getWidth(),
