@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.1.RELEASE</version>
+		<version>1.4.2.RELEASE</version>
 	</parent>
 
 	<properties>
@@ -47,20 +47,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<!-- <version>4.3.3.RELEASE</version> -->
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<!-- <version>4.3.3.RELEASE</version> -->
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/junit/junit -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<!-- <version>4.12</version> -->
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j -->
@@ -103,6 +89,9 @@
 					<resource>
 						<directory>${project.basedir}/src/main/resources</directory>
 						<filtering>true</filtering>
+						<!-- <includes> -->
+						<!-- <include>application.properties</include> -->
+						<!-- </includes> -->
 					</resource>
 				</resources>
 
@@ -121,35 +110,82 @@
 						<version>3.0.1</version>
 					</plugin>
 
+					<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-shade-plugin -->
 					<plugin>
-						<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
 						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-jar-plugin</artifactId>
-						<version>3.0.2</version>
+						<artifactId>maven-shade-plugin</artifactId>
+						<version>2.4.3</version>
 						<executions>
 							<execution>
 								<phase>package</phase>
 								<goals>
-									<goal>jar</goal>
+									<goal>shade</goal>
 								</goals>
 								<configuration>
-									<classifier>client</classifier>
-									<includes>
-										<include>**/service/*</include>
-									</includes>
+									<transformers>
+										<transformer
+											implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+											<resource>META-INF/spring.handlers</resource>
+										</transformer>
+										<transformer
+											implementation="org.springframework.boot.maven.PropertiesMergingResourceTransformer">
+											<resource>META-INF/spring.factories</resource>
+										</transformer>
+										<transformer
+											implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+											<resource>META-INF/spring.schemas</resource>
+										</transformer>
+										<transformer
+											implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+										<transformer
+											implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+											<mainClass>ch.gibb.iet.modul306.vmlauncher.app.app</mainClass>
+										</transformer>
+									</transformers>
+									<filters>
+										<filter>
+											<artifact>*:*</artifact>
+											<excludes>
+												<exclude>META-INF/*.SF</exclude>
+												<exclude>META-INF/*.DSA</exclude>
+												<exclude>META-INF/*.RSA</exclude>
+											</excludes>
+										</filter>
+									</filters>
 								</configuration>
 							</execution>
 						</executions>
-						<configuration>
-							<archive>
-								<manifest>
-									<addClasspath>true</addClasspath>
-									<classpathPrefix>src/main/resources/</classpathPrefix>
-									<mainClass>ch.gibb.iet.modul306.vmlauncher.app.app</mainClass>
-								</manifest>
-							</archive>
-						</configuration>
 					</plugin>
+
+					<!-- <plugin> -->
+					<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
+					<!-- <groupId>org.apache.maven.plugins</groupId> -->
+					<!-- <artifactId>maven-jar-plugin</artifactId> -->
+					<!-- <version>3.0.2</version> -->
+					<!-- <executions> -->
+					<!-- <execution> -->
+					<!-- <phase>package</phase> -->
+					<!-- <goals> -->
+					<!-- <goal>jar</goal> -->
+					<!-- </goals> -->
+					<!-- <configuration> -->
+					<!-- <classifier>client</classifier> -->
+					<!-- <includes> -->
+					<!-- <include>**/service/*</include> -->
+					<!-- </includes> -->
+					<!-- </configuration> -->
+					<!-- </execution> -->
+					<!-- </executions> -->
+					<!-- <configuration> -->
+					<!-- <archive> -->
+					<!-- <manifest> -->
+					<!-- <addClasspath>true</addClasspath> -->
+					<!-- <classpathPrefix>src/main/resources/</classpathPrefix> -->
+					<!-- <mainClass>ch.gibb.iet.modul306.vmlauncher.app.app</mainClass> -->
+					<!-- </manifest> -->
+					<!-- </archive> -->
+					<!-- </configuration> -->
+					<!-- </plugin> -->
 
 					<plugin>
 						<!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->

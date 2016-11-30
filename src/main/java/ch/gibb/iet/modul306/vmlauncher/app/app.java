@@ -3,6 +3,7 @@ package ch.gibb.iet.modul306.vmlauncher.app;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -18,6 +19,8 @@ public class app extends Application {
 	private static ApplicationContext context;
 
 	public static void main(String[] args) {
+		BasicConfigurator.configure();
+
 		LOGGER.info("--------------------------------------------");
 		LOGGER.info("Starting application..");
 		LOGGER.info("--------------------------------------------");
