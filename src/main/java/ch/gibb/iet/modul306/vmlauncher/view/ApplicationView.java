@@ -1,5 +1,8 @@
 package ch.gibb.iet.modul306.vmlauncher.view;
 
+import java.awt.Desktop;
+import java.io.IOException;
+
 import org.apache.log4j.Logger;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
@@ -7,6 +10,8 @@ import org.w3c.dom.events.EventTarget;
 
 import ch.gibb.iet.modul306.vmlauncher.controller.BootController;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
@@ -54,6 +59,25 @@ public class ApplicationView extends AbstractView<BootController> {
 
 				LOGGER.info("Changing to settings-modul");
 				controller.getSettingsModul().loadView(mainStage);
+
+				evt.preventDefault();
+			}
+		});
+
+		bindClickEventToLinkClass("pstart_menu_link", new EventListener() {
+			@Override
+			public void handleEvent(Event evt) {
+				try {
+					Desktop.getDesktop().open(controller.getBootController().getPStartFile());
+				} catch (IOException e) {
+					LOGGER.error(e.getLocalizedMessage());
+
+					Alert error = new Alert(AlertType.ERROR);
+					error.setTitle(e.getClass().toString());
+					error.setHeaderText("Unable to open portable app manager!");
+					error.setContentText(e.getLocalizedMessage());
+					error.show();
+				}
 
 				evt.preventDefault();
 			}

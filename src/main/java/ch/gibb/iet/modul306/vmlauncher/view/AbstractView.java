@@ -74,7 +74,8 @@ public abstract class AbstractView<C extends AbstractController> {
 	protected abstract void loadScene();
 
 	protected WebView loadPage(String pageName) {
-		String notWorkingFile = "file:///" + getClass().getClassLoader().getResource("contents/" + pageName).getPath();
+		String notWorkingFile = "file:///"
+				+ getClass().getClassLoader().getResource("contents/Default Material-Design/" + pageName).getPath();
 		LOGGER.debug("Using file at " + notWorkingFile);
 
 		webView.getEngine().load(notWorkingFile);
@@ -108,25 +109,6 @@ public abstract class AbstractView<C extends AbstractController> {
 
 	protected void bindFooterLinks() {
 		LOGGER.debug("Binding footer links");
-
-		bindClickEventToLinkClass("pstart_menu_link", new EventListener() {
-			@Override
-			public void handleEvent(Event evt) {
-				try {
-					Desktop.getDesktop().open(controller.getBootController().getPStartFile());
-				} catch (IOException e) {
-					LOGGER.error(e.getLocalizedMessage());
-
-					Alert error = new Alert(AlertType.ERROR);
-					error.setTitle(e.getClass().toString());
-					error.setHeaderText("Unable to open portable app manager!");
-					error.setContentText(e.getLocalizedMessage());
-					error.show();
-				}
-
-				evt.preventDefault();
-			}
-		});
 
 		((EventTarget) webView.getEngine().getDocument().getElementById("project_github_link"))
 				.addEventListener("click", new EventListener() {
