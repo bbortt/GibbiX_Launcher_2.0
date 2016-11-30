@@ -78,14 +78,17 @@ public class DesignView extends AbstractView<DesignController> {
 						int selectedIndex = ((HTMLSelectElement) webView.getEngine().getDocument()
 								.getElementById(getSelectElementId())).getSelectedIndex();
 
-						themeName = themes[selectedIndex].toLowerCase();
-
-						LOGGER.debug("Changing theme to " + themeName);
+						LOGGER.debug("Changing theme to " + themes[selectedIndex].toLowerCase());
 
 						try {
-							controller.saveProperty("info.application.display.theme", themeName);
+							controller.saveProperty("info.application.display.theme",
+									themes[selectedIndex].toLowerCase());
 
-							controller.loadView(mainStage);
+							Alert information = new Alert(AlertType.INFORMATION);
+							information.setTitle("Succeed");
+							information.setContentText(
+									"Succesfully changed theme. Please restart the application to affect changes!");
+							information.show();
 						} catch (Exception e) {
 							e.printStackTrace();
 							LOGGER.error(e.getLocalizedMessage());
@@ -96,6 +99,8 @@ public class DesignView extends AbstractView<DesignController> {
 							error.setContentText(e.getLocalizedMessage());
 							error.show();
 						}
+
+						controller.loadView(mainStage);
 
 						evt.preventDefault();
 					}
