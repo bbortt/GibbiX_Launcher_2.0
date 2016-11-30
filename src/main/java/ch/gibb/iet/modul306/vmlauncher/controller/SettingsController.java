@@ -2,7 +2,7 @@ package ch.gibb.iet.modul306.vmlauncher.controller;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.HashMap;
+import java.util.TreeMap;
 
 import javax.xml.bind.JAXBException;
 
@@ -34,7 +34,7 @@ public class SettingsController extends AbstractController {
 		}
 	}
 
-	public void saveProperties(HashMap<String, Object> properties)
+	public void saveProperties(TreeMap<String, Object> properties)
 			throws JAXBException, IOException, URISyntaxException {
 		settingsModul.overrideProperties(properties);
 	}

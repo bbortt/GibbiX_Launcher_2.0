@@ -1,6 +1,6 @@
 package ch.gibb.iet.modul306.vmlauncher.view;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -19,16 +19,16 @@ import javafx.stage.Stage;
 public class SettingsView extends AbstractView<SettingsController> {
 	private static final Logger LOGGER = LogManager.getLogger(SettingsView.class);
 
-	private HashMap<String, Object> properties;
+	private TreeMap<String, Object> properties;
 	private boolean propertiesNotFound = false;
 
-	public void setProperties(HashMap<String, Object> properties) {
-		if (properties == null) {
+	public void setProperties(TreeMap<String, Object> treeMap) {
+		if (treeMap == null) {
 			setPropertiesNotFound();
 			return;
 		}
 
-		this.properties = properties;
+		this.properties = treeMap;
 	}
 
 	public void setPropertiesNotFound() {

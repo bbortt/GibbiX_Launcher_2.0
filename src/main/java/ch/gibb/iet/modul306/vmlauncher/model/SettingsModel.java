@@ -6,8 +6,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import javax.xml.bind.JAXBException;
 
@@ -22,7 +22,7 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 	private static final Logger LOGGER = LogManager.getLogger(SettingsModel.class);
 
 	private File localFile;
-	private HashMap<String, Object> properties;
+	private TreeMap<String, Object> properties;
 
 	public Object getProperty(String name) {
 		return properties.get(name);
@@ -36,7 +36,7 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 		properties.put(name, value);
 	}
 
-	public HashMap<String, Object> getAllProperties() {
+	public TreeMap<String, Object> getAllProperties() {
 		return properties;
 	}
 
@@ -51,9 +51,9 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 
 		String line;
 		while ((line = reader.readLine()) != null) {
-			if (line.contains("=") && !line.contains("#") && !line.equals("")) {
+			if (line.contains("=") && !line.contains("#") && !line.equals("") && !line.contains("info")) {
 				if (properties == null) {
-					properties = new HashMap<>();
+					properties = new TreeMap<String, Object>();
 				}
 
 				LOGGER.debug(line);
@@ -83,7 +83,7 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 
 		String line;
 		while ((line = reader.readLine()) != null) {
-			if (line.contains("#")) {
+			if (line.contains("#") || line.contains("info")) {
 				propertyString.append(line);
 			} else if (line.equals("")) {
 				propertyString.append("\n");
@@ -108,9 +108,9 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 	}
 
 	@SuppressWarnings("resource")
-	public void overrideProperties(HashMap<String, Object> newProperties)
+	public void overrideProperties(TreeMap<String, Object> properties2)
 			throws JAXBException, IOException, URISyntaxException {
-		if (newProperties == null || newProperties.size() == 0) {
+		if (properties2 == null || properties2.size() == 0) {
 			throw new IllegalArgumentException("No properties exist to save!");
 		}
 
@@ -125,7 +125,7 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 
 		String line;
 		while ((line = reader.readLine()) != null) {
-			if (line.contains("#")) {
+			if (line.contains("#") || line.contains("info")) {
 				propertyString.append(line);
 			} else if (line.equals("")) {
 				propertyString.append("\n");
@@ -133,7 +133,7 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 				final String tmpLine = line;
 
 				try {
-					Entry<String, Object> foundEntry = newProperties.entrySet().stream()
+					Entry<String, Object> foundEntry = properties2.entrySet().stream()
 							.filter(entry -> entry.getKey().equals(tmpLine.split("=")[0])).findFirst().get();
 
 					if (foundEntry != null) {
