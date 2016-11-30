@@ -71,6 +71,8 @@ public class BackupController extends AbstractController {
 					LOGGER.fatal(e.getLocalizedMessage());
 				}
 
+				LOGGER.info("Successfully backed up " + machine.name);
+
 				// TODO: Fix "this is not an fx-thread"
 				Alert done = new Alert(AlertType.INFORMATION);
 				done.setTitle("Finished backup");
@@ -78,6 +80,11 @@ public class BackupController extends AbstractController {
 				done.show();
 			}
 		}).start();
+
+		Alert done = new Alert(AlertType.INFORMATION);
+		done.setTitle("Finished backup");
+		done.setContentText("Machine " + machine.name + " successfully backed up.");
+		done.show();
 	}
 
 	public void restoreMachine(XMLMachine machine, Stage mainStage) throws ZipException {

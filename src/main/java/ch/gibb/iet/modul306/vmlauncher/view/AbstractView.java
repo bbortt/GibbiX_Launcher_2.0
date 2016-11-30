@@ -52,7 +52,11 @@ public abstract class AbstractView<C extends AbstractController> {
 			public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue,
 					Worker.State newValue) {
 				if (newValue != Worker.State.SUCCEEDED) {
-					LOGGER.fatal("Could not load page to display. Exiting application!");
+					// LOGGER.warn("Could not load page to display. Retrying!");
+					// waitForGUIAndBindButtons();
+
+					// TODO: How to fix this??
+					LOGGER.fatal("Could not load page to display. Exiting..");
 					System.exit(1);
 				}
 
@@ -87,15 +91,15 @@ public abstract class AbstractView<C extends AbstractController> {
 		warning.show();
 	}
 
-	protected void bindClickEventToClass(String clazz, EventListener listener) {
-		LOGGER.debug("Binding click listener to items of class " + clazz);
+	protected void bindClickEventToLinkClass(String elementClazz, EventListener listener) {
+		LOGGER.debug("Binding click listener to links of class " + elementClazz);
 
 		NodeList classElements = webView.getEngine().getDocument().getElementsByTagName("A");
 		for (int i = 0; i < classElements.getLength(); i++) {
 			NamedNodeMap attributesList = classElements.item(i).getAttributes();
 			for (int j = 0; j < attributesList.getLength(); j++) {
 				if (attributesList.item(j).getNodeName() != null && attributesList.item(j).getNodeName().equals("class")
-						&& attributesList.item(j).getNodeValue().contains(clazz)) {
+						&& attributesList.item(j).getNodeValue().contains(elementClazz)) {
 					((EventTarget) classElements.item(i)).addEventListener("click", listener, false);
 				}
 			}
@@ -104,6 +108,25 @@ public abstract class AbstractView<C extends AbstractController> {
 
 	protected void bindFooterLinks() {
 		LOGGER.debug("Binding footer links");
+
+		bindClickEventToLinkClass("pstart_menu_link", new EventListener() {
+			@Override
+			public void handleEvent(Event evt) {
+				try {
+					Desktop.getDesktop().open(controller.getBootController().getPStartFile());
+				} catch (IOException e) {
+					LOGGER.error(e.getLocalizedMessage());
+
+					Alert error = new Alert(AlertType.ERROR);
+					error.setTitle(e.getClass().toString());
+					error.setHeaderText("Unable to open portable app manager!");
+					error.setContentText(e.getLocalizedMessage());
+					error.show();
+				}
+
+				evt.preventDefault();
+			}
+		});
 
 		((EventTarget) webView.getEngine().getDocument().getElementById("project_github_link"))
 				.addEventListener("click", new EventListener() {
@@ -131,6 +154,8 @@ public abstract class AbstractView<C extends AbstractController> {
 								error.show();
 							}
 						}
+
+						evt.preventDefault();
 					}
 				}, false);
 
@@ -159,6 +184,8 @@ public abstract class AbstractView<C extends AbstractController> {
 								error.show();
 							}
 						}
+
+						evt.preventDefault();
 					}
 				}, false);
 	}

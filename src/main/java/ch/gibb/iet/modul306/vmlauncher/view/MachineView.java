@@ -70,7 +70,7 @@ public class MachineView extends AbstractView<LauncherController> {
 			addMachinesToView();
 		}
 
-		bindClickEventToClass("home_menu_link", new EventListener() {
+		bindClickEventToLinkClass("home_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
 				LOGGER.info("Chaning to boot-modul");
@@ -78,10 +78,20 @@ public class MachineView extends AbstractView<LauncherController> {
 			}
 		});
 
-		bindClickEventToClass("settings_menu_link", new EventListener() {
+		bindClickEventToLinkClass("settings_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
-				LOGGER.warn("Settings modul does not exist yet!");
+				if (controller.getBootController().getSettingsModul() == null) {
+					LOGGER.warn("Settings-modul ist currently not enabled!");
+
+					warnModulNotEnabled("Settings-modul");
+					return;
+				}
+
+				LOGGER.info("Changing to settings-modul");
+				controller.getBootController().getSettingsModul().loadView(mainStage);
+
+				evt.preventDefault();
 			}
 		});
 
@@ -105,6 +115,8 @@ public class MachineView extends AbstractView<LauncherController> {
 					@Override
 					public void handleEvent(Event evt) {
 						machine.launch();
+
+						evt.preventDefault();
 					}
 				}, false);
 	}
@@ -115,18 +127,18 @@ public class MachineView extends AbstractView<LauncherController> {
 		StringBuilder htmlBuilder = new StringBuilder();
 
 		// <div class="col s12 m4">
-		htmlBuilder.append("<div class='col s12 m4'>");
+		htmlBuilder.append("<div class='col s12 m3 l2 height-limit'>");
 		// <div class="icon-block">
 		htmlBuilder.append("<div class='icon-block'>");
 		// <a id="[ID]" href="[DETAIL_VIEW]" class="black-text">
 		htmlBuilder.append("<a id='" + machine.id + "_" + machine.name + "' href='" + machine.path + "\\" + machine.file
 				+ "' class='black-text'>");
 		// <h2 class="center light-blue-text">
-		htmlBuilder.append("<h2 class='center light-blue-text'>");
-		// <img alt="Launch machine" src="images/ic_launch_black_24dp_2x.png" />
-		htmlBuilder.append("<img alt='Launch machine' src='images/ic_launch_black_24dp_2x.png' />");
+		htmlBuilder.append("<div class='center vm-icon'>");
+		// <img alt="Launch machine" src="images/vm/[ICON]" />
+		htmlBuilder.append("<img alt='Launch machine' src='images/vm/"+machine.name+"-icon.png' class='vm-icon'/>");
 		// </h2>
-		htmlBuilder.append("</h2>");
+		htmlBuilder.append("</div>");
 		// </a>
 		htmlBuilder.append("</a>");
 		// <h5 class="center">[NAME]</h5>
@@ -162,7 +174,6 @@ public class MachineView extends AbstractView<LauncherController> {
 		htmlBuilder.append("<a class='settings_menu_link black-text' href='settings_modul'>");
 		// <h2 class="center light-blue-text">
 		htmlBuilder.append("<h2 class='center light-blue-text'>");
-		// TODO: Download google-material "settings"-icon
 		// <img alt="Launch machine" src="images/ic_settings_black_24dp_2x.png"
 		// />
 		htmlBuilder.append("<img alt='Settings' src='images/ic_settings_black_24dp_2x.png' />");

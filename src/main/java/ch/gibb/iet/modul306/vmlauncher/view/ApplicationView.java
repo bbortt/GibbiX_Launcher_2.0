@@ -29,23 +29,33 @@ public class ApplicationView extends AbstractView<BootController> {
 		} else {
 			mainStage.setScene(new Scene(super.loadPage("index.html")));
 		}
-		
+
 		mainStage.show();
 	}
 
 	@Override
 	protected void viewLoadedCallback() throws InterruptedException {
-		bindClickEventToClass("hosts_menu_link", new EventListener() {
+		bindClickEventToLinkClass("hosts_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
 				LOGGER.warn("Hosts modul does not exist yet!");
 			}
 		});
 
-		bindClickEventToClass("settings_menu_link", new EventListener() {
+		bindClickEventToLinkClass("settings_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
-				LOGGER.warn("Settings modul does not exist yet!");
+				if (controller.getSettingsModul() == null) {
+					LOGGER.warn("Settings-modul ist currently not enabled!");
+
+					warnModulNotEnabled("Settings-modul");
+					return;
+				}
+
+				LOGGER.info("Changing to settings-modul");
+				controller.getSettingsModul().loadView(mainStage);
+
+				evt.preventDefault();
 			}
 		});
 
@@ -56,12 +66,14 @@ public class ApplicationView extends AbstractView<BootController> {
 						if (controller.getLauncherModul() == null) {
 							LOGGER.warn("Launcher-modul is currently not enabled!");
 
-							warnModulNotEnabled("Launcher-Modul");
+							warnModulNotEnabled("Launcher-modul");
 							return;
 						}
 
 						LOGGER.info("Changing to launcher-modul");
 						controller.getLauncherModul().loadView(mainStage);
+
+						evt.preventDefault();
 					}
 				}, false);
 
@@ -78,6 +90,8 @@ public class ApplicationView extends AbstractView<BootController> {
 
 						LOGGER.info("Changing to backup-modul");
 						controller.getBackupModul().loadView(mainStage);
+
+						evt.preventDefault();
 					}
 				}, false);
 
@@ -94,6 +108,8 @@ public class ApplicationView extends AbstractView<BootController> {
 
 						LOGGER.info("Changing to session-modul");
 						controller.getSessionModul().loadView(mainStage);
+
+						evt.preventDefault();
 					}
 				}, false);
 

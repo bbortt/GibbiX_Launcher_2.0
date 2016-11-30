@@ -1,5 +1,8 @@
 package ch.gibb.iet.modul306.vmlauncher.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -68,6 +71,30 @@ public class BootController extends AbstractController {
 			return sessionModul;
 		}
 		return null;
+	}
+
+	@Autowired
+	private SettingsController settingsController;
+
+	public SettingsController getSettingsModul() {
+		return settingsController;
+	}
+
+	@Value("${gibbix.path.default}")
+	private String gibbiXPath;
+
+	@Value("${application.external.apps.path}")
+	private String pstartPath;
+
+	public File getPStartFile() throws FileNotFoundException {
+		File pstartFile = new File(gibbiXPath + pstartPath);
+
+		if (!pstartFile.exists()) {
+			throw new FileNotFoundException(
+					"Either your GibbiX-Path or PStart.exe-Installation are incorrect. Please check your settings.");
+		}
+
+		return pstartFile;
 	}
 
 	@Autowired

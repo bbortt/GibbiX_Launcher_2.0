@@ -35,6 +35,10 @@ public class XMLSessions {
 		}
 
 		public void addVirtualMachine(XMLMachine virtualMachine) {
+			if (virtualMachines == null) {
+				virtualMachines = new ArrayList<>();
+			}
+
 			virtualMachines.add(virtualMachine);
 		}
 

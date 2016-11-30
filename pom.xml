@@ -123,6 +123,36 @@
 					</plugin>
 
 					<plugin>
+						<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jar-plugin</artifactId>
+						<version>3.0.2</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+								<configuration>
+									<classifier>client</classifier>
+									<includes>
+										<include>**/service/*</include>
+									</includes>
+								</configuration>
+							</execution>
+						</executions>
+						<configuration>
+							<archive>
+								<manifest>
+									<addClasspath>true</addClasspath>
+									<classpathPrefix>src/main/resources/</classpathPrefix>
+									<mainClass>ch.gibb.iet.modul306.vmlauncher.app.app</mainClass>
+								</manifest>
+							</archive>
+						</configuration>
+					</plugin>
+
+					<plugin>
 						<!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>exec-maven-plugin</artifactId>

@@ -74,7 +74,7 @@ public class BackupView extends AbstractView<BackupController> {
 			addMachinesToView(givenMachines);
 		}
 
-		bindClickEventToClass("home_menu_link", new EventListener() {
+		bindClickEventToLinkClass("home_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
 				LOGGER.info("Chaning to boot-modul");
@@ -82,10 +82,20 @@ public class BackupView extends AbstractView<BackupController> {
 			}
 		});
 
-		bindClickEventToClass("settings_menu_link", new EventListener() {
+		bindClickEventToLinkClass("settings_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
-				LOGGER.warn("Settings modul does not exist yet!");
+				if (controller.getBootController().getSettingsModul() == null) {
+					LOGGER.warn("Settings-modul ist currently not enabled!");
+
+					warnModulNotEnabled("Settings-modul");
+					return;
+				}
+
+				LOGGER.info("Changing to settings-modul");
+				controller.getBootController().getSettingsModul().loadView(mainStage);
+
+				evt.preventDefault();
 			}
 		});
 
@@ -118,9 +128,12 @@ public class BackupView extends AbstractView<BackupController> {
 
 							Alert error = new Alert(AlertType.ERROR);
 							error.setTitle(e.getClass().toString());
+							error.setHeaderText("Error while backing up machine " + machine.name);
 							error.setContentText(e.getLocalizedMessage());
 							error.show();
 						}
+
+						evt.preventDefault();
 					}
 				}, false);
 
@@ -137,9 +150,12 @@ public class BackupView extends AbstractView<BackupController> {
 
 							Alert error = new Alert(AlertType.ERROR);
 							error.setTitle(e.getClass().toString());
+							error.setHeaderText("Error while restoring " + machine.name);
 							error.setContentText(e.getLocalizedMessage());
 							error.show();
 						}
+
+						evt.preventDefault();
 					}
 				}, false);
 	}
@@ -150,7 +166,7 @@ public class BackupView extends AbstractView<BackupController> {
 		StringBuilder htmlBuilder = new StringBuilder();
 
 		// <div class="col s12 m4">
-		htmlBuilder.append("<div class='col s12 m4'>");
+		htmlBuilder.append("<div class='col s12 m3 l2'>");
 		// <div class="icon-block">
 		htmlBuilder.append("<div class='icon-block'>");
 
