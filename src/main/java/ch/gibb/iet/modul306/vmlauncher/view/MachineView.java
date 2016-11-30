@@ -17,7 +17,6 @@ import ch.gibb.iet.modul306.vmlauncher.controller.LauncherController;
 import ch.gibb.iet.modul306.vmlauncher.model.objects.XMLMachine;
 import javafx.scene.Scene;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 
 @Component
 public class MachineView extends AbstractView<LauncherController> {
@@ -42,11 +41,6 @@ public class MachineView extends AbstractView<LauncherController> {
 
 	private static String getContentElementId() {
 		return "root_content_element";
-	}
-
-	@Override
-	public void display(Stage mainStage, LauncherController controller) {
-		super.display(mainStage, controller);
 	}
 
 	@Override

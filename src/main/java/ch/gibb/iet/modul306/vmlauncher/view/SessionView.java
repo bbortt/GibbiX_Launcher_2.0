@@ -20,7 +20,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 
 @Component
 public class SessionView extends AbstractView<SessionController> {
@@ -62,11 +61,6 @@ public class SessionView extends AbstractView<SessionController> {
 
 	private static String getContentElementId() {
 		return "root_content_element";
-	}
-
-	@Override
-	public void display(Stage mainStage, SessionController controller) {
-		super.display(mainStage, controller);
 	}
 
 	@Override

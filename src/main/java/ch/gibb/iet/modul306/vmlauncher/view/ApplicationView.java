@@ -14,16 +14,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 
 @Component
 public class ApplicationView extends AbstractView<BootController> {
 	private static final Logger LOGGER = Logger.getLogger(ApplicationView.class);
-
-	@Override
-	public void display(Stage mainStage, BootController controller) {
-		super.display(mainStage, controller);
-	}
 
 	@Override
 	protected void loadScene() {

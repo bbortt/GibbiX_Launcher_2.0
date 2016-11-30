@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 import java.util.TreeMap;
 
 import javax.xml.bind.JAXBException;
@@ -47,6 +48,8 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 	@SuppressWarnings("resource")
 	public SettingsModel readRuntimeConfiguration() throws URISyntaxException, IOException {
 		localFile = new File(this.getClass().getClassLoader().getResource("application.properties").toURI());
+		LOGGER.info("Reading local runtime configuration from " + localFile.getAbsolutePath());
+
 		BufferedReader reader = new BufferedReader(new FileReader(localFile));
 
 		String line;
@@ -83,11 +86,11 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 
 		String line;
 		while ((line = reader.readLine()) != null) {
-			if (line.contains("#") || line.contains("info")) {
-				propertyString.append(line);
+			if (line.contains("#")) {
+				propertyString.append(line + "\n");
 			} else if (line.equals("")) {
 				propertyString.append("\n");
-			} else if (line.contains("=")) {
+			} else {
 				final String tmpLine = line;
 
 				try {
@@ -95,10 +98,13 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 							.filter(entry -> entry.getKey().equals(tmpLine.split("=")[0])).findFirst().get();
 
 					if (foundEntry != null) {
+						LOGGER.debug("Updating " + foundEntry.getKey() + " to " + foundEntry.getValue());
 						propertyString.append("\n" + foundEntry.getKey() + "=" + foundEntry.getValue());
+					} else {
+						propertyString.append(line);
 					}
-				} catch (NullPointerException e) {
-					LOGGER.error(e.getLocalizedMessage());
+				} catch (NoSuchElementException e) {
+					propertyString.append(line);
 				}
 			}
 		}
@@ -108,9 +114,9 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 	}
 
 	@SuppressWarnings("resource")
-	public void overrideProperties(TreeMap<String, Object> properties2)
+	public void overrideProperties(TreeMap<String, Object> newProperties)
 			throws JAXBException, IOException, URISyntaxException {
-		if (properties2 == null || properties2.size() == 0) {
+		if (newProperties == null || newProperties.size() == 0) {
 			throw new IllegalArgumentException("No properties exist to save!");
 		}
 
@@ -125,7 +131,7 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 
 		String line;
 		while ((line = reader.readLine()) != null) {
-			if (line.contains("#") || line.contains("info")) {
+			if (line.contains("#")) {
 				propertyString.append(line);
 			} else if (line.equals("")) {
 				propertyString.append("\n");
@@ -133,15 +139,17 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 				final String tmpLine = line;
 
 				try {
-					Entry<String, Object> foundEntry = properties2.entrySet().stream()
+					Entry<String, Object> foundEntry = newProperties.entrySet().stream()
 							.filter(entry -> entry.getKey().equals(tmpLine.split("=")[0])).findFirst().get();
 
 					if (foundEntry != null) {
 						LOGGER.debug("Updating " + foundEntry.getKey() + " to " + foundEntry.getValue());
 						propertyString.append("\n" + foundEntry.getKey() + "=" + foundEntry.getValue());
+					} else {
+						propertyString.append(line);
 					}
-				} catch (NullPointerException e) {
-					LOGGER.error(e.getLocalizedMessage());
+				} catch (NoSuchElementException e) {
+					propertyString.append(line);
 				}
 			}
 		}

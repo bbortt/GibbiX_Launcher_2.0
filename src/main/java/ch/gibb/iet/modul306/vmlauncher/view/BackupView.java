@@ -20,7 +20,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 import net.lingala.zip4j.exception.ZipException;
 
 @Component
@@ -45,11 +44,6 @@ public class BackupView extends AbstractView<BackupController> {
 
 	private static String getContentElementId() {
 		return "root_content_element";
-	}
-
-	@Override
-	public void display(Stage mainStage, BackupController controller) {
-		super.display(mainStage, controller);
 	}
 
 	@Override

@@ -20,7 +20,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 
 @Component
 public class CreateSessionsView extends AbstractView<SessionController> {
@@ -32,11 +31,6 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 
 	public void setXMLMachines(XMLMachine[] machines) {
 		this.givenMachines = machines;
-	}
-
-	@Override
-	public void display(Stage mainStage, SessionController controller) {
-		super.display(mainStage, controller);
 	}
 
 	@Override
@@ -144,7 +138,7 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 
 		// <div class="input-field col s12">
 		builder.append("<div class='input-field col s12'>");
-		// <select class="machine_select_element" id="session_machines_select">
+		// <select id="session_machines_select">
 		builder.append("<select id='machine_select_element_" + selectIdCounter + "'>");
 		// <option value="" disabled selected>Choose virtual machines</option>
 		builder.append("<option value='default' disabled selected>Add machine</option>");
@@ -157,7 +151,7 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 
 		// </select>
 		builder.append("</select>");
-		// <label>Materialize Select</label>
+		// <label>Add machine</label>
 		builder.append("<label>Add machine</label>");
 		// </div>
 		builder.append("</div>");
@@ -179,15 +173,6 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 	}
 
 	private void initalizeMaterialSelect() {
-		// <!-- Enable material select -->
-		// <script>
-		// $(document).ready(function() {
-		// setTimeout(function(){
-		// $('select').material_select();
-		// },50);
-		// });
-		// </script>
-
 		webView.getEngine().executeScript(
 				"$(document).ready( function() { setTimeout( function() { $('select').material_select(); }, 50); });");
 	}

@@ -15,7 +15,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 
 @Component
 public class SettingsView extends AbstractView<SettingsController> {
@@ -39,11 +38,6 @@ public class SettingsView extends AbstractView<SettingsController> {
 
 	private static String getContentElementId() {
 		return "root_content_element";
-	}
-
-	@Override
-	public void display(Stage mainStage, SettingsController controller) {
-		super.display(mainStage, controller);
 	}
 
 	@Override
@@ -92,6 +86,23 @@ public class SettingsView extends AbstractView<SettingsController> {
 			public void handleEvent(Event evt) {
 				LOGGER.info("Chaning to boot-modul");
 				controller.getBootController().loadView(mainStage);
+			}
+		});
+
+		bindClickEventToLinkClass("theme_menu_link", new EventListener() {
+			@Override
+			public void handleEvent(Event evt) {
+				if (controller.getBootController().getDesignModul() == null) {
+					LOGGER.warn("Design-modul ist currently not enabled!");
+
+					warnModulNotEnabled("Design-modul");
+					return;
+				}
+
+				LOGGER.info("Chaning to design-modul");
+				controller.getBootController().getDesignModul().loadView(mainStage);
+
+				evt.preventDefault();
 			}
 		});
 

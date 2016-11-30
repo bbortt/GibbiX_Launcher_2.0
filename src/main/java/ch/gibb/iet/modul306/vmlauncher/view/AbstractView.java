@@ -33,7 +33,7 @@ public abstract class AbstractView<C extends AbstractController> {
 	protected String displayName;
 
 	@Value("${info.application.display.theme}")
-	private String themeName;
+	protected String themeName;
 
 	protected Stage mainStage;
 
@@ -82,6 +82,8 @@ public abstract class AbstractView<C extends AbstractController> {
 	protected abstract void loadScene();
 
 	protected WebView loadPage(String pageName) {
+		LOGGER.debug("Current theme is " + themeName);
+
 		String notWorkingFile = "file:///"
 				+ getClass().getClassLoader().getResource("contents/" + themeName + "/" + pageName).getPath();
 		LOGGER.debug("Using file at " + notWorkingFile);
