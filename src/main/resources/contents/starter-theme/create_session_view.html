@@ -4,46 +4,47 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1.0" />
-<title>VMLauncher 2.0 | Settings-Modul</title>
+<title>VMLauncher 2.0 | Session-Modul</title>
 
 <!-- CSS  -->
-<link href="css/google_fonts_material_icons.css" type="text/css"
+<link href="../css/google_fonts_material_icons.css" type="text/css"
 	rel="stylesheet">
-<link href="css/materialize.min.css" type="text/css" rel="stylesheet"
+<link href="../css/materialize.min.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
-<link href="css/style.css" type="text/css" rel="stylesheet"
+<link href="../css/style.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
-<link href="css/custom_size_fix.css" type="text/css" rel="stylesheet"
+<link href="../css/custom_size_fix.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
 </head>
 <body>
-	<nav class="light-blue lighten-1" role="navigation">
+	<nav class="teal lighten-1" role="navigation">
 		<div class="nav-wrapper container">
 			<a id="logo-container" href="#" class="brand-logo">VMLauncher 2.0</a>
 			<ul class="right hide-on-med-and-down">
 				<li><a class="home_menu_link" href="index.html">Home</a></li>
-				<li><a class="pstart_menu_link" href="pstart.exe">Portable Apps</a></li>
+				<li><a class="settings_menu_link" href="settings_view.html">Settings</a></li>
 			</ul>
 
-			<ul id="nav-mobile" class="side-nav">
+			<ul id="nav-mobile" class="side-nav light-blue lighten-1">
 				<li><a class="home_menu_link" href="index.html">Home</a></li>
-				<li><a class="pstart_menu_link" href="pstart.exe">Portable Apps</a></li>
+				<li><a class="settings_menu_link" href="settings_view.html">Settings</a></li>
 			</ul>
 			<a href="#" data-activates="nav-mobile" class="button-collapse">
-				<img alt="Menu" src="images/ic_menu_black_24dp_2x.png" /></a>
+				<img alt="Menu" src="../images/ic_menu_black_24dp_2x.png" />
+			</a>
 		</div>
 	</nav>
 
 	<div class="section no-pad-bot" id="index-banner">
 		<div class="container">
-			<h1 class="header center orange-text">Settings modul</h1>
+			<h1 class="header center pink-text">Session modul</h1>
 			<div class="row center">
-				<h5 class="header col s12 light">Manage application settings here!</h5>
+				<h5 class="header col s12 light">Manage your sessions here!</h5>
 			</div>
 			<!-- 			<div class="row center"> -->
 			<!-- 				<a href="http://materializecss.com/getting-started.html" -->
 			<!-- 					id="download-button" -->
-			<!-- 					class="btn-large waves-effect waves-light orange">Get Started</a> -->
+			<!-- 					class="btn-large waves-effect waves-light pink">Get Started</a> -->
 			<!-- 			</div> -->
 		</div>
 	</div>
@@ -51,15 +52,27 @@
 	<div class="container">
 		<div class="section scrollable">
 			<div class="row center" id="root_content_element">
-				<!-- Content added via java! -->
+				<div class="input-field col s12">
+					<input placeholder="Session name" id="session_name_input"
+						type="text" class="validate"> <label
+						for="session_name_input">Session name</label>
+				</div>
+
+				<!-- Select added by java -->
 			</div>
+			<a href="#" id="add_machine_button" class="left"> <img
+				alt="Add machine" src="../images/ic_add_box_black_24dp_2x.png" />
+			</a>
 		</div>
 		<div class="row center" id="create_session_element">
-			<a href="#" id="save_settings_button" class="btn-large waves-effect waves-light orange">Save settings</a>
+			<a href="session_view.html" id="cancel_session_button"
+				class="btn-large waves-effect waves-light pink">Cancel</a> <a
+				href="session_view.html" id="create_session_button"
+				class="btn-large waves-effect waves-light pink">Create</a>
 		</div>
 	</div>
 
-	<footer class="page-footer orange">
+	<footer class="page-footer pink">
 		<div class="container">
 			<div class="row">
 				<div class="col l6 s12">
@@ -92,15 +105,15 @@
 		</div>
 		<div class="footer-copyright">
 			<div class="container">
-				Made by <a class="orange-text text-lighten-3"
+				Made by <a class="pink-text text-lighten-3"
 					id="materialize_footer_link" href="https://materializecss.com">Materialize</a>
 			</div>
 		</div>
 	</footer>
 
 	<!--  Scripts-->
-	<script src="js/jquery-2.1.1.min.js"></script>
-	<script src="js/materialize.min.js"></script>
-	<script src="js/init.js"></script>
+	<script src="../js/jquery-2.1.1.min.js"></script>
+	<script src="../js/materialize.min.js"></script>
+	<script src="../js/init.js"></script>
 </body>
 </html>

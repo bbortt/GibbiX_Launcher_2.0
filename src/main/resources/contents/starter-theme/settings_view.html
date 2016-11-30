@@ -4,16 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1.0" />
-<title>VMLauncher 2.0 | Backup-Modul</title>
+<title>VMLauncher 2.0 | Settings-Modul</title>
 
 <!-- CSS  -->
-<link href="css/google_fonts_material_icons.css" type="text/css"
+<link href="../css/google_fonts_material_icons.css" type="text/css"
 	rel="stylesheet">
-<link href="css/materialize.min.css" type="text/css" rel="stylesheet"
+<link href="../css/materialize.min.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
-<link href="css/style.css" type="text/css" rel="stylesheet"
+<link href="../css/style.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
-<link href="css/custom_size_fix.css" type="text/css" rel="stylesheet"
+<link href="../css/custom_size_fix.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
 </head>
 <body>
@@ -22,25 +22,23 @@
 			<a id="logo-container" href="#" class="brand-logo">VMLauncher 2.0</a>
 			<ul class="right hide-on-med-and-down">
 				<li><a class="home_menu_link" href="index.html">Home</a></li>
-				<li><a class="settings_menu_link" href="settings_view.html">Settings</a></li>
-				<li><a class="pstart_menu_link" href="pstart.exe">Portable Apps</a></li>
 			</ul>
 
-			<ul id="nav-mobile" class="side-nav">
+			<ul id="nav-mobile" class="side-nav light-blue lighten-1">
 				<li><a class="home_menu_link" href="index.html">Home</a></li>
-				<li><a class="settings_menu_link" href="settings_view.html">Settings</a></li>
-				<li><a class="pstart_menu_link" href="pstart.exe">Portable Apps</a></li>
 			</ul>
 			<a href="#" data-activates="nav-mobile" class="button-collapse">
-				<img alt="Menu" src="images/ic_menu_black_24dp_2x.png" /></a>
+				<img alt="Menu" src="../images/ic_menu_black_24dp_2x.png" />
+			</a>
 		</div>
 	</nav>
 
 	<div class="section no-pad-bot" id="index-banner">
 		<div class="container">
-			<h1 class="header center orange-text">Backup modul</h1>
+			<h1 class="header center orange-text">Settings modul</h1>
 			<div class="row center">
-				<h5 class="header col s12 light">Im- and export your machines here!</h5>
+				<h5 class="header col s12 light">Manage application settings
+					here!</h5>
 			</div>
 			<!-- 			<div class="row center"> -->
 			<!-- 				<a href="http://materializecss.com/getting-started.html" -->
@@ -56,7 +54,10 @@
 				<!-- Content added via java! -->
 			</div>
 		</div>
-		<!-- 		<div class="section"></div> -->
+		<div class="row center" id="create_session_element">
+			<a href="#" id="save_settings_button"
+				class="btn-large waves-effect waves-light orange">Save settings</a>
+		</div>
 	</div>
 
 	<footer class="page-footer orange">
@@ -99,8 +100,8 @@
 	</footer>
 
 	<!--  Scripts-->
-	<script src="js/jquery-2.1.1.min.js"></script>
-	<script src="js/materialize.min.js"></script>
-	<script src="js/init.js"></script>
+	<script src="../js/jquery-2.1.1.min.js"></script>
+	<script src="../js/materialize.min.js"></script>
+	<script src="../js/init.js"></script>
 </body>
 </html>

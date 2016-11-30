@@ -135,8 +135,12 @@ public class MachineView extends AbstractView<LauncherController> {
 				+ "' class='black-text'>");
 		// <h2 class="center light-blue-text">
 		htmlBuilder.append("<div class='center vm-icon'>");
-		// <img alt="Launch machine" src="images/vm/[ICON]" />
-		htmlBuilder.append("<img alt='Launch machine' src='images/vm/"+machine.name+"-icon.png' class='vm-icon'/>");
+
+		// TODO: What if machine not from gibbiX (external machines shall be
+		// supported too!)
+		// <img alt="Launch machine" src="../images/vm/[ICON]" />
+		htmlBuilder
+				.append("<img alt='Launch machine' src='../images/vm/" + machine.name + "-icon.png' class='vm-icon'/>");
 		// </h2>
 		htmlBuilder.append("</div>");
 		// </a>
@@ -174,9 +178,10 @@ public class MachineView extends AbstractView<LauncherController> {
 		htmlBuilder.append("<a class='settings_menu_link black-text' href='settings_modul'>");
 		// <h2 class="center light-blue-text">
 		htmlBuilder.append("<h2 class='center light-blue-text'>");
-		// <img alt="Launch machine" src="images/ic_settings_black_24dp_2x.png"
+		// <img alt="Launch machine"
+		// src="../images/ic_settings_black_24dp_2x.png"
 		// />
-		htmlBuilder.append("<img alt='Settings' src='images/ic_settings_black_24dp_2x.png' />");
+		htmlBuilder.append("<img alt='Settings' src='../images/ic_settings_black_24dp_2x.png' />");
 		// </h2>
 		htmlBuilder.append("</h2>");
 		// <h5 class="center">Settings</h5>

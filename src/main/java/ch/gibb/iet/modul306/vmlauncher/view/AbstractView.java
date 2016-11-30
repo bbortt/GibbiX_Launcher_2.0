@@ -32,6 +32,8 @@ public abstract class AbstractView<C extends AbstractController> {
 	protected WebView webView;
 	protected C controller;
 
+	private String themePath = "starter-theme/";
+
 	public AbstractView(Stage mainStage, C controller) {
 		this.mainStage = mainStage;
 		this.controller = controller;
@@ -75,7 +77,7 @@ public abstract class AbstractView<C extends AbstractController> {
 
 	protected WebView loadPage(String pageName) {
 		String notWorkingFile = "file:///"
-				+ getClass().getClassLoader().getResource("contents/Default Material-Design/" + pageName).getPath();
+				+ getClass().getClassLoader().getResource("contents/" + themePath + pageName).getPath();
 		LOGGER.debug("Using file at " + notWorkingFile);
 
 		webView.getEngine().load(notWorkingFile);

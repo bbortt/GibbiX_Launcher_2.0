@@ -148,9 +148,10 @@ public class SessionView extends AbstractView<SessionController> {
 		htmlBuilder.append("<a class='settings_menu_link black-text' href='settings_modul'>");
 		// <h2 class="center light-blue-text">
 		htmlBuilder.append("<h2 class='center light-blue-text'>");
-		// <img alt="Launch machine" src="images/ic_settings_black_24dp_2x.png"
+		// <img alt="Launch machine"
+		// src="../images/ic_settings_black_24dp_2x.png"
 		// />
-		htmlBuilder.append("<img alt='Settings' src='images/ic_settings_black_24dp_2x.png' />");
+		htmlBuilder.append("<img alt='Settings' src='../images/ic_settings_black_24dp_2x.png' />");
 		// </h2>
 		htmlBuilder.append("</h2>");
 		// <h5 class="center">Settings</h5>
@@ -275,21 +276,23 @@ public class SessionView extends AbstractView<SessionController> {
 		htmlBuilder.append("<div class='icon-block'>");
 		// <h2 class="center light-blue-text">
 		htmlBuilder.append("<h2 class='center light-blue-text'>");
-		
+
 		// Launch
 		// <a id="[ID]" href="[LAUNCH_SESSION]" class="black-text">
 		htmlBuilder.append("<a id='launch_" + session.id + "' href='" + session.name + "' class='black-text'>");
-		// <img alt="Launch session" src="images/ic_launch_black_24dp_2x.png" />
-		htmlBuilder.append("<img alt='Launch session' src='images/ic_launch_black_24dp_2x.png' />");
+		// <img alt="Launch session" src="../images/ic_launch_black_24dp_2x.png"
+		// />
+		htmlBuilder.append("<img alt='Launch session' src='../images/ic_launch_black_24dp_2x.png' />");
 		// </a>
 		htmlBuilder.append("</a>");
-		
+
 		// Delete
 		// <a id="[ID]" href="[DELETE_SESSION]" class="black-text">
 		htmlBuilder.append("<a id='delete_" + session.id + "' href='" + session.name + "' class='black-text'>");
 		// TODO: Download delete-icon
-		// <img alt="Delete session" src="images/ic_delete_forever_black_24dp_2x.png" />
-		htmlBuilder.append("<img alt='Delete session' src='images/ic_delete_forever_black_24dp_2x.png' />");
+		// <img alt="Delete session"
+		// src="../images/ic_delete_forever_black_24dp_2x.png" />
+		htmlBuilder.append("<img alt='Delete session' src='../images/ic_delete_forever_black_24dp_2x.png' />");
 		// </a>
 		htmlBuilder.append("</a>");
 		// </h2>

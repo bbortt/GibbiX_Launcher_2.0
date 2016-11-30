@@ -176,8 +176,9 @@ public class BackupView extends AbstractView<BackupController> {
 		// <a id="[ID]" href="[PATH]" class="black-text">
 		htmlBuilder.append("<a id='" + machine.id + "_" + machine.name + "_export' href='" + machine.path
 				+ "' class='black-text'>");
-		// <img alt="Backup machine" src="images/ic_backup_black_24dp_2x.png" />
-		htmlBuilder.append("<img alt='Backup machine' src='images/ic_backup_black_24dp_2x.png' />");
+		// <img alt="Backup machine" src="../images/ic_backup_black_24dp_2x.png"
+		// />
+		htmlBuilder.append("<img alt='Backup machine' src='../images/ic_backup_black_24dp_2x.png' />");
 		// </a>
 		htmlBuilder.append("</a>");
 
@@ -186,8 +187,8 @@ public class BackupView extends AbstractView<BackupController> {
 		htmlBuilder.append("<a id='" + machine.id + "_" + machine.name + "_import' href='" + machine.path
 				+ "' class='black-text'>");
 		// <img alt="Restore machine"
-		// src="images/ic_cloud_download_black_24dp_2x.png" />
-		htmlBuilder.append("<img alt='Restore machine' src='images/ic_cloud_download_black_24dp_2x.png' />");
+		// src="../images/ic_cloud_download_black_24dp_2x.png" />
+		htmlBuilder.append("<img alt='Restore machine' src='../images/ic_cloud_download_black_24dp_2x.png' />");
 		// </a>
 		htmlBuilder.append("</a>");
 		// </h2>
@@ -223,9 +224,10 @@ public class BackupView extends AbstractView<BackupController> {
 		// <h2 class="center light-blue-text">
 		htmlBuilder.append("<h2 class='center light-blue-text'>");
 		// TODO: Download google-material "settings"-icon
-		// <img alt="Launch machine" src="images/ic_settings_black_24dp_2x.png"
+		// <img alt="Launch machine"
+		// src="../images/ic_settings_black_24dp_2x.png"
 		// />
-		htmlBuilder.append("<img alt='Settings' src='images/ic_settings_black_24dp_2x.png' />");
+		htmlBuilder.append("<img alt='Settings' src='../images/ic_settings_black_24dp_2x.png' />");
 		// </h2>
 		htmlBuilder.append("</h2>");
 		// <h5 class="center">Settings</h5>
