@@ -1,1 +1,3 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Sessions><Session Id="2"><Name>Multiple Machines Test</Name><Machine id="0" Name="vmWP2"><Installation_path>D:\\\\1_work\\vmWP1</Installation_path><Config_file>vmWP2.vmx</Config_file><Is_default>true</Is_default></Machine><Machine id="0" Name="vmLP1"><Installation_path>D:\\\\1_work\\vmWP1</Installation_path><Config_file>vmLP1.vmx</Config_file><Is_default>true</Is_default></Machine></Session><Session Id="3"><Name>Input Test</Name><Machine id="1" Name="kali_java_development"><Installation_path>C:\Users\User\VirtualBox VMs\kali_java_development</Installation_path><Config_file>kali_java_development.vbox</Config_file><Is_default>false</Is_default></Machine></Session></Sessions>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Sessions>
+</Sessions>
