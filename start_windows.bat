@@ -2,7 +2,9 @@
 
 TITLE VMLauncher 2.0
 
-CALL lib/figbat /f Doom "VMLauncher 2.0"
+ECHO "---------------------------------------------------------------"
+ECHO "--------------- WELCOME TO VM-LAUNCHER 2.0 --------------------"
+ECHO "---------------------------------------------------------------"
                                                             
 :: This script launches VMLauncher 2.0 as long as the maven-shade-plugin does not work properly!
 :: @author: Timon Borter
@@ -21,4 +23,4 @@ ECHO "---------------------------------------------------------------"
 ECHO Launching maven with temporal properties
 call %~dp0lib\apache-maven-3.3.9\bin\mvn clean install exec:java
 
-EXIT
+:: EXIT
