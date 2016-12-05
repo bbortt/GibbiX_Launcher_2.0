@@ -22,3 +22,6 @@ lib/jdk1.8.0_101
 
 # start scripts
 start_*
+
+# proxy config
+*proxy*
