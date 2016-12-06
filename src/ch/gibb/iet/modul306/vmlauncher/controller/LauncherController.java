@@ -14,12 +14,12 @@ public class LauncherController extends AbstractController {
 	public LauncherController(Stage mainStage, BootController bootController) {
 		super(mainStage, bootController);
 
-		machineView = new MachineView();
+		machineView = new MachineView(mainStage, this);
 	}
 
 	@Override
 	public void loadView() {
-		machineView.display(mainStage, this);
+		machineView.display();
 
 		try {
 			machineView.setXMLMachines(getBootController().getMachineModel().getAllMachinesInWorkDirectory());

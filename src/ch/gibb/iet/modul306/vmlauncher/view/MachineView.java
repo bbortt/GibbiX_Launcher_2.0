@@ -1,6 +1,7 @@
 package ch.gibb.iet.modul306.vmlauncher.view;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -44,14 +45,13 @@ public class MachineView extends AbstractView<LauncherController> {
 
 	public MachineView(Stage mainStage, LauncherController controller) {
 		super(mainStage, controller);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	protected void loadScene() {
 		this.webView = new WebView();
 
-		mainStage.setTitle(DISPLAY_NAME);
+		mainStage.setTitle(displayName);
 
 		if (mainStage.getScene() != null) {
 			mainStage.setScene(new Scene(super.loadPage("machine_view.html"), mainStage.getScene().getWidth(),
@@ -161,7 +161,8 @@ public class MachineView extends AbstractView<LauncherController> {
 		return htmlBuilder.toString();
 	}
 
-	private void showMachinesNotFount() throws SAXException, IOException, ParserConfigurationException {
+	private void showMachinesNotFount()
+			throws SAXException, IOException, ParserConfigurationException, URISyntaxException {
 		LOGGER.info("Inform user that no machine was found");
 
 		// <div class="col s12 m4"><div class="icon-block"><!-- Left filler

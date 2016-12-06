@@ -52,12 +52,12 @@ public class SessionController extends AbstractController {
 
 	public void createSession(Session session) throws JAXBException, IOException {
 		sessionModel.addSession(session);
-		sessionModel.saveSessionChanges();
+		sessionModel.saveChanges();
 	}
 
 	public void deleteSession(Session session, Stage mainStage) throws JAXBException, IOException {
 		sessionModel.removeSession(session);
-		sessionModel.saveSessionChanges();
+		sessionModel.saveChanges();
 		loadView();
 	}
 }

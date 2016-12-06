@@ -28,12 +28,12 @@ public class BackupController extends AbstractController {
 		super(mainStage, bootController);
 
 		backupModel = new BackupModel(this);
-		backupView = new BackupView();
+		backupView = new BackupView(mainStage, this);
 	}
 
 	@Override
 	public void loadView() {
-		backupView.display(mainStage, this);
+		backupView.display();
 
 		try {
 			backupView.setXMLMachines(getBootController().getMachineModel().getAllMachinesInWorkDirectory());

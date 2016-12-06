@@ -1,6 +1,7 @@
 package ch.gibb.iet.modul306.vmlauncher.view;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import org.apache.log4j.Logger;
 import org.w3c.dom.events.Event;
@@ -25,7 +26,7 @@ public class ApplicationView extends AbstractView<BootController> {
 	protected void loadScene() {
 		this.webView = new WebView();
 
-		mainStage.setTitle(DISPLAY_NAME);
+		mainStage.setTitle(displayName);
 
 		if (mainStage.getScene() != null) {
 			mainStage.setScene(new Scene(super.loadPage("index.html"), mainStage.getScene().getWidth(),
@@ -68,7 +69,7 @@ public class ApplicationView extends AbstractView<BootController> {
 			public void handleEvent(Event evt) {
 				try {
 					controller.startPortableAppManager();
-				} catch (IOException e) {
+				} catch (IOException | URISyntaxException e) {
 					LOGGER.error(e.getLocalizedMessage());
 
 					Alert error = new Alert(AlertType.ERROR);

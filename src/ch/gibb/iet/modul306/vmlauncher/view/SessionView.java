@@ -1,5 +1,7 @@
 package ch.gibb.iet.modul306.vmlauncher.view;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -66,7 +68,7 @@ public class SessionView extends AbstractView<SessionController> {
 	protected void loadScene() {
 		this.webView = new WebView();
 
-		mainStage.setTitle(DISPLAY_NAME);
+		mainStage.setTitle(displayName);
 
 		if (mainStage.getScene() != null) {
 			mainStage.setScene(new Scene(super.loadPage("session_view.html"), mainStage.getScene().getWidth(),
@@ -128,7 +130,7 @@ public class SessionView extends AbstractView<SessionController> {
 		bindFooterLinks();
 	}
 
-	private void showMachinesNotFount() {
+	private void showMachinesNotFount() throws URISyntaxException, IOException {
 		LOGGER.info("Inform user that no machine was found");
 
 		// Disable "create" button

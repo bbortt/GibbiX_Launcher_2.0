@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 import org.w3c.dom.NamedNodeMap;
@@ -27,7 +28,7 @@ import javafx.stage.Stage;
 public abstract class AbstractView<C extends AbstractController> {
 	private static final Logger LOGGER = Logger.getLogger(AbstractView.class);
 
-	protected static final String DISPLAY_NAME = "VMLauncher 2.0";
+	protected String displayName;
 	protected String themeName;
 
 	protected Stage mainStage;
@@ -39,8 +40,14 @@ public abstract class AbstractView<C extends AbstractController> {
 		this.mainStage = mainStage;
 		this.controller = controller;
 
-		themeName = controller.getBootController().getApplicationSettings().get("info.application.display.theme")
-				.toString();
+		try {
+			TreeMap<String, Object> applicationSettings = controller.getBootController().getApplicationSettings();
+
+			displayName = applicationSettings.get("application.display.name").toString();
+			themeName = applicationSettings.get("application.display.theme").toString();
+		} catch (URISyntaxException | IOException e) {
+			LOGGER.error(e.getLocalizedMessage());
+		}
 	}
 
 	public void display() {

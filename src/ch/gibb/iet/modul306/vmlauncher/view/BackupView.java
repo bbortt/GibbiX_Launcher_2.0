@@ -55,7 +55,7 @@ public class BackupView extends AbstractView<BackupController> {
 	protected void loadScene() {
 		this.webView = new WebView();
 
-		mainStage.setTitle(DISPLAY_NAME);
+		mainStage.setTitle(displayName);
 
 		if (mainStage.getScene() != null) {
 			mainStage.setScene(new Scene(super.loadPage("backup_view.html"), mainStage.getScene().getWidth(),
@@ -71,7 +71,11 @@ public class BackupView extends AbstractView<BackupController> {
 	protected void viewLoadedCallback()
 			throws InterruptedException, SAXException, IOException, ParserConfigurationException {
 		if (machinesNotFound) {
-			showMachinesNotFount();
+			try {
+				showMachinesNotFount();
+			} catch (URISyntaxException e) {
+				LOGGER.fatal(e.getLocalizedMessage());
+			}
 		} else {
 			addMachinesToView(givenMachines);
 		}
@@ -207,7 +211,8 @@ public class BackupView extends AbstractView<BackupController> {
 		return htmlBuilder.toString();
 	}
 
-	private void showMachinesNotFount() throws SAXException, IOException, ParserConfigurationException {
+	private void showMachinesNotFount()
+			throws SAXException, IOException, ParserConfigurationException, URISyntaxException {
 		LOGGER.info("Inform user that no machine was found");
 
 		// <div class="col s12 m4"><div class="icon-block"><!-- Left filler

@@ -1,5 +1,6 @@
 package ch.gibb.iet.modul306.vmlauncher.controller;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.TreeMap;
@@ -19,16 +20,16 @@ public class SettingsController extends AbstractController {
 	private SettingsModel settingsModul;
 	private SettingsView settingsView;
 
-	public SettingsController(Stage mainStage, BootController bootController) {
+	public SettingsController(Stage mainStage, BootController bootController) throws FileNotFoundException {
 		super(mainStage, bootController);
 
 		settingsModul = new SettingsModel();
-		settingsView = new SettingsView();
+		settingsView = new SettingsView(mainStage, this);
 	}
 
 	@Override
 	public void loadView() {
-		settingsView.display(mainStage, this);
+		settingsView.display();
 
 		try {
 			settingsView.setProperties(settingsModul.readRuntimeConfiguration().getAllProperties());

@@ -40,7 +40,7 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 	protected void loadScene() {
 		this.webView = new WebView();
 
-		mainStage.setTitle(DISPLAY_NAME);
+		mainStage.setTitle(displayName);
 
 		if (mainStage.getScene() != null) {
 			mainStage.setScene(new Scene(super.loadPage("create_session_view.html"), mainStage.getScene().getWidth(),

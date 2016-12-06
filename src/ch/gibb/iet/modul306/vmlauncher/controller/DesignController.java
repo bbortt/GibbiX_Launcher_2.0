@@ -17,12 +17,12 @@ public class DesignController extends AbstractController {
 	public DesignController(Stage mainStage, BootController bootController) {
 		super(mainStage, bootController);
 
-		designView = new DesignView();
+		designView = new DesignView(mainStage, this);
 	}
 
 	@Override
 	public void loadView() {
-		designView.display(mainStage, this);
+		designView.display();
 	}
 
 	public void saveProperty(String name, String value) throws JAXBException, IOException, URISyntaxException {

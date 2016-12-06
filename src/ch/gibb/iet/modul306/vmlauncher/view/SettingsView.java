@@ -47,7 +47,7 @@ public class SettingsView extends AbstractView<SettingsController> {
 	protected void loadScene() {
 		this.webView = new WebView();
 
-		mainStage.setTitle(DISPLAY_NAME);
+		mainStage.setTitle(displayName);
 
 		if (mainStage.getScene() != null) {
 			mainStage.setScene(new Scene(super.loadPage("settings_view.html"), mainStage.getScene().getWidth(),

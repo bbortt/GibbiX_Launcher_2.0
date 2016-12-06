@@ -2,6 +2,7 @@ package ch.gibb.iet.modul306.vmlauncher.model;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,23 +26,28 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 	private TreeMap<String, Object> properties;
 
 	public Object getProperty(String name) {
-		return properties.get(name);
+		return this.properties.get(name);
 	}
 
 	public void setProperty(String name, Object value) {
-		if (properties.get(name) != null) {
-			properties.remove(name);
+		if (this.properties.get(name) != null) {
+			this.properties.remove(name);
 		}
 
-		properties.put(name, value);
+		this.properties.put(name, value);
 	}
 
 	public TreeMap<String, Object> getAllProperties() {
-		return properties;
+		return this.properties;
 	}
 
-	public SettingsModel() {
+	public SettingsModel() throws FileNotFoundException {
 		super();
+
+		if (!SETTINGS_FILE.exists()) {
+			throw new FileNotFoundException(
+					"\"application.properties\" does not exist. Your installation might be corrupt!");
+		}
 	}
 
 	public SettingsModel readRuntimeConfiguration() throws URISyntaxException, IOException {
@@ -56,7 +62,6 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 					properties = new TreeMap<String, Object>();
 				}
 
-				LOGGER.debug(line);
 				String[] splittedValue = line.split("=");
 
 				properties.put(splittedValue[0], splittedValue[1]);
