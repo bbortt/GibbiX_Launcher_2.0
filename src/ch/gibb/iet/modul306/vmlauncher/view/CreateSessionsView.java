@@ -112,7 +112,15 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 							Alert information = new Alert(AlertType.INFORMATION);
 							information.setTitle("Success");
 							information.setContentText("New session successfully created!");
-							information.show();
+							information.showAndWait();
+
+							// TODO: Fix bug and remove message!
+							Alert bugAlert = new Alert(AlertType.WARNING);
+							bugAlert.setTitle("BUG");
+							bugAlert.setHeaderText("Be aware: There is a bug!");
+							bugAlert.setContentText(
+									"New sessions might not be visible at the first refresh attempt. We will fix this bug as soon as possible!");
+							bugAlert.show();
 						} catch (Exception e) {
 							LOGGER.error(e.getLocalizedMessage());
 
