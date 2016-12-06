@@ -16,9 +16,8 @@ log/
 target/
 /bin/
 
-# lib folders
-lib/apache-maven-3.3.9
-lib/jdk1.8.0_101
+# proxy config
+*proxy*
 
-# start scripts
-start_*
+# Local logs
+log/
