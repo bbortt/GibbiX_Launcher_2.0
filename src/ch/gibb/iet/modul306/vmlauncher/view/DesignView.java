@@ -89,9 +89,9 @@ public class DesignView extends AbstractView<DesignController> {
 							controller.getBootController().getApplicationSettings().savePropertiesChanged();
 
 							Alert information = new Alert(AlertType.INFORMATION);
-							information.setTitle("Succeed");
-							information.setContentText(
-									"Succesfully changed theme. Please restart the application to affect changes!");
+							information.setTitle("Success");
+							information.setHeaderText("Changes successfully saved.");
+							information.setContentText("Please restart application to affect changes!");
 							information.show();
 						} catch (Exception e) {
 							e.printStackTrace();

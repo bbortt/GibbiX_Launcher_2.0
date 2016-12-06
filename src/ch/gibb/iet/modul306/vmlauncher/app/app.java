@@ -54,7 +54,7 @@ public class app extends Application {
 
 	private void printGoodBye() {
 		LOGGER.info("--------------------------------------------");
-		LOGGER.info("Application exited.");
+		LOGGER.info("Application exited at " + getCurrentSystemTime());
 		LOGGER.info("--------------------------------------------");
 	}
 

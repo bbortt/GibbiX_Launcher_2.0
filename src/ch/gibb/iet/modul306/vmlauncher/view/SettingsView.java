@@ -75,6 +75,7 @@ public class SettingsView extends AbstractView<SettingsController> {
 
 						Alert information = new Alert(AlertType.INFORMATION);
 						information.setTitle("Success");
+						information.setHeaderText("Changes successfully saved.");
 						information.setContentText("Please restart application to affect changes!");
 						information.show();
 
