@@ -27,6 +27,8 @@ public class SessionController extends AbstractController {
 
 	@Override
 	public void loadView() {
+		sessionModel.updateSessions();
+
 		sessionView.display();
 
 		if (countExistingSessions() > 0) {

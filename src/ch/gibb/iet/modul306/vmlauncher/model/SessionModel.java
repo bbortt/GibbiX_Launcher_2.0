@@ -56,7 +56,7 @@ public class SessionModel extends XMLModel<SessionController> {
 		updateSessions();
 	}
 
-	private void updateSessions() {
+	public void updateSessions() {
 		try {
 			readAllLocalSessions(SESSION_CONFIG);
 		} catch (FileNotFoundException | JAXBException e) {
@@ -64,12 +64,7 @@ public class SessionModel extends XMLModel<SessionController> {
 		}
 	}
 
-	public SessionModel readSessionsFromFile(File sessionFile) throws FileNotFoundException, JAXBException {
-		readAllLocalSessions(sessionFile);
-		return this;
-	}
-
-	private void readAllLocalSessions(File sessionFile) throws JAXBException, FileNotFoundException {
+	public void readAllLocalSessions(File sessionFile) throws JAXBException, FileNotFoundException {
 		if (sessionFile.exists()) {
 			LOGGER.debug("Loading local session configuration from " + sessionFile.getAbsolutePath());
 			sessions = ((XMLSessions) xmlReader.unmarshal(sessionFile)).sessions;
@@ -83,11 +78,7 @@ public class SessionModel extends XMLModel<SessionController> {
 		saveChangesToFile(SESSION_CONFIG);
 	}
 
-	public void saveSessionsToFile(File sessionFile) throws JAXBException, IOException {
-		saveChangesToFile(sessionFile);
-	}
-
-	private void saveChangesToFile(File sessionFile) throws JAXBException, IOException {
+	public void saveChangesToFile(File sessionFile) throws JAXBException, IOException {
 		if (sessions == null) {
 			throw new IllegalArgumentException("No sessions exist to save!");
 		}
@@ -99,7 +90,5 @@ public class SessionModel extends XMLModel<SessionController> {
 
 		LOGGER.info("Saving session configuration to " + sessionFile.getAbsolutePath());
 		xmlWriter.marshal(new XMLSessions(sessions), sessionFile);
-
-		updateSessions();
 	}
 }
