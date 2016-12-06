@@ -109,8 +109,6 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 						try {
 							controller.createSession(createNewSessionFromGUIInputs());
 
-							controller.loadView();
-
 							Alert information = new Alert(AlertType.INFORMATION);
 							information.setTitle("Success");
 							information.setContentText("New session successfully created!");
