@@ -53,9 +53,13 @@ public class SessionModel extends XMLModel<SessionController> {
 		super(controller);
 		super.initialize(XMLSessions.class);
 
+		updateSessions();
+	}
+
+	private void updateSessions() {
 		try {
 			readAllLocalSessions(SESSION_CONFIG);
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException | JAXBException e) {
 			LOGGER.warn(e.getLocalizedMessage());
 		}
 	}
@@ -95,5 +99,7 @@ public class SessionModel extends XMLModel<SessionController> {
 
 		LOGGER.info("Saving session configuration to " + sessionFile.getAbsolutePath());
 		xmlWriter.marshal(new XMLSessions(sessions), sessionFile);
+
+		updateSessions();
 	}
 }
