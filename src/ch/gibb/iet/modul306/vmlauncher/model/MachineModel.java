@@ -1,6 +1,8 @@
 package ch.gibb.iet.modul306.vmlauncher.model;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,15 +10,25 @@ import java.util.List;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import ch.gibb.iet.modul306.vmlauncher.controller.BootController;
 import ch.gibb.iet.modul306.vmlauncher.model.objects.XMLMachine;
 
 public class MachineModel {
 	private static final Logger LOGGER = LogManager.getLogger(MachineModel.class);
 
-	// TODO: Insert configured variables
 	private String gibbiXPath;
 	private String workDirectory;
 	private String vmFileSuffix;
+
+	public MachineModel(BootController controller) {
+		try {
+			gibbiXPath = controller.getApplicationSettings().getProperty("gibbix.path.default").toString();
+			workDirectory = controller.getApplicationSettings().getProperty("gibbix.machines.path.default").toString();
+			vmFileSuffix = controller.getApplicationSettings().getProperty("gibbix.machines.file.suffix").toString();
+		} catch (URISyntaxException | IOException e) {
+			LOGGER.error(e.getLocalizedMessage());
+		}
+	}
 
 	public String getGibbiXRootPath() {
 		return gibbiXPath + workDirectory;

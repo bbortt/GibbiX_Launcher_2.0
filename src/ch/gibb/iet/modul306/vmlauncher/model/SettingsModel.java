@@ -98,7 +98,7 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 
 					if (foundEntry != null) {
 						LOGGER.debug("Updating " + foundEntry.getKey() + " to " + foundEntry.getValue());
-						propertyString.append("\n" + foundEntry.getKey() + "=" + foundEntry.getValue());
+						propertyString.append(foundEntry.getKey() + "=" + foundEntry.getValue() + "\n");
 					} else {
 						propertyString.append(line);
 					}

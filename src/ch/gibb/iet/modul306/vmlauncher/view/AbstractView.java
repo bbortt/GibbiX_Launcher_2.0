@@ -41,7 +41,8 @@ public abstract class AbstractView<C extends AbstractController> {
 		this.controller = controller;
 
 		try {
-			TreeMap<String, Object> applicationSettings = controller.getBootController().getApplicationSettings();
+			TreeMap<String, Object> applicationSettings = controller.getBootController().getApplicationSettings()
+					.getAllProperties();
 
 			displayName = applicationSettings.get("application.display.name").toString();
 			themeName = applicationSettings.get("application.display.theme").toString();
@@ -91,7 +92,7 @@ public abstract class AbstractView<C extends AbstractController> {
 	protected WebView loadPage(String pageName) {
 		LOGGER.debug("Current theme is " + themeName);
 
-		String newDisplayFile = "file:///" + new File("resources/" + themeName + "/" + pageName).getPath();
+		String newDisplayFile = "file:///" + new File("resources/" + themeName + "/" + pageName).getAbsolutePath();
 		LOGGER.debug("Using file at " + newDisplayFile);
 
 		webView.getEngine().load(newDisplayFile);

@@ -38,8 +38,8 @@ public class BackupController extends AbstractController {
 		try {
 			backupView.setXMLMachines(getBootController().getMachineModel().getAllMachinesInWorkDirectory());
 		} catch (IllegalArgumentException e) {
+			LOGGER.warn(e.getLocalizedMessage());
 			backupView.setMachinesNotFound();
-			LOGGER.error(e.getLocalizedMessage());
 		}
 	}
 

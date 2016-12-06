@@ -84,8 +84,9 @@ public class DesignView extends AbstractView<DesignController> {
 						LOGGER.debug("Changing theme to " + themes[selectedIndex].toLowerCase());
 
 						try {
-							controller.saveProperty("info.application.display.theme",
-									themes[selectedIndex].toLowerCase());
+							controller.getBootController().getApplicationSettings()
+									.setProperty("application.display.theme", themes[selectedIndex].toLowerCase());
+							controller.getBootController().getApplicationSettings().savePropertiesChanged();
 
 							Alert information = new Alert(AlertType.INFORMATION);
 							information.setTitle("Succeed");

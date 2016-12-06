@@ -163,7 +163,7 @@ public class SessionView extends AbstractView<SessionController> {
 		htmlBuilder.append("</a>");
 		// <p class="light">[SOME TEXT]</p>
 		htmlBuilder.append("<p class='light'>We were not able to find your GibbiX at the  default path on "
-				+ controller.getBootController().getApplicationSettings().get("gibbix.path.default").toString()
+				+ controller.getBootController().getApplicationSettings().getProperty("gibbix.path.default").toString()
 				+ ". Please check your settings!</p>");
 		// </div>
 		htmlBuilder.append("</div>");

@@ -3,9 +3,6 @@ package ch.gibb.iet.modul306.vmlauncher.controller;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.TreeMap;
-
-import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -37,10 +34,5 @@ public class SettingsController extends AbstractController {
 			settingsView.setPropertiesNotFound();
 			LOGGER.error(e.getLocalizedMessage());
 		}
-	}
-
-	public void saveProperties(TreeMap<String, Object> properties)
-			throws JAXBException, IOException, URISyntaxException {
-		settingsModul.overrideProperties(properties);
 	}
 }

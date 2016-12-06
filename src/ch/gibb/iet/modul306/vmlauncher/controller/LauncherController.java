@@ -24,8 +24,8 @@ public class LauncherController extends AbstractController {
 		try {
 			machineView.setXMLMachines(getBootController().getMachineModel().getAllMachinesInWorkDirectory());
 		} catch (IllegalArgumentException e) {
+			LOGGER.warn(e.getLocalizedMessage());
 			machineView.setMachinesNotFound();
-			LOGGER.error(e.getLocalizedMessage());
 		}
 	}
 }

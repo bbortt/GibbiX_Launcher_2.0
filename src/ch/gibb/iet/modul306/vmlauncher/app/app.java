@@ -1,10 +1,14 @@
 package ch.gibb.iet.modul306.vmlauncher.app;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import ch.gibb.iet.modul306.vmlauncher.controller.BootController;
 import javafx.application.Application;
@@ -14,7 +18,14 @@ public class app extends Application {
 	private static final Logger LOGGER = Logger.getLogger(app.class);
 
 	public static void main(String[] args) {
-		BasicConfigurator.configure();
+		try {
+			Properties props = new Properties();
+			props.load(new FileInputStream("conf/log4j.properties"));
+			PropertyConfigurator.configure(props);
+		} catch (IOException e) {
+			LOGGER.warn(e.getLocalizedMessage());
+			BasicConfigurator.configure();
+		}
 
 		LOGGER.info("--------------------------------------------");
 		LOGGER.info("Application starting at " + getCurrentSystemTime());

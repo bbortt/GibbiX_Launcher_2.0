@@ -218,7 +218,7 @@ public class SettingsView extends AbstractView<SettingsController> {
 		updateObjectProperties();
 
 		try {
-			controller.saveProperties(properties);
+			controller.getBootController().getApplicationSettings().overrideProperties(properties);
 		} catch (Exception e) {
 			LOGGER.error(e.getLocalizedMessage());
 

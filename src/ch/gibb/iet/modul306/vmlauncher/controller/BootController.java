@@ -39,6 +39,10 @@ public class BootController extends AbstractController {
 	}
 
 	public MachineModel getMachineModel() {
+		if (this.machineModel == null) {
+			this.machineModel = new MachineModel(this);
+		}
+
 		return this.machineModel;
 	}
 
@@ -58,12 +62,12 @@ public class BootController extends AbstractController {
 		return this.settingsController;
 	}
 
-	public TreeMap<String, Object> getApplicationSettings() throws URISyntaxException, IOException {
+	public SettingsModel getApplicationSettings() throws URISyntaxException, IOException {
 		if (settingsModel == null) {
 			settingsModel = new SettingsModel().readRuntimeConfiguration();
 		}
 
-		return this.settingsModel.getAllProperties();
+		return this.settingsModel;
 	}
 
 	public Stage getMainStage() {
@@ -85,8 +89,8 @@ public class BootController extends AbstractController {
 	}
 
 	public void startPortableAppManager() throws IOException, URISyntaxException {
-		File pstartFile = new File(getApplicationSettings().get("gibbix.path.default").toString()
-				+ getApplicationSettings().get("application.external.apps.path").toString());
+		File pstartFile = new File(getApplicationSettings().getProperty("gibbix.path.default").toString()
+				+ getApplicationSettings().getProperty("application.external.apps.path").toString());
 
 		if (!pstartFile.exists()) {
 			throw new FileNotFoundException(
@@ -107,8 +111,6 @@ public class BootController extends AbstractController {
 		loadModules();
 		loadView();
 
-		machineModel = new MachineModel();
-
 		LOGGER.info("--------------------------------------------");
 		LOGGER.info("Startup finished at " + app.getCurrentSystemTime() + ". Application ready to use.");
 		LOGGER.info("Good luck @ GIBB :)");
@@ -117,7 +119,7 @@ public class BootController extends AbstractController {
 	}
 
 	private void readLocalSettings() throws URISyntaxException, IOException {
-		TreeMap<String, Object> settings = getApplicationSettings();
+		TreeMap<String, Object> settings = getApplicationSettings().getAllProperties();
 
 		isLauncherModulEnabled = Boolean.valueOf(settings.get("application.modules.launcher").toString());
 		isBackupModulEnabled = Boolean.valueOf(settings.get("application.modules.backup").toString());
