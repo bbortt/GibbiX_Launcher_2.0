@@ -61,7 +61,8 @@ public class MachineModel {
 		}
 
 		for (File subFile : currentDir.listFiles()) {
-			if (subFile.isFile() && subFile.getName().contains(vmFileSuffix)) {
+			if (subFile.isFile() && subFile.getName().contains(vmFileSuffix)
+					&& !subFile.getName().contains(vmFileSuffix + "f")) {
 				LOGGER.debug("Got machine at " + subFile.getAbsolutePath());
 
 				XMLMachine newMachine = new XMLMachine();
