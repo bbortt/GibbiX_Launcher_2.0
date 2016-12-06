@@ -34,7 +34,8 @@ We currently have no automated tests to run.
 
 ## Deployment
 
-Just export the project as a Running-Jar with the app#main(String[] args) as default function.
+Just export the project as a Running-Jar with the app#main(String[] args) as default function. Copy the folders "conf" and "resources" into the same root folder as the .jar-file.
+Alternatively you can use our newest release at [the release page](https://github.com/bbortt/GibbiX_Launcher_2.0/releases).
 
 ## Built With
 
