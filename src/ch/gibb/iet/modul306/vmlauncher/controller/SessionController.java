@@ -19,10 +19,11 @@ public class SessionController extends AbstractController {
 	private SessionModel sessionModel;
 	private SessionView sessionView;
 
-	public SessionController(Stage mainStage, BootController bootController) {
+	public SessionController(Stage mainStage, BootController bootController)
+			throws FileNotFoundException, JAXBException {
 		super(mainStage, bootController);
 
-		sessionModel = new SessionModel();
+		sessionModel = new SessionModel(this);
 		sessionView = new SessionView(mainStage, this);
 	}
 
@@ -31,9 +32,8 @@ public class SessionController extends AbstractController {
 		sessionView.display();
 
 		try {
-			sessionModel.initalize(this);
 			sessionView.setSessions(sessionModel.getAllSessions());
-		} catch (NullPointerException | FileNotFoundException | JAXBException e) {
+		} catch (NullPointerException e) {
 			sessionView.setSessionsNotFound();
 			LOGGER.error(e.getLocalizedMessage());
 		}

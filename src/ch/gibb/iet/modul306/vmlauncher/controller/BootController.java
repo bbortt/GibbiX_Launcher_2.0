@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.TreeMap;
 
+import javax.xml.bind.JAXBException;
+
 import org.apache.log4j.Logger;
 
 import ch.gibb.iet.modul306.vmlauncher.app.app;
@@ -146,9 +148,14 @@ public class BootController extends AbstractController {
 			designController = new DesignController(mainStage, this);
 		}
 
-		if (isSessionModulEnabled) {
-			LOGGER.debug("Session-modul is enabled. Creating");
-			sessionController = new SessionController(mainStage, this);
+		try {
+			if (isSessionModulEnabled) {
+				LOGGER.debug("Session-modul is enabled. Creating");
+				sessionController = new SessionController(mainStage, this);
+			}
+		} catch (FileNotFoundException | JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		try {

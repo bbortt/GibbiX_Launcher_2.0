@@ -53,14 +53,10 @@ public class SessionModel extends XMLModel<SessionController> {
 		return sessions.toArray(new Session[sessions.size()]);
 	}
 
-	public SessionModel() {
-		super();
-	}
-
-	public SessionModel initalize(SessionController controller) throws JAXBException, FileNotFoundException {
-		super.initalize(controller, XMLSessions.class);
+	public SessionModel(SessionController controller) throws JAXBException, FileNotFoundException {
+		super(controller);
+		super.initialize(XMLSessions.class);
 		readAllLocalSessions(SESSION_CONFIG);
-		return this;
 	}
 
 	public SessionModel readSessionsFromFile(File sessionFile) throws FileNotFoundException, JAXBException {
