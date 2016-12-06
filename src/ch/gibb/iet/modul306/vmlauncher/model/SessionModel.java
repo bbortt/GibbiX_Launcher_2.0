@@ -35,28 +35,29 @@ public class SessionModel extends XMLModel<SessionController> {
 
 	public void removeSession(Session session) {
 		sessions.remove(session);
-
-		if (sessions.size() == 0) {
-			sessions = null;
-		}
 	}
 
 	public void removeSessionByIndex(int index) {
 		sessions.remove(index);
-
-		if (sessions.size() == 0) {
-			sessions = null;
-		}
 	}
 
 	public Session[] getAllSessions() {
+		if (sessions == null) {
+			sessions = new ArrayList<>();
+		}
+
 		return sessions.toArray(new Session[sessions.size()]);
 	}
 
-	public SessionModel(SessionController controller) throws JAXBException, FileNotFoundException {
+	public SessionModel(SessionController controller) throws JAXBException {
 		super(controller);
 		super.initialize(XMLSessions.class);
-		readAllLocalSessions(SESSION_CONFIG);
+
+		try {
+			readAllLocalSessions(SESSION_CONFIG);
+		} catch (FileNotFoundException e) {
+			LOGGER.warn(e.getLocalizedMessage());
+		}
 	}
 
 	public SessionModel readSessionsFromFile(File sessionFile) throws FileNotFoundException, JAXBException {
@@ -83,7 +84,7 @@ public class SessionModel extends XMLModel<SessionController> {
 	}
 
 	private void saveChangesToFile(File sessionFile) throws JAXBException, IOException {
-		if (sessions == null || sessions.size() == 0) {
+		if (sessions == null) {
 			throw new IllegalArgumentException("No sessions exist to save!");
 		}
 

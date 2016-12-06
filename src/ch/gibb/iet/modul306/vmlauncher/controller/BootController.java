@@ -153,9 +153,8 @@ public class BootController extends AbstractController {
 				LOGGER.debug("Session-modul is enabled. Creating");
 				sessionController = new SessionController(mainStage, this);
 			}
-		} catch (FileNotFoundException | JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (JAXBException e) {
+			LOGGER.fatal(e.getLocalizedMessage());
 		}
 
 		try {

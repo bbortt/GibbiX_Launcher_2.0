@@ -1,6 +1,5 @@
 package ch.gibb.iet.modul306.vmlauncher.controller;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.xml.bind.JAXBException;
@@ -19,8 +18,7 @@ public class SessionController extends AbstractController {
 	private SessionModel sessionModel;
 	private SessionView sessionView;
 
-	public SessionController(Stage mainStage, BootController bootController)
-			throws FileNotFoundException, JAXBException {
+	public SessionController(Stage mainStage, BootController bootController) throws JAXBException {
 		super(mainStage, bootController);
 
 		sessionModel = new SessionModel(this);
@@ -31,11 +29,15 @@ public class SessionController extends AbstractController {
 	public void loadView() {
 		sessionView.display();
 
-		try {
-			sessionView.setSessions(sessionModel.getAllSessions());
-		} catch (NullPointerException e) {
+		if (countExistingSessions() > 0) {
+			try {
+				sessionView.setSessions(sessionModel.getAllSessions());
+			} catch (NullPointerException e) {
+				sessionView.setSessionsNotFound();
+				LOGGER.error(e.getLocalizedMessage());
+			}
+		} else {
 			sessionView.setSessionsNotFound();
-			LOGGER.error(e.getLocalizedMessage());
 		}
 
 		try {
