@@ -116,25 +116,18 @@ public class SettingsView extends AbstractView<SettingsController> {
 	private void showPropertiesNotFound() {
 		LOGGER.info("Inform user that no properties were found");
 
-		// <div class="col s12 m4"><div class="icon-block"><!-- Left filler
-		// --></div></div>
 		String leftFiller = "<div class='col s12 m4'><div class='icon-block'><!-- Left filler --></div></div>";
 		addHTMLToElementWithId(getContentElementId(), leftFiller);
 
 		StringBuilder htmlBuilder = new StringBuilder();
 
-		// <div class="col s12 m4">
 		htmlBuilder.append("<div class='col s12 m4'>");
-		// <p class="light">[SOME TEXT]</p>
 		htmlBuilder.append(
 				"<p class='light'>We were not able to find any configurations. Please check your classpath!</p>");
-		// </div>
 		htmlBuilder.append("</div>");
 
 		addHTMLToElementWithId(getContentElementId(), htmlBuilder.toString());
 
-		// <div class="col s12 m4"><div class="icon-block"><!-- Right filler
-		// --></div></div>
 		String rightFiller = "<div class='col s12 m4'><div class='icon-block'><!-- Right filler --></div></div>";
 		addHTMLToElementWithId(getContentElementId(), rightFiller);
 	}
@@ -162,30 +155,22 @@ public class SettingsView extends AbstractView<SettingsController> {
 	private String createBooleanHTMLElement(String name, boolean value) {
 		StringBuilder elementBuilder = new StringBuilder();
 
-		// <div class="switch col s12">
 		elementBuilder.append("<div class='switch col s12'>");
-		// <p>[PROPERTY_KEY]</p>
 		elementBuilder.append("<p>" + name + "</p>");
-		// <label>
 		elementBuilder.append("<label>");
 		// Off
 		elementBuilder.append("False");
 
 		if (value == true) {
-			// <input type="checkbox">
 			elementBuilder.append("<input id='" + name + "' type='checkbox' checked='true'>");
 		} else {
-			// <input type="checkbox">
 			elementBuilder.append("<input id='" + name + "' type='checkbox'>");
 		}
 
-		// <span class="lever"></span>
 		elementBuilder.append("<span class='lever'></span>");
 		// On
 		elementBuilder.append("True");
-		// </label>
 		elementBuilder.append("</label>");
-		// </div>
 		elementBuilder.append("</div>");
 
 		return elementBuilder.toString();
@@ -194,22 +179,17 @@ public class SettingsView extends AbstractView<SettingsController> {
 	private String createStringHTMLElement(String name, String value) {
 		StringBuilder elementBuilder = new StringBuilder();
 
-		// <div class="input-field col s12">
 		elementBuilder.append("<div class='input-field col s12'>");
-		// <p>[PROPERTY_KEY]</p>
 		elementBuilder.append("<p>" + name + "</p>");
 
 		if (value != null && value != "") {
-			// <input id="[PROPERTY_KEY]" type="text" class="validate">
-			elementBuilder.append("<input id='" + name + "' type='text' class='validate' value='" + value + "'>");
+			elementBuilder.append(
+					"<input id='" + name + "' type='text' class='validate content-text' value='" + value + "'>");
 		} else {
-			// <input placeholder="[PROPERTY-VALUE]" id="[PROPERTY_KEY]"
-			// type="text" class="validate">
-			elementBuilder
-					.append("<input placeholder='" + name + "-value' id='" + name + "' type='text' class='validate'>");
+			elementBuilder.append("<input placeholder='" + name + "-value' id='" + name
+					+ "' type='text' class='validate content-text'>");
 		}
 
-		// </div>
 		elementBuilder.append("</div>");
 
 		return elementBuilder.toString();

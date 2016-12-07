@@ -49,7 +49,6 @@ public class BackupView extends AbstractView<BackupController> {
 
 	public BackupView(Stage mainStage, BackupController controller) {
 		super(mainStage, controller);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -71,6 +70,8 @@ public class BackupView extends AbstractView<BackupController> {
 	@Override
 	protected void viewLoadedCallback()
 			throws InterruptedException, SAXException, IOException, ParserConfigurationException {
+		loadAndApplyTheme();
+
 		if (machinesNotFound) {
 			try {
 				showMachinesNotFount();
@@ -172,41 +173,26 @@ public class BackupView extends AbstractView<BackupController> {
 
 		StringBuilder htmlBuilder = new StringBuilder();
 
-		// <div class="col s12 m4">
 		htmlBuilder.append("<div class='col s12 m3 l2'>");
-		// <div class="icon-block">
 		htmlBuilder.append("<div class='icon-block'>");
 
 		// Export
-		// <h2 class="center light-blue-text">
-		htmlBuilder.append("<h2 class='center light-blue-text'>");
-		// <a id="[ID]" href="[PATH]" class="black-text">
+		htmlBuilder.append("<h2 class='center content-text'>");
 		htmlBuilder.append("<a id='" + machine.id + "_" + machine.name + "_export' href='" + machine.path
-				+ "' class='black-text'>");
-		// <img alt="Backup machine" src="../images/ic_backup_black_24dp_2x.png"
-		// />
-		htmlBuilder.append("<img alt='Backup machine' src='../images/ic_backup_black_24dp_2x.png' />");
-		// </a>
+				+ "' class='content-link'>");
+		htmlBuilder.append("<img alt='Backup machine' src='../images/ic_backup_white_24dp_2x.png' />");
 		htmlBuilder.append("</a>");
 
 		// Import
-		// <a id="[ID]" href="[PATH]" class="black-text">
 		htmlBuilder.append("<a id='" + machine.id + "_" + machine.name + "_import' href='" + machine.path
-				+ "' class='black-text'>");
-		// <img alt="Restore machine"
-		// src="../images/ic_cloud_download_black_24dp_2x.png" />
-		htmlBuilder.append("<img alt='Restore machine' src='../images/ic_cloud_download_black_24dp_2x.png' />");
-		// </a>
+				+ "' class='content-link'>");
+		htmlBuilder.append("<img alt='Restore machine' src='../images/ic_cloud_download_white_24dp_2x.png' />");
 		htmlBuilder.append("</a>");
-		// </h2>
 		htmlBuilder.append("</h2>");
 
-		// <h5 class="center">[NAME]</h5>
-		htmlBuilder.append("<h5 class='center'>" + machine.name + "</h5>");
+		htmlBuilder.append("<h5 class='center content-header'>" + machine.name + "</h5>");
 
-		// </div>
 		htmlBuilder.append("</div>");
-		// </div>
 		htmlBuilder.append("</div>");
 
 		return htmlBuilder.toString();
@@ -216,45 +202,27 @@ public class BackupView extends AbstractView<BackupController> {
 			throws SAXException, IOException, ParserConfigurationException, URISyntaxException {
 		LOGGER.info("Inform user that no machine was found");
 
-		// <div class="col s12 m4"><div class="icon-block"><!-- Left filler
-		// --></div></div>
 		String leftFiller = "<div class='col s12 m4'><div class='icon-block'><!-- Left filler --></div></div>";
 		addHTMLToElementWithId(getContentElementId(), leftFiller);
 
 		StringBuilder htmlBuilder = new StringBuilder();
 
-		// <div class="col s12 m4">
 		htmlBuilder.append("<div class='col s12 m4'>");
-		// <div class="icon-block">
 		htmlBuilder.append("<div class='icon-block'>");
-		// <a class="settings_menu_link black-text" href="settings_modul">
-		htmlBuilder.append("<a class='settings_menu_link black-text' href='settings_modul'>");
-		// <h2 class="center light-blue-text">
-		htmlBuilder.append("<h2 class='center light-blue-text'>");
-		// TODO: Download google-material "settings"-icon
-		// <img alt="Launch machine"
-		// src="../images/ic_settings_black_24dp_2x.png"
-		// />
-		htmlBuilder.append("<img alt='Settings' src='../images/ic_settings_black_24dp_2x.png' />");
-		// </h2>
+		htmlBuilder.append("<a class='settings_menu_link content-link' href='settings_modul'>");
+		htmlBuilder.append("<h2 class='center content-text'>");
+		htmlBuilder.append("<img alt='Settings' src='../images/ic_settings_white_24dp_2x.png' />");
 		htmlBuilder.append("</h2>");
-		// <h5 class="center">Settings</h5>
-		htmlBuilder.append("<h5 class='center'>Settings</h5>");
-		// </a>
+		htmlBuilder.append("<h5 class='center content-header'>Settings</h5>");
 		htmlBuilder.append("</a>");
-		// <p class="light">[SOME TEXT]</p>
-		htmlBuilder.append("<p class='light'>We were not able to find your GibbiX at the  default path on "
+		htmlBuilder.append("<p class='light content-text'>We were not able to find your GibbiX at the  default path on "
 				+ controller.getBootController().getApplicationSettings().getProperty("gibbix.path.default").toString()
 				+ ". Please check your settings!</p>");
-		// </div>
 		htmlBuilder.append("</div>");
-		// </div>
 		htmlBuilder.append("</div>");
 
 		addHTMLToElementWithId(getContentElementId(), htmlBuilder.toString());
 
-		// <div class="col s12 m4"><div class="icon-block"><!-- Right filler
-		// --></div></div>
 		String rightFiller = "<div class='col s12 m4'><div class='icon-block'><!-- Right filler --></div></div>";
 		addHTMLToElementWithId(getContentElementId(), rightFiller);
 	}

@@ -145,24 +145,17 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 	private void addNewMachineSelect() {
 		StringBuilder builder = new StringBuilder();
 
-		// <div class="input-field col s12">
-		builder.append("<div class='input-field col s12'>");
-		// <select id="session_machines_select">
+		builder.append("<div class='input-field col s12 content-text'>");
 		builder.append("<select id='machine_select_element_" + selectIdCounter + "'>");
-		// <option value="" disabled selected>Choose virtual machines</option>
 		builder.append("<option value='default' disabled selected>Add machine</option>");
 
 		// Virtual machines
-		// <option value="3">Option 3</option>
 		Arrays.asList(givenMachines).forEach(machine -> {
 			builder.append(createMachineOptionHTMLElement(machine));
 		});
 
-		// </select>
 		builder.append("</select>");
-		// <label>Add machine</label>
-		builder.append("<label>Add machine</label>");
-		// </div>
+		builder.append("<label class='content-header'>Add machine</label>");
 		builder.append("</div>");
 
 		addHTMLToElementWithId("root_content_element", builder.toString());
@@ -175,8 +168,7 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 
 		StringBuilder optionBuilder = new StringBuilder();
 
-		// <option value="3">Option 3</option>
-		optionBuilder.append("<option value='" + machine.id + "'>" + machine.name + "</option>");
+		optionBuilder.append("<option value='" + machine.id + "' class='content-text'>" + machine.name + "</option>");
 
 		return optionBuilder.toString();
 	}

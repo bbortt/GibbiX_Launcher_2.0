@@ -136,44 +136,27 @@ public class SessionView extends AbstractView<SessionController> {
 		// Disable "create" button
 		webView.getEngine().getDocument().getElementById("create_session_button").setAttribute("disabled", null);
 
-		// <div class="col s12 m4"><div class="icon-block"><!-- Left filler
-		// --></div></div>
 		String leftFiller = "<div class='col s12 m4'><div class='icon-block'><!-- Left filler --></div></div>";
 		addHTMLToElementWithId(getContentElementId(), leftFiller);
 
 		StringBuilder htmlBuilder = new StringBuilder();
 
-		// <div class="col s12 m4">
 		htmlBuilder.append("<div class='col s12 m4'>");
-		// <div class="icon-block">
 		htmlBuilder.append("<div class='icon-block'>");
-		// <a class="settings_menu_link black-text" href="settings_modul">
-		htmlBuilder.append("<a class='settings_menu_link black-text' href='settings_modul'>");
-		// <h2 class="center light-blue-text">
-		htmlBuilder.append("<h2 class='center light-blue-text'>");
-		// <img alt="Launch machine"
-		// src="../images/ic_settings_black_24dp_2x.png"
-		// />
-		htmlBuilder.append("<img alt='Settings' src='../images/ic_settings_black_24dp_2x.png' />");
-		// </h2>
+		htmlBuilder.append("<a class='settings_menu_link content-link' href='settings_modul'>");
+		htmlBuilder.append("<h2 class='center content-text'>");
+		htmlBuilder.append("<img alt='Settings' src='../images/ic_settings_white_24dp_2x.png' />");
 		htmlBuilder.append("</h2>");
-		// <h5 class="center">Settings</h5>
-		htmlBuilder.append("<h5 class='center'>Settings</h5>");
-		// </a>
+		htmlBuilder.append("<h5 class='center content-header'>Settings</h5>");
 		htmlBuilder.append("</a>");
-		// <p class="light">[SOME TEXT]</p>
-		htmlBuilder.append("<p class='light'>We were not able to find your GibbiX at the  default path on "
+		htmlBuilder.append("<p class='light content-text'>We were not able to find your GibbiX at the  default path on "
 				+ controller.getBootController().getApplicationSettings().getProperty("gibbix.path.default").toString()
 				+ ". Please check your settings!</p>");
-		// </div>
 		htmlBuilder.append("</div>");
-		// </div>
 		htmlBuilder.append("</div>");
 
 		addHTMLToElementWithId(getContentElementId(), htmlBuilder.toString());
 
-		// <div class="col s12 m4"><div class="icon-block"><!-- Right filler
-		// --></div></div>
 		String rightFiller = "<div class='col s12 m4'><div class='icon-block'><!-- Right filler --></div></div>";
 		addHTMLToElementWithId(getContentElementId(), rightFiller);
 	}
@@ -181,25 +164,26 @@ public class SessionView extends AbstractView<SessionController> {
 	private void showSessionsNotFound() {
 		LOGGER.info("Inform user that no sessions were found");
 
-		// <div class="col s12 m4"><div class="icon-block"><!-- Left filler
-		// --></div></div>
 		String leftFiller = "<div class='col s12 m4'><div class='icon-block'><!-- Left filler --></div></div>";
 		addHTMLToElementWithId(getContentElementId(), leftFiller);
 
 		StringBuilder htmlBuilder = new StringBuilder();
 
-		// <div class="col s12 m4">
 		htmlBuilder.append("<div class='col s12 m4'>");
-		// <p class="light">[SOME TEXT]</p>
+		htmlBuilder.append("<div class='icon-block'>");
+		htmlBuilder.append("<a class='settings_menu_link content-link' href='settings_modul'>");
+		htmlBuilder.append("<h2 class='center content-text'>");
+		htmlBuilder.append("<img alt='Settings' src='../images/ic_settings_white_24dp_2x.png' />");
+		htmlBuilder.append("</h2>");
+		htmlBuilder.append("<h5 class='center content-header'>Settings</h5>");
+		htmlBuilder.append("</a>");
 		htmlBuilder.append(
-				"<p class='light'>We were not able to find any session. Create your first session by clicking the button below.</p>");
-		// </div>
+				"<p class='light content-text'>We were not able to find any session. Create your first session by clicking the button below.</p>");
+		htmlBuilder.append("</div>");
 		htmlBuilder.append("</div>");
 
 		addHTMLToElementWithId(getContentElementId(), htmlBuilder.toString());
 
-		// <div class="col s12 m4"><div class="icon-block"><!-- Right filler
-		// --></div></div>
 		String rightFiller = "<div class='col s12 m4'><div class='icon-block'><!-- Right filler --></div></div>";
 		addHTMLToElementWithId(getContentElementId(), rightFiller);
 	}
@@ -274,43 +258,26 @@ public class SessionView extends AbstractView<SessionController> {
 
 		StringBuilder htmlBuilder = new StringBuilder();
 
-		// <div class="col s12 m4">
 		htmlBuilder.append("<div class='col s12 m4'>");
-		// <div class="icon-block">
 		htmlBuilder.append("<div class='icon-block'>");
-		// <h2 class="center light-blue-text">
-		htmlBuilder.append("<h2 class='center light-blue-text'>");
+		htmlBuilder.append("<h2 class='center content-text'>");
 
 		// Launch
-		// <a id="[ID]" href="[LAUNCH_SESSION]" class="black-text">
-		htmlBuilder.append("<a id='launch_" + session.id + "' href='" + session.name + "' class='black-text'>");
-		// <img alt="Launch session" src="../images/ic_launch_black_24dp_2x.png"
-		// />
-		htmlBuilder.append("<img alt='Launch session' src='../images/ic_launch_black_24dp_2x.png' />");
-		// </a>
+		htmlBuilder.append("<a id='launch_" + session.id + "' href='" + session.name + "' class='content-link'>");
+		htmlBuilder.append("<img alt='Launch session' src='../images/ic_launch_white_24dp_2x.png' />");
 		htmlBuilder.append("</a>");
 
 		// Delete
-		// <a id="[ID]" href="[DELETE_SESSION]" class="black-text">
-		htmlBuilder.append("<a id='delete_" + session.id + "' href='" + session.name + "' class='black-text'>");
-		// TODO: Download delete-icon
-		// <img alt="Delete session"
-		// src="../images/ic_delete_forever_black_24dp_2x.png" />
-		htmlBuilder.append("<img alt='Delete session' src='../images/ic_delete_forever_black_24dp_2x.png' />");
-		// </a>
+		htmlBuilder.append("<a id='delete_" + session.id + "' href='" + session.name + "' class='content-link'>");
+		htmlBuilder.append("<img alt='Delete session' src='../images/ic_delete_forever_white_24dp_2x.png' />");
 		htmlBuilder.append("</a>");
-		// </h2>
 		htmlBuilder.append("</h2>");
-		// <h5 class="center">[NAME]</h5>
-		htmlBuilder.append("<h5 class='center'>" + session.name + "</h5>");
+		htmlBuilder.append("<h5 class='center content-header'>" + session.name + "</h5>");
 
-		// <p class="light">[SOME TEXT]</p>
 		// TODO: Might add the path or some information here!
 		// TODO: To get information refactor getData() from zimmermannj
 
-		// </div>
 		htmlBuilder.append("</div>");
-		// </div>
 		htmlBuilder.append("</div>");
 
 		return htmlBuilder.toString();

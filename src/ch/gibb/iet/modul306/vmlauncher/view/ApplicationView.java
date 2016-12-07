@@ -40,6 +40,8 @@ public class ApplicationView extends AbstractView<BootController> {
 
 	@Override
 	protected void viewLoadedCallback() throws InterruptedException {
+		loadAndApplyTheme();
+
 		// bindClickEventToLinkClass("hosts_menu_link", new EventListener() {
 		// @Override
 		// public void handleEvent(Event evt) {

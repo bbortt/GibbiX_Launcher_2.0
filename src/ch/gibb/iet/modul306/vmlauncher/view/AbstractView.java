@@ -90,14 +90,20 @@ public abstract class AbstractView<C extends AbstractController> {
 	protected abstract void loadScene();
 
 	protected WebView loadPage(String pageName) {
-		LOGGER.debug("Current theme is " + themeName);
-
-		String newDisplayFile = "file:///" + new File("resources/" + themeName + "/" + pageName).getAbsolutePath();
-		LOGGER.debug("Using file at " + newDisplayFile);
+		String newDisplayFile = "file:///" + new File("resources/sites/" + pageName).getAbsolutePath();
+		LOGGER.debug("Using html file at " + newDisplayFile);
 
 		webView.getEngine().load(newDisplayFile);
 
 		return webView;
+	}
+
+	protected void loadAndApplyTheme() {
+		String newCssFile = "file:///" + new File("resources/themes/" + themeName + ".css").getAbsolutePath();
+		LOGGER.debug("Using css file at " + newCssFile);
+
+		webView.getStylesheets().add(newCssFile);
+		webView.applyCss();
 	}
 
 	protected abstract void viewLoadedCallback() throws Exception;
