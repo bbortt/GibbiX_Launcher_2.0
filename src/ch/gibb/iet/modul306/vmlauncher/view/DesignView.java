@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 public class DesignView extends AbstractView<DesignController> {
 	private static final Logger LOGGER = LogManager.getLogger(DesignView.class);
 
-	private static String[] themes = new String[] { "Starter-Theme", "Default Material-Design" };
+	private static String[] themes = new String[] { "Color-Splash Theme" };
 
 	private static String getSelectElementId() {
 		return "theme_select_element";
