@@ -13,7 +13,7 @@ Background-Image by Theophilos Papadopoulos: https://www.flickr.com/photos/theo_
 
 /*--- DOCUMENT BACKGROUND CONFIGURATION ---*/
 html {
-	background-image: url("../images/color_splash_background.jpg")
+	background-image: url("background/color_splash_background.jpg")
 		!important;
 	background-repeat: no-repeat !important;
 	background-size: cover !important;
@@ -26,6 +26,11 @@ body {
 }
 
 /*--- MENU CONFIGURATION ---*/
+img {
+	/* Use white pictures (swap black/white) */
+	-webkit-filter: invert(100%);
+}
+
 .menu-color {
 	background-color: rgba(1, 1, 1, 0.7) !important;
 }

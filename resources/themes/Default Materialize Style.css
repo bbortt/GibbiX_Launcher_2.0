@@ -1,0 +1,61 @@
+/*
+  __  __       _            _       _ _           _______ _                         
+ |  \/  |     | |          (_)     | (_)         |__   __| |                        
+ | \  / | __ _| |_ ___ _ __ _  __ _| |_ _______     | |  | |__   ___ _ __ ___   ___ 
+ | |\/| |/ _` | __/ _ \ '__| |/ _` | | |_  / _ \    | |  | '_ \ / _ \ '_ ` _ \ / _ \
+ | |  | | (_| | ||  __/ |  | | (_| | | |/ /  __/    | |  | | | |  __/ | | | | |  __/
+ |_|  |_|\__,_|\__\___|_|  |_|\__,_|_|_/___\___|    |_|  |_| |_|\___|_| |_| |_|\___|
+                                                                                    
+					(c) 2014-2016 Materialize, All rights reserved.
+									MIT License
+*/
+
+/*--- DOCUMENT BACKGROUND CONFIGURATION ---*/
+body {
+	margin: 0 !important;
+	width: 100% !important;
+}
+
+/*--- MENU CONFIGURATION ---*/
+.menu-color {
+	background-color: #FF4081 !important;
+}
+
+.side-menu-color {
+	background-color: #FF4081 !important;
+}
+
+.menu-text, .light-header-text {
+	color: #C2185B !important;
+}
+
+.header-text {
+	color: #009688 !important;
+}
+
+/*--- CONTENT CONFIGURATION ---*/
+.content-header {
+	color: #212121 !important;
+}
+
+.content-text, .content-link {
+	color: #757575 !important;
+}
+
+.content-button {
+	background-color: #009688 !important;
+	color: #212121 !important;
+}
+
+/*--- FOOTER CONFIGURATION ---*/
+footer {
+	background-color: #009688 !important;
+}
+
+.footer-text {
+	color: #212121 !important;
+}
+
+.material-footer-text {
+	color: #00796b !important;
+}
