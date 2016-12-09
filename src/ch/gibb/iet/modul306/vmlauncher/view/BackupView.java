@@ -180,13 +180,13 @@ public class BackupView extends AbstractView<BackupController> {
 		htmlBuilder.append("<h2 class='center content-text'>");
 		htmlBuilder.append("<a id='" + machine.id + "_" + machine.name + "_export' href='" + machine.path
 				+ "' class='content-link'>");
-		htmlBuilder.append("<img alt='Backup machine' src='../images/ic_backup_white_24dp_2x.png' />");
+		htmlBuilder.append("<img alt='Backup machine' src='../images/ic_backup_black_24dp_2x.png' />");
 		htmlBuilder.append("</a>");
 
 		// Import
 		htmlBuilder.append("<a id='" + machine.id + "_" + machine.name + "_import' href='" + machine.path
 				+ "' class='content-link'>");
-		htmlBuilder.append("<img alt='Restore machine' src='../images/ic_cloud_download_white_24dp_2x.png' />");
+		htmlBuilder.append("<img alt='Restore machine' src='../images/ic_cloud_download_black_24dp_2x.png' />");
 		htmlBuilder.append("</a>");
 		htmlBuilder.append("</h2>");
 
@@ -211,7 +211,7 @@ public class BackupView extends AbstractView<BackupController> {
 		htmlBuilder.append("<div class='icon-block'>");
 		htmlBuilder.append("<a class='settings_menu_link content-link' href='settings_modul'>");
 		htmlBuilder.append("<h2 class='center content-text'>");
-		htmlBuilder.append("<img alt='Settings' src='../images/ic_settings_white_24dp_2x.png' />");
+		htmlBuilder.append("<img alt='Settings' src='../images/ic_settings_black_24dp_2x.png' />");
 		htmlBuilder.append("</h2>");
 		htmlBuilder.append("<h5 class='center content-header'>Settings</h5>");
 		htmlBuilder.append("</a>");

@@ -147,7 +147,7 @@ public class SessionView extends AbstractView<SessionController> {
 		htmlBuilder.append("<div class='icon-block'>");
 		htmlBuilder.append("<a class='settings_menu_link content-link' href='settings_modul'>");
 		htmlBuilder.append("<h2 class='center content-text'>");
-		htmlBuilder.append("<img alt='Settings' src='../images/ic_settings_white_24dp_2x.png' />");
+		htmlBuilder.append("<img alt='Settings' src='../images/ic_settings_black_24dp_2x.png' />");
 		htmlBuilder.append("</h2>");
 		htmlBuilder.append("<h5 class='center content-header'>Settings</h5>");
 		htmlBuilder.append("</a>");
@@ -175,7 +175,7 @@ public class SessionView extends AbstractView<SessionController> {
 		htmlBuilder.append("<div class='icon-block'>");
 		htmlBuilder.append("<a class='settings_menu_link content-link' href='settings_modul'>");
 		htmlBuilder.append("<h2 class='center content-text'>");
-		htmlBuilder.append("<img alt='Settings' src='../images/ic_settings_white_24dp_2x.png' />");
+		htmlBuilder.append("<img alt='Settings' src='../images/ic_settings_black_24dp_2x.png' />");
 		htmlBuilder.append("</h2>");
 		htmlBuilder.append("<h5 class='center content-header'>Settings</h5>");
 		htmlBuilder.append("</a>");
@@ -266,12 +266,12 @@ public class SessionView extends AbstractView<SessionController> {
 
 		// Launch
 		htmlBuilder.append("<a id='launch_" + session.id + "' href='" + session.name + "' class='content-link'>");
-		htmlBuilder.append("<img alt='Launch session' src='../images/ic_launch_white_24dp_2x.png' />");
+		htmlBuilder.append("<img alt='Launch session' src='../images/ic_launch_black_24dp_2x.png' />");
 		htmlBuilder.append("</a>");
 
 		// Delete
 		htmlBuilder.append("<a id='delete_" + session.id + "' href='" + session.name + "' class='content-link'>");
-		htmlBuilder.append("<img alt='Delete session' src='../images/ic_delete_forever_white_24dp_2x.png' />");
+		htmlBuilder.append("<img alt='Delete session' src='../images/ic_delete_forever_black_24dp_2x.png' />");
 		htmlBuilder.append("</a>");
 		htmlBuilder.append("</h2>");
 		htmlBuilder.append("<h5 class='center content-header'>" + session.name + "</h5>");

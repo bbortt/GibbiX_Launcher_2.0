@@ -165,7 +165,7 @@ public class MachineView extends AbstractView<LauncherController> {
 		htmlBuilder.append("<div class='icon-block'>");
 		htmlBuilder.append("<a class='settings_menu_link content-link' href='settings_modul'>");
 		htmlBuilder.append("<h2 class='center content-text'>");
-		htmlBuilder.append("<img alt='Settings' src='../images/ic_settings_white_24dp_2x.png' />");
+		htmlBuilder.append("<img alt='Settings' src='../images/ic_settings_black_24dp_2x.png' />");
 		htmlBuilder.append("</h2>");
 		htmlBuilder.append("<h5 class='center content-header'>Settings</h5>");
 		htmlBuilder.append("</a>");
