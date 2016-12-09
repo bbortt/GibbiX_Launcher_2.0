@@ -1,58 +1,79 @@
+/*
+   _____      _                   _____       _           _       _______ _                         
+  / ____|    | |                 / ____|     | |         | |     |__   __| |                        
+ | |     ___ | | ___  _ __ _____| (___  _ __ | | __ _ ___| |__      | |  | |__   ___ _ __ ___   ___ 
+ | |    / _ \| |/ _ \| '__|______\___ \| '_ \| |/ _` / __| '_ \     | |  | '_ \ / _ \ '_ ` _ \ / _ \
+ | |___| (_) | | (_) | |         ____) | |_) | | (_| \__ \ | | |    | |  | | | |  __/ | | | | |  __/
+  \_____\___/|_|\___/|_|        |_____/| .__/|_|\__,_|___/_| |_|    |_|  |_| |_|\___|_| |_| |_|\___|
+                                       | |                                                          
+                                       |_|                          Timon Borter (c) 2016
+
+Background-Image by Theophilos Papadopoulos: https://www.flickr.com/photos/theo_reth/6324344746
+*/
+
+/*--- DOCUMENT BACKGROUND CONFIGURATION ---*/
 html {
-	background-image: url("../images/color_splash_background.jpg");
-	background-repeat: no-repeat;
-	background-size: cover;
+	background-image: url("../images/color_splash_background.jpg")
+		!important;
+	background-repeat: no-repeat !important;
+	background-size: cover !important;
 }
 
 body {
-	background-color: black;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-	filter: alpha(opacity = 30);
-	opacity: 0.7;
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+	margin: 0 !important;
+	width: 100% !important;
+	background-color: rgba(1, 1, 1, 0.7) !important;
 }
 
+/*--- MENU CONFIGURATION ---*/
 .menu-color {
-	background-color: black;
+	background-color: rgba(1, 1, 1, 0.7) !important;
 }
 
-.menu-text {
-	color: white;
+.side-menu-color {
+	background-color: rgba(1, 1, 1, 0.9) !important;
 }
 
-.header-text {
-	color: white;
+.menu-text, .header-text, .light-header-text {
+	color: white !important;
 }
 
-.light-header-text {
-	color: white;
-}
-
-.content-header {
-	color: white;
-}
-
-.content-text {
-	color: white;
-}
-
-.content-link {
-	color: white;
+/*--- CONTENT CONFIGURATION ---*/
+.content-header, .content-text, .content-link {
+	color: white !important;
 }
 
 .content-button {
-	background-color: black;
-	color: white;
+	background-color: rgba(1, 1, 1, 0.9) !important;
+	color: white !important;
 }
 
+/*--- DROP-DOWN CONFIGURATION ---*/
+.select-wrapper, .caret {
+	color: white !important;
+}
+
+.dropdown-content>li {
+	background-color: rgba(1, 1, 1, 0.9) !important;
+}
+
+.dropdown-content>li.selected {
+	background-color: rgba(25, 25, 25, 0.9) !important;
+}
+
+.dropdown-content>li:hover {
+	background-color: rgba(50, 50, 50, 0.9) !important;
+}
+
+.dropdown-content>li>span {
+	color: white !important;
+}
+
+/*--- FOOTER CONFIGURATION ---*/
 footer {
-	background-color: black !important;
+	background-color: rgba(1, 1, 1, 0.7) !important;
 }
 
-.footer-text {
-	color: white;
-}
-
-.material-footer-text {
-	color: white;
+.footer-text, .material-footer-text {
+	color: white !important;
 }

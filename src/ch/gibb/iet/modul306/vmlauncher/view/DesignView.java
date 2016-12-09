@@ -120,11 +120,11 @@ public class DesignView extends AbstractView<DesignController> {
 
 		Arrays.asList(themes).forEach(theme -> {
 			if (theme.toLowerCase().equals(themeName)) {
-				optionsBuilder.append(
-						"<option value='" + Arrays.asList(themes).indexOf(theme) + "' selected>" + theme + "</option>");
+				optionsBuilder.append("<option class='content-text' value='" + Arrays.asList(themes).indexOf(theme)
+						+ "' selected>" + theme + "</option>");
 			} else {
-				optionsBuilder
-						.append("<option value='" + Arrays.asList(themes).indexOf(theme) + "'>" + theme + "</option>");
+				optionsBuilder.append("<option class='content-text' value='" + Arrays.asList(themes).indexOf(theme)
+						+ "'>" + theme + "</option>");
 			}
 		});
 

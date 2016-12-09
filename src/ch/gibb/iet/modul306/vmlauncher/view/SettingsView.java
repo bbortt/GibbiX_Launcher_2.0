@@ -125,7 +125,7 @@ public class SettingsView extends AbstractView<SettingsController> {
 
 		htmlBuilder.append("<div class='col s12 m4'>");
 		htmlBuilder.append(
-				"<p class='light'>We were not able to find any configurations. Please check your classpath!</p>");
+				"<p class='light content-text'>We were not able to find any configurations. Please check your classpath!</p>");
 		htmlBuilder.append("</div>");
 
 		addHTMLToElementWithId(getContentElementId(), htmlBuilder.toString());
@@ -158,8 +158,8 @@ public class SettingsView extends AbstractView<SettingsController> {
 		StringBuilder elementBuilder = new StringBuilder();
 
 		elementBuilder.append("<div class='switch col s12'>");
-		elementBuilder.append("<p>" + name + "</p>");
-		elementBuilder.append("<label>");
+		elementBuilder.append("<p class='content-text'>" + name + "</p>");
+		elementBuilder.append("<label class='content-text'>");
 		// Off
 		elementBuilder.append("False");
 
@@ -170,6 +170,7 @@ public class SettingsView extends AbstractView<SettingsController> {
 		}
 
 		elementBuilder.append("<span class='lever'></span>");
+		
 		// On
 		elementBuilder.append("True");
 		elementBuilder.append("</label>");
@@ -182,7 +183,7 @@ public class SettingsView extends AbstractView<SettingsController> {
 		StringBuilder elementBuilder = new StringBuilder();
 
 		elementBuilder.append("<div class='input-field col s12'>");
-		elementBuilder.append("<p>" + name + "</p>");
+		elementBuilder.append("<p class='content-text'>" + name + "</p>");
 
 		if (value != null && value != "") {
 			elementBuilder.append(

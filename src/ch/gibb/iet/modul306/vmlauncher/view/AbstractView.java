@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.events.Event;
@@ -99,11 +101,14 @@ public abstract class AbstractView<C extends AbstractController> {
 	}
 
 	protected void loadAndApplyTheme() {
-		String newCssFile = "file:///" + new File("resources/themes/" + themeName + ".css").getAbsolutePath();
-		LOGGER.debug("Using css file at " + newCssFile);
-
-		webView.getStylesheets().add(newCssFile);
-		webView.applyCss();
+		// Create and append a new css tag (dynamically)
+		Document doc = webView.getEngine().getDocument();
+		Element styleNode = doc.createElement("link");
+		styleNode.setAttribute("href", "../themes/" + themeName + ".css");
+		styleNode.setAttribute("type", "text/css");
+		styleNode.setAttribute("rel", "stylesheet");
+		styleNode.setAttribute("media", "screen, projection");
+		doc.getDocumentElement().getElementsByTagName("head").item(0).appendChild(styleNode);
 	}
 
 	protected abstract void viewLoadedCallback() throws Exception;
