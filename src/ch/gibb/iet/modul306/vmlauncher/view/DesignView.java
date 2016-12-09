@@ -127,7 +127,7 @@ public class DesignView extends AbstractView<DesignController> {
 		StringBuilder optionsBuilder = new StringBuilder();
 
 		Arrays.asList(themes).forEach(theme -> {
-			if (theme.toLowerCase().equals(themeName)) {
+			if (theme.equals(themeName)) {
 				optionsBuilder.append("<option class='content-text' value='" + Arrays.asList(themes).indexOf(theme)
 						+ "' selected>" + theme + "</option>");
 			} else {
