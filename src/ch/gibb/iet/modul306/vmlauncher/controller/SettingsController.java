@@ -29,7 +29,7 @@ public class SettingsController extends AbstractController {
 		settingsView.display();
 
 		try {
-			settingsView.setProperties(settingsModul.readRuntimeConfiguration().getAllProperties());
+			settingsView.setProperties(settingsModul.getAllProperties());
 		} catch (URISyntaxException | IOException e) {
 			settingsView.setPropertiesNotFound();
 			LOGGER.error(e.getLocalizedMessage());

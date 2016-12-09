@@ -7,6 +7,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.TreeMap;
@@ -25,11 +28,15 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 
 	private TreeMap<String, Object> properties;
 
-	public Object getProperty(String name) {
+	public Object getProperty(String name) throws URISyntaxException, IOException {
+		readRuntimeConfiguration();
+
 		return this.properties.get(name);
 	}
 
-	public void setProperty(String name, Object value) {
+	public void setProperty(String name, Object value) throws URISyntaxException, IOException {
+		readRuntimeConfiguration();
+
 		if (this.properties.get(name) != null) {
 			this.properties.remove(name);
 		}
@@ -37,7 +44,9 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 		this.properties.put(name, value);
 	}
 
-	public TreeMap<String, Object> getAllProperties() {
+	public TreeMap<String, Object> getAllProperties() throws URISyntaxException, IOException {
+		readRuntimeConfiguration();
+
 		return this.properties;
 	}
 
@@ -50,7 +59,32 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 		}
 	}
 
-	public SettingsModel readRuntimeConfiguration() throws URISyntaxException, IOException {
+	public String[] getAllPossibleThemes() throws URISyntaxException, IOException {
+		LOGGER.info("Reading installed themes from \"" + getProperty("application.display.themes.folder").toString()
+				+ "\"");
+
+		List<String> collectedThemes = new ArrayList<>();
+
+		File themeFolder = new File(getProperty("application.display.themes.folder").toString());
+		if (!themeFolder.exists() || !themeFolder.isDirectory()) {
+			throw new FileNotFoundException("Directory \"" + getProperty("application.display.themes.folder").toString()
+					+ "\" does not exist!");
+		}
+
+		Arrays.asList(themeFolder.listFiles()).forEach(subFile -> {
+			if (subFile.getName().contains(".css")) {
+				collectedThemes.add(subFile.getName().replaceAll(".css", ""));
+			}
+		});
+
+		if (collectedThemes.size() == 0) {
+			throw new IllegalArgumentException("Could not find any installed themes!");
+		}
+
+		return collectedThemes.toArray(new String[collectedThemes.size()]);
+	}
+
+	private void readRuntimeConfiguration() throws URISyntaxException, IOException {
 		LOGGER.info("Reading local runtime configuration from " + SETTINGS_FILE.getAbsolutePath());
 
 		BufferedReader reader = new BufferedReader(new FileReader(SETTINGS_FILE));
@@ -69,8 +103,6 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 		}
 
 		reader.close();
-
-		return this;
 	}
 
 	public void savePropertiesChanged() throws JAXBException, IOException, URISyntaxException {

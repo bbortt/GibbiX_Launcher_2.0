@@ -47,7 +47,7 @@ public abstract class AbstractView<C extends AbstractController> {
 					.getAllProperties();
 
 			displayName = applicationSettings.get("application.display.name").toString();
-			themeName = applicationSettings.get("application.display.theme").toString();
+			themeName = applicationSettings.get("application.display.themes.current").toString();
 		} catch (URISyntaxException | IOException e) {
 			LOGGER.error(e.getLocalizedMessage());
 		}
