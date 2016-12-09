@@ -65,6 +65,8 @@ public class MachineView extends AbstractView<LauncherController> {
 
 	@Override
 	protected void viewLoadedCallback() throws Exception {
+		loadAndApplyTheme();
+
 		if (machinesNotFound) {
 			showMachinesNotFount();
 		} else {

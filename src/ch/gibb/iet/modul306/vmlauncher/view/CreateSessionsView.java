@@ -54,6 +54,8 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 
 	@Override
 	protected void viewLoadedCallback() throws Exception {
+		loadAndApplyTheme();
+
 		addFirstMachineSelect();
 
 		bindClickEventToLinkClass("home_menu_link", new EventListener() {

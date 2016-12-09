@@ -82,6 +82,8 @@ public class SessionView extends AbstractView<SessionController> {
 
 	@Override
 	protected void viewLoadedCallback() throws Exception {
+		loadAndApplyTheme();
+
 		if (machinesNotFound) {
 			showMachinesNotFount();
 		} else if (sessionsNotFound) {

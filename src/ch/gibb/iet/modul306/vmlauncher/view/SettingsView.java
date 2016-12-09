@@ -61,6 +61,8 @@ public class SettingsView extends AbstractView<SettingsController> {
 
 	@Override
 	protected void viewLoadedCallback() throws Exception {
+		loadAndApplyTheme();
+
 		if (propertiesNotFound) {
 			showPropertiesNotFound();
 		} else {
