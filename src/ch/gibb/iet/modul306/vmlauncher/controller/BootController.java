@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 public class BootController extends AbstractController {
 	private static final Logger LOGGER = Logger.getLogger(BootController.class);
 
+	private ApplicationView view;
+
 	private boolean isLauncherModulEnabled;
 	private LauncherController launcherController;
 	private MachineModel machineModel;
@@ -83,6 +85,8 @@ public class BootController extends AbstractController {
 
 	public BootController(Stage mainStage) {
 		super(mainStage);
+
+		view = new ApplicationView(mainStage, this);
 	}
 
 	@Deprecated
@@ -169,6 +173,6 @@ public class BootController extends AbstractController {
 		LOGGER.info("--------------------------------------------");
 		LOGGER.info("Loading view..");
 
-		new ApplicationView(mainStage, this).display();
+		view.display();
 	}
 }

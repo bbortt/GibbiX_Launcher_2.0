@@ -85,7 +85,7 @@ public class SettingsModel extends AbstractModel<SettingsController> {
 	}
 
 	private void readRuntimeConfiguration() throws URISyntaxException, IOException {
-		LOGGER.info("Reading local runtime configuration from " + SETTINGS_FILE.getAbsolutePath());
+		LOGGER.info("Updating settings from local configuration at " + SETTINGS_FILE.getAbsolutePath());
 
 		BufferedReader reader = new BufferedReader(new FileReader(SETTINGS_FILE));
 
