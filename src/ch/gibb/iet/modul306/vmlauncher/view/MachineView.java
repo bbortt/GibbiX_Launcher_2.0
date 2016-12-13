@@ -76,7 +76,7 @@ public class MachineView extends AbstractView<LauncherController> {
 		bindClickEventToLinkClass("home_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
-				LOGGER.info("Chaning to boot-modul");
+				LOGGER.info("Changing to boot-modul");
 				controller.getBootController().loadView();
 			}
 		});
