@@ -64,9 +64,9 @@ public class BootController extends AbstractController {
 		return this.settingsController;
 	}
 
-	public SettingsModel getApplicationSettings() throws URISyntaxException, IOException {
-		if (settingsModel == null) {
-			settingsModel = new SettingsModel().readRuntimeConfiguration();
+	public SettingsModel getApplicationSettings() throws FileNotFoundException {
+		if (this.settingsModel == null) {
+			this.settingsModel = new SettingsModel();
 		}
 
 		return this.settingsModel;

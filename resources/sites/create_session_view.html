@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+<title>VMLauncher 2.0 | Session-Modul</title>
+
+<!-- CSS  -->
+<link href="../materialize/css/google_fonts_material_icons.css"
+	type="text/css" rel="stylesheet">
+<link href="../materialize/css/materialize.min.css" type="text/css"
+	rel="stylesheet" media="screen,projection" />
+<link href="../materialize/css/style.css" type="text/css"
+	rel="stylesheet" media="screen,projection" />
+<link href="custom_size_fix.css" type="text/css" rel="stylesheet"
+	media="screen,projection" />
+</head>
+<body>
+	<nav class="menu-color" role="navigation">
+		<div class="nav-wrapper container">
+			<!-- <a id="logo-container" href="#" class="brand-logo">VMLauncher 2.0</a> -->
+			<ul class="right hide-on-med-and-down">
+				<li><a class="home_menu_link menu-text" href="index.html">Home</a></li>
+				<li><a class="settings_menu_link menu-text"
+					href="settings_view.html">Settings</a></li>
+			</ul>
+
+			<ul id="nav-mobile" class="side-nav side-menu-color">
+				<li><a class="home_menu_link menu-text" href="index.html">Home</a></li>
+				<li><a class="settings_menu_link menu-text"
+					href="settings_view.html">Settings</a></li>
+			</ul>
+			<a href="#" data-activates="nav-mobile" class="button-collapse">
+				<img alt="Menu" src="../images/ic_menu_black_24dp_2x.png" />
+			</a>
+		</div>
+	</nav>
+
+	<div class="section no-pad-bot" id="index-banner">
+		<div class="container">
+			<h1 class="header center header-text">Sessions</h1>
+			<div class="row center">
+				<h5 class="header col s12 light light-header-text">Tired of
+					clicking each single machine? Collect the most used all in one
+					session!</h5>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="section scrollable">
+			<div class="row center" id="root_content_element">
+				<div class="input-field col s12">
+					<input placeholder="Session name" id="session_name_input"
+						type="text" class="validate content-text"> <label
+						for="session_name_input" class="content-text">Session name</label>
+				</div>
+
+				<!-- Select added by java -->
+			</div>
+			<a href="#" id="add_machine_button" class="left"> <img
+				alt="Add machine" src="../images/ic_add_box_black_24dp_2x.png" />
+			</a>
+		</div>
+		<div class="row center">
+			<a href="session_view.html" id="cancel_session_button"
+				class="btn-large waves-effect waves-light content-button">Cancel</a>
+			<a href="session_view.html" id="create_session_button"
+				class="btn-large waves-effect waves-light content-button">Create</a>
+		</div>
+	</div>
+
+	<footer class="page-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col l6 s12">
+					<h5 class="footer-text">Contributors</h5>
+					<p class="footer-text">We are students of the GIBB working on
+						this project like it is our full time job. Any amount would help
+						support and continue development on this project and is greatly
+						appreciated.</p>
+				</div>
+				<div class="col l3 s12">
+					<h5 class="footer-text">Connect</h5>
+					<ul>
+						<li><a class="footer-text" id="project_github_link"
+							href="https://github.com/bbortt/GibbiX_Launcher_2.0">GitHub</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container footer-text">
+				Made by <a class="material-footer-text" id="materialize_footer_link"
+					href="https://materializecss.com">Materialize</a>
+			</div>
+		</div>
+	</footer>
+
+	<!--  Scripts-->
+	<script src="../materialize/js/jquery-2.1.1.min.js"></script>
+	<script src="../materialize/js/materialize.min.js"></script>
+	<script src="../materialize/js/init.js"></script>
+</body>
+</html>

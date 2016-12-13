@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.events.Event;
@@ -45,7 +47,7 @@ public abstract class AbstractView<C extends AbstractController> {
 					.getAllProperties();
 
 			displayName = applicationSettings.get("application.display.name").toString();
-			themeName = applicationSettings.get("application.display.theme").toString();
+			themeName = applicationSettings.get("application.display.themes.current").toString();
 		} catch (URISyntaxException | IOException e) {
 			LOGGER.error(e.getLocalizedMessage());
 		}
@@ -90,14 +92,23 @@ public abstract class AbstractView<C extends AbstractController> {
 	protected abstract void loadScene();
 
 	protected WebView loadPage(String pageName) {
-		LOGGER.debug("Current theme is " + themeName);
-
-		String newDisplayFile = "file:///" + new File("resources/" + themeName + "/" + pageName).getAbsolutePath();
-		LOGGER.debug("Using file at " + newDisplayFile);
+		String newDisplayFile = "file:///" + new File("resources/sites/" + pageName).getAbsolutePath();
+		LOGGER.debug("Using html file at " + newDisplayFile);
 
 		webView.getEngine().load(newDisplayFile);
 
 		return webView;
+	}
+
+	protected void loadAndApplyTheme() {
+		// Create and append a new css tag (dynamically)
+		Document doc = webView.getEngine().getDocument();
+		Element styleNode = doc.createElement("link");
+		styleNode.setAttribute("href", "../themes/" + themeName + ".css");
+		styleNode.setAttribute("type", "text/css");
+		styleNode.setAttribute("rel", "stylesheet");
+		styleNode.setAttribute("media", "screen, projection");
+		doc.getDocumentElement().getElementsByTagName("head").item(0).appendChild(styleNode);
 	}
 
 	protected abstract void viewLoadedCallback() throws Exception;

@@ -1,5 +1,7 @@
 package ch.gibb.iet.modul306.vmlauncher.view;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 
 import org.apache.log4j.LogManager;
@@ -19,7 +21,7 @@ import javafx.stage.Stage;
 public class DesignView extends AbstractView<DesignController> {
 	private static final Logger LOGGER = LogManager.getLogger(DesignView.class);
 
-	private static String[] themes = new String[] { "Starter-Theme", "Default Material-Design" };
+	String[] themes;
 
 	private static String getSelectElementId() {
 		return "theme_select_element";
@@ -27,6 +29,12 @@ public class DesignView extends AbstractView<DesignController> {
 
 	public DesignView(Stage mainStage, DesignController controller) {
 		super(mainStage, controller);
+
+		try {
+			themes = controller.getBootController().getApplicationSettings().getAllPossibleThemes();
+		} catch (URISyntaxException | IOException e) {
+			LOGGER.warn(e.getLocalizedMessage());
+		}
 	}
 
 	@Override
@@ -47,6 +55,8 @@ public class DesignView extends AbstractView<DesignController> {
 
 	@Override
 	protected void viewLoadedCallback() throws Exception {
+		loadAndApplyTheme();
+
 		fillThemeOptions();
 
 		bindClickEventToLinkClass("home_menu_link", new EventListener() {
@@ -81,11 +91,11 @@ public class DesignView extends AbstractView<DesignController> {
 						int selectedIndex = ((HTMLSelectElement) webView.getEngine().getDocument()
 								.getElementById(getSelectElementId())).getSelectedIndex();
 
-						LOGGER.debug("Changing theme to " + themes[selectedIndex].toLowerCase());
+						LOGGER.debug("Changing theme to " + themes[selectedIndex]);
 
 						try {
 							controller.getBootController().getApplicationSettings()
-									.setProperty("application.display.theme", themes[selectedIndex].toLowerCase());
+									.setProperty("application.display.themes.current", themes[selectedIndex]);
 							controller.getBootController().getApplicationSettings().savePropertiesChanged();
 
 							Alert information = new Alert(AlertType.INFORMATION);
@@ -117,12 +127,12 @@ public class DesignView extends AbstractView<DesignController> {
 		StringBuilder optionsBuilder = new StringBuilder();
 
 		Arrays.asList(themes).forEach(theme -> {
-			if (theme.toLowerCase().equals(themeName)) {
-				optionsBuilder.append(
-						"<option value='" + Arrays.asList(themes).indexOf(theme) + "' selected>" + theme + "</option>");
+			if (theme.equals(themeName)) {
+				optionsBuilder.append("<option class='content-text' value='" + Arrays.asList(themes).indexOf(theme)
+						+ "' selected>" + theme + "</option>");
 			} else {
-				optionsBuilder
-						.append("<option value='" + Arrays.asList(themes).indexOf(theme) + "'>" + theme + "</option>");
+				optionsBuilder.append("<option class='content-text' value='" + Arrays.asList(themes).indexOf(theme)
+						+ "'>" + theme + "</option>");
 			}
 		});
 
