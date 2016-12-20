@@ -15,6 +15,7 @@ import org.w3c.dom.events.EventTarget;
 import ch.gibb.iet.modul306.vmlauncher.controller.SessionController;
 import ch.gibb.iet.modul306.vmlauncher.model.objects.XMLMachine;
 import ch.gibb.iet.modul306.vmlauncher.model.objects.XMLSessions.Session;
+import ch.gibb.iet.modul306.vmlauncher.view.dialogues.ErrorDialogWithStacktrace;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -214,10 +215,7 @@ public class SessionView extends AbstractView<SessionController> {
 										.filter(givenMachine -> (givenMachine.name.equals(machine.name))).findFirst()
 										.get().launch();
 							} catch (NoSuchElementException e) {
-								Alert error = new Alert(AlertType.ERROR);
-								error.setTitle(e.getClass().toString());
-								error.setContentText("Machine " + machine.name + " not found. Skipping..");
-								error.show();
+								new ErrorDialogWithStacktrace().appendStracktrace(e).showAndWait();
 							}
 						});
 
@@ -240,11 +238,7 @@ public class SessionView extends AbstractView<SessionController> {
 							try {
 								controller.deleteSession(session, mainStage);
 							} catch (Exception e) {
-								Alert error = new Alert(AlertType.ERROR);
-								error.setTitle(e.getClass().toString());
-								error.setHeaderText("Session " + session.name + " could not be saved!");
-								error.setContentText(e.getLocalizedMessage());
-								error.show();
+								new ErrorDialogWithStacktrace().appendStracktrace(e).showAndWait();
 							}
 						} else {
 							LOGGER.debug("Deleting session " + session.name + " abort");

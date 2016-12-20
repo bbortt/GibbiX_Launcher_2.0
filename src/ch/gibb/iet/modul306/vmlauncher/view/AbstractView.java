@@ -18,6 +18,7 @@ import org.w3c.dom.events.EventTarget;
 
 import ch.gibb.iet.modul306.vmlauncher.app.app;
 import ch.gibb.iet.modul306.vmlauncher.controller.AbstractController;
+import ch.gibb.iet.modul306.vmlauncher.view.dialogues.ErrorDialogWithStacktrace;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
@@ -158,10 +159,7 @@ public abstract class AbstractView<C extends AbstractController> {
 							} catch (IOException | URISyntaxException e) {
 								LOGGER.error(e.getLocalizedMessage());
 
-								Alert error = new Alert(AlertType.ERROR);
-								error.setTitle(e.getClass().toString());
-								error.setContentText(e.getLocalizedMessage());
-								error.show();
+								new ErrorDialogWithStacktrace().appendStracktrace(e).showAndWait();
 							}
 						}
 
@@ -188,10 +186,7 @@ public abstract class AbstractView<C extends AbstractController> {
 							} catch (IOException | URISyntaxException e) {
 								LOGGER.error(e.getLocalizedMessage());
 
-								Alert error = new Alert(AlertType.ERROR);
-								error.setTitle(e.getClass().toString());
-								error.setContentText(e.getLocalizedMessage());
-								error.show();
+								new ErrorDialogWithStacktrace().appendStracktrace(e).showAndWait();
 							}
 						}
 

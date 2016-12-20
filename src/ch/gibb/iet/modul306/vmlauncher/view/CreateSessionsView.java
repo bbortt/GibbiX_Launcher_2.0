@@ -15,6 +15,7 @@ import org.w3c.dom.html.HTMLSelectElement;
 import ch.gibb.iet.modul306.vmlauncher.controller.SessionController;
 import ch.gibb.iet.modul306.vmlauncher.model.objects.XMLMachine;
 import ch.gibb.iet.modul306.vmlauncher.model.objects.XMLSessions.Session;
+import ch.gibb.iet.modul306.vmlauncher.view.dialogues.ErrorDialogWithStacktrace;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -126,11 +127,7 @@ public class CreateSessionsView extends AbstractView<SessionController> {
 						} catch (Exception e) {
 							LOGGER.error(e.getLocalizedMessage());
 
-							Alert error = new Alert(AlertType.ERROR);
-							error.setTitle(e.getClass().toString());
-							error.setHeaderText("Failed to create new session.");
-							error.setContentText(e.getLocalizedMessage());
-							error.show();
+							new ErrorDialogWithStacktrace().appendStracktrace(e).showAndWait();
 						}
 
 						evt.preventDefault();

@@ -16,9 +16,8 @@ import org.xml.sax.SAXException;
 import ch.gibb.iet.modul306.vmlauncher.controller.BackupController;
 import ch.gibb.iet.modul306.vmlauncher.model.BackupModel;
 import ch.gibb.iet.modul306.vmlauncher.model.objects.XMLMachine;
+import ch.gibb.iet.modul306.vmlauncher.view.dialogues.ErrorDialogWithStacktrace;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import net.lingala.zip4j.exception.ZipException;
@@ -134,11 +133,7 @@ public class BackupView extends AbstractView<BackupController> {
 						} catch (ZipException | URISyntaxException e) {
 							LOGGER.error(e.getLocalizedMessage());
 
-							Alert error = new Alert(AlertType.ERROR);
-							error.setTitle(e.getClass().toString());
-							error.setHeaderText("Error while backing up machine " + machine.name);
-							error.setContentText(e.getLocalizedMessage());
-							error.show();
+							new ErrorDialogWithStacktrace().appendStracktrace(e).showAndWait();
 						}
 
 						evt.preventDefault();
@@ -156,11 +151,7 @@ public class BackupView extends AbstractView<BackupController> {
 						} catch (ZipException | URISyntaxException e) {
 							LOGGER.error(e.getLocalizedMessage());
 
-							Alert error = new Alert(AlertType.ERROR);
-							error.setTitle(e.getClass().toString());
-							error.setHeaderText("Error while restoring " + machine.name);
-							error.setContentText(e.getLocalizedMessage());
-							error.show();
+							new ErrorDialogWithStacktrace().appendStracktrace(e).showAndWait();
 						}
 
 						evt.preventDefault();

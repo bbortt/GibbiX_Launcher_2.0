@@ -12,6 +12,7 @@ import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLSelectElement;
 
 import ch.gibb.iet.modul306.vmlauncher.controller.DesignController;
+import ch.gibb.iet.modul306.vmlauncher.view.dialogues.ErrorDialogWithStacktrace;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -34,6 +35,8 @@ public class DesignView extends AbstractView<DesignController> {
 			themes = controller.getBootController().getApplicationSettings().getAllPossibleThemes();
 		} catch (URISyntaxException | IOException e) {
 			LOGGER.warn(e.getLocalizedMessage());
+
+			new ErrorDialogWithStacktrace().appendStracktrace(e).showAndWait();
 		}
 	}
 
@@ -104,14 +107,9 @@ public class DesignView extends AbstractView<DesignController> {
 							information.setContentText("Please restart application to affect changes!");
 							information.show();
 						} catch (Exception e) {
-							e.printStackTrace();
 							LOGGER.error(e.getLocalizedMessage());
 
-							Alert error = new Alert(AlertType.ERROR);
-							error.setTitle(e.getClass().toString());
-							error.setHeaderText("Could not change theme!");
-							error.setContentText(e.getLocalizedMessage());
-							error.show();
+							new ErrorDialogWithStacktrace().appendStracktrace(e).showAndWait();
 						}
 
 						controller.loadView();

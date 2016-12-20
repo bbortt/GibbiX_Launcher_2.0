@@ -9,9 +9,8 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 
 import ch.gibb.iet.modul306.vmlauncher.controller.BootController;
+import ch.gibb.iet.modul306.vmlauncher.view.dialogues.ErrorDialogWithStacktrace;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
@@ -74,11 +73,7 @@ public class ApplicationView extends AbstractView<BootController> {
 				} catch (IOException | URISyntaxException e) {
 					LOGGER.error(e.getLocalizedMessage());
 
-					Alert error = new Alert(AlertType.ERROR);
-					error.setTitle(e.getClass().toString());
-					error.setHeaderText("Unable to open portable app manager!");
-					error.setContentText(e.getLocalizedMessage());
-					error.show();
+					new ErrorDialogWithStacktrace().appendStracktrace(e).showAndWait();
 				}
 
 				evt.preventDefault();
