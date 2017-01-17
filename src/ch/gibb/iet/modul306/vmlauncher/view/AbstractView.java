@@ -70,21 +70,18 @@ public abstract class AbstractView<C extends AbstractController> {
 			public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue,
 					Worker.State newValue) {
 				if (newValue != Worker.State.SUCCEEDED) {
-					// LOGGER.warn("Could not load page to display. Retrying!");
-					// waitForGUIAndBindButtons();
+					LOGGER.warn("Page is still loading. Worker state is \"" + newValue + "\"!");
+				} else {
+					LOGGER.info("Loading finished: State is \"" + newValue + "\".");
 
-					// TODO: How to fix this??
-					LOGGER.fatal("Could not load page to display. Exiting..");
-					System.exit(1);
+					try {
+						viewLoadedCallback();
+					} catch (Exception e) {
+						waitForGUIAndBindButtons();
+					}
+
+					webView.getEngine().getLoadWorker().stateProperty().removeListener(this);
 				}
-
-				try {
-					viewLoadedCallback();
-				} catch (Exception e) {
-					waitForGUIAndBindButtons();
-				}
-
-				webView.getEngine().getLoadWorker().stateProperty().removeListener(this);
 			}
 		});
 	}

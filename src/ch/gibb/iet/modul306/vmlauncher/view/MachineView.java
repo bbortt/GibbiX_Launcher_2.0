@@ -1,5 +1,6 @@
 package ch.gibb.iet.modul306.vmlauncher.view;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -76,7 +77,7 @@ public class MachineView extends AbstractView<LauncherController> {
 		bindClickEventToLinkClass("home_menu_link", new EventListener() {
 			@Override
 			public void handleEvent(Event evt) {
-				LOGGER.info("Chaning to boot-modul");
+				LOGGER.info("Changing to boot-modul");
 				controller.getBootController().loadView();
 			}
 		});
@@ -135,10 +136,13 @@ public class MachineView extends AbstractView<LauncherController> {
 				+ "' class='content-link'>");
 		htmlBuilder.append("<div class='center vm-icon content-text'>");
 
-		// TODO: What if machine not from gibbiX? (external machines shall be
-		// supported too!)
-		htmlBuilder
-				.append("<img alt='Launch machine' src='../images/vm/" + machine.name + "-icon.png' class='vm-icon'/>");
+		if (isImageForMachineExisting(machine)) {
+			htmlBuilder.append(
+					"<img alt='Launch machine' src='../images/vm/" + machine.name + "-icon.png' class='vm-icon'/>");
+		} else {
+			htmlBuilder
+					.append("<img alt='Launch machine' src='../images/ic_launch_black_24dp_2x.png' class='vm-icon'/>");
+		}
 		htmlBuilder.append("</div>");
 		htmlBuilder.append("</a>");
 		htmlBuilder.append("<h5 class='center content-header'>" + machine.name + "</h5>");
@@ -150,6 +154,10 @@ public class MachineView extends AbstractView<LauncherController> {
 		htmlBuilder.append("</div>");
 
 		return htmlBuilder.toString();
+	}
+
+	private boolean isImageForMachineExisting(XMLMachine machine) {
+		return new File("resources/images/vm/" + machine.name + "-icon.png").exists();
 	}
 
 	private void showMachinesNotFount()
